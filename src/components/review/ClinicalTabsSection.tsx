@@ -142,7 +142,7 @@ const ClinicalTabsSection = ({
     }
   };
   return <Card className="border-0 shadow-sm overflow-hidden">
-      <div className="flex justify-between items-center px-4 py-2 border-b">
+      <div className="flex justify-between items-center py-2 border-b px-0">
         <h2 className="font-semibold text-base">Clinical Data</h2>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" className="h-8 gap-1 bg-white border-gray-200 hover:bg-gray-50 text-gray-700" onClick={handleViewSources}>
