@@ -133,10 +133,7 @@ const ReviewPage = () => {
               <div className="section-container">
                 <Card className="border-0 shadow-sm">
                   <SectionHeader title="School and Social History" confidenceLevel="high" confidenceScore={88}>
-                    <Button variant="outline" size="sm" className="gap-1 h-7" onClick={() => toggleSectionCompletion("School and Social History", true)}>
-                      <CheckCircle2Icon className="h-3.5 w-3.5" />
-                      Mark as Reviewed
-                    </Button>
+                    
                   </SectionHeader>
                   
                   <EditableField initialValue={socialHistory} fieldType="textarea" onSave={setSocialHistory} alwaysEditable={true} />
@@ -147,10 +144,7 @@ const ReviewPage = () => {
               <div className="section-container">
                 <Card className="border-0 shadow-sm">
                   <SectionHeader title="Family History" confidenceLevel="medium" confidenceScore={76}>
-                    <Button variant="outline" size="sm" className="gap-1 h-7" onClick={() => toggleSectionCompletion("Family History", true)}>
-                      <CheckCircle2Icon className="h-3.5 w-3.5" />
-                      Mark as Reviewed
-                    </Button>
+                    
                   </SectionHeader>
                   
                   <EditableField initialValue={familyHistory} fieldType="textarea" onSave={setFamilyHistory} alwaysEditable={true} />
