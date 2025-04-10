@@ -50,7 +50,7 @@ const ReviewPage = () => {
       icon: isComplete ? <CheckCircle2Icon className="h-4 w-4 text-green-500" /> : <AlertCircleIcon className="h-4 w-4 text-amber-500" />
     });
   };
-  return <div className="min-h-screen bg-clinical-neutral/50">
+  return <div className="min-h-screen bg-neutral-50">
       {/* Status Bar */}
       <div className="status-bar">
         <div className="flex items-center gap-2">
