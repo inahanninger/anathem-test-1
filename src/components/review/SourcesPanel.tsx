@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { FileTextIcon, UploadIcon } from "lucide-react";
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 
 interface SourcesPanelProps {
   isVisible: boolean;
