@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { CheckCircle2Icon, AlertCircleIcon } from "lucide-react";
+import { CheckCircle2Icon, AlertCircleIcon, BookOpenIcon, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
@@ -12,6 +11,7 @@ import PresentingIssuesSection from "@/components/review/PresentingIssuesSection
 import MedicationSection from "@/components/review/MedicationSection";
 import SocialHistorySection from "@/components/review/SocialHistorySection";
 import FamilyHistorySection from "@/components/review/FamilyHistorySection";
+import SectionHeader from "@/components/SectionHeader";
 
 const ReviewPage = () => {
   const [completedSections, setCompletedSections] = useState(2);

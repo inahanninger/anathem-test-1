@@ -52,7 +52,7 @@ const EditableField = ({
               value={value} 
               onChange={e => setValue(e.target.value)} 
               placeholder={placeholder} 
-              className="min-h-[120px] focus:ring-1 focus:ring-blue-400 border-gray-200 resize-none text-xs" 
+              className="min-h-[200px] focus:ring-1 focus:ring-blue-400 border-gray-200 resize-none text-xs" 
               autoFocus={false} 
             />
           ) : (

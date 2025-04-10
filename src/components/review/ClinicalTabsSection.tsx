@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { FileTextIcon, ClipboardIcon, BookIcon, PlusIcon } from "lucide-react";
+import { FileTextIcon, ClipboardIcon, BookIcon, PlusIcon, BookOpenIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
@@ -68,6 +67,11 @@ const ClinicalTabsSection = ({
     // In a real application, this would trigger an API call to generate more content
   };
 
+  const handleViewSources = () => {
+    toast.success("Viewing sources...");
+    // In a real application, this would show the sources of the content
+  };
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -97,15 +101,26 @@ const ClinicalTabsSection = ({
     <Card className="border-0 shadow-sm overflow-hidden">
       <div className="flex justify-between items-center px-4 py-2 border-b">
         <h2 className="font-semibold text-base">Clinical Data</h2>
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="h-8 gap-1 bg-white border-gray-200 hover:bg-gray-50 text-gray-700"
-          onClick={handleGenerateMoreNotes}
-        >
-          <PlusIcon className="h-4 w-4" />
-          <span className="text-xs">Generate</span>
-        </Button>
+        <div className="flex gap-2">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="h-8 gap-1 bg-white border-gray-200 hover:bg-gray-50 text-gray-700"
+            onClick={handleViewSources}
+          >
+            <BookOpenIcon className="h-4 w-4" />
+            <span className="text-xs">View Sources</span>
+          </Button>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="h-8 gap-1 bg-white border-gray-200 hover:bg-gray-50 text-gray-700"
+            onClick={handleGenerateMoreNotes}
+          >
+            <PlusIcon className="h-4 w-4" />
+            <span className="text-xs">Generate</span>
+          </Button>
+        </div>
       </div>
       
       <Tabs defaultValue="progress-notes" value={activeTab} onValueChange={setActiveTab} className="w-full">
