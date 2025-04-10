@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { AlertCircleIcon, CheckCircle2Icon, ClipboardCheckIcon, PlusIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,12 +8,11 @@ import EditableField from "@/components/EditableField";
 import MedicationItem, { Medication } from "@/components/MedicationItem";
 import FormProgress from "@/components/FormProgress";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-
 const ReviewPage = () => {
   const [completedSections, setCompletedSections] = useState(2);
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 3;
-  
+
   // Page 1 content
   const [presentingIssues, setPresentingIssues] = useState("Patient reports experiencing moderate depressive symptoms for approximately 3 months, including low mood, decreased interest in activities, and poor sleep. Patient also mentions occasional anxiety in social situations that has increased in frequency over the past month.");
   const [medications, setMedications] = useState<Medication[]>([{
@@ -28,26 +26,23 @@ const ReviewPage = () => {
     dosage: "0.5mg",
     frequency: "As needed"
   }]);
-  
+
   // Page 2 content
   const [socialHistory, setSocialHistory] = useState("Patient is a 28-year-old software engineer who works remotely full-time. They describe their work environment as moderately stressful. Patient completed a bachelor's degree in computer science in 2018. Patient reports having a small but supportive social network, primarily consisting of 3-4 close friends. They engage in social activities approximately once per week.");
   const [familyHistory, setFamilyHistory] = useState("Patient reports maternal history of depression and anxiety. Father has no known mental health conditions. Patient has one younger sibling with ADHD diagnosis. No known history of substance abuse disorders in immediate family.");
-  
+
   // Page 3 content
   const [clinicalNotes, setClinicalNotes] = useState("Patient presents with symptoms consistent with Major Depressive Disorder and Social Anxiety Disorder. Current medication regimen appears to be providing moderate symptom relief, but patient may benefit from increased psychosocial interventions, particularly around social anxiety. Recommend weekly CBT sessions for 8 weeks, focusing on cognitive restructuring and graduated exposure exercises.");
   const [treatmentPlan, setTreatmentPlan] = useState("1. Continue current medication regimen with follow-up in 4 weeks\n2. Begin weekly CBT with focus on social anxiety symptoms\n3. Patient to complete daily mood tracking\n4. Provide referral to support group for young professionals with anxiety");
-
   const handleMedicationUpdate = (id: string, updatedMed: Partial<Medication>) => {
     setMedications(medications.map(med => med.id === id ? {
       ...med,
       ...updatedMed
     } : med));
   };
-  
   const handleMedicationDelete = (id: string) => {
     setMedications(medications.filter(med => med.id !== id));
   };
-  
   const handleAddMedication = () => {
     const newId = (Math.max(0, ...medications.map(m => parseInt(m.id))) + 1).toString();
     setMedications([...medications, {
@@ -57,30 +52,25 @@ const ReviewPage = () => {
       frequency: ""
     }]);
   };
-  
   const handleSaveAll = () => {
     toast.success("All changes saved to patient record");
   };
-  
   const toggleSectionCompletion = (sectionName: string, isComplete: boolean) => {
     setCompletedSections(prev => isComplete ? prev + 1 : Math.max(0, prev - 1));
     toast(`${sectionName} ${isComplete ? "marked as reviewed" : "marked as pending"}`, {
       icon: isComplete ? <CheckCircle2Icon className="h-4 w-4 text-green-500" /> : <AlertCircleIcon className="h-4 w-4 text-amber-500" />
     });
   };
-
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
     }
   };
-
   const currentDate = new Date().toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'long',
     year: 'numeric'
   });
-
   return <div className="min-h-screen bg-white">
       {/* Header Bar */}
       <div className="border-b border-gray-100 py-5 px-6">
@@ -97,8 +87,8 @@ const ReviewPage = () => {
         <div className="container max-w-4xl mx-auto">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <ClipboardCheckIcon className="h-5 w-5 text-blue-600" />
-              <span className="text-sm">Review and approve AI-generated content</span>
+              
+              
             </div>
             <FormProgress completedSections={completedSections} totalSections={6} />
           </div>
@@ -107,16 +97,12 @@ const ReviewPage = () => {
       
       <div className="container max-w-4xl py-8 px-6">
         <div className="space-y-6">
-          {currentPage === 1 && (
-            <>
+          {currentPage === 1 && <>
               {/* Presenting Issues Section */}
               <div className="section-container rounded">
                 <Card className="border-0 shadow-sm">
                   <SectionHeader title="Presenting Issues" confidenceLevel="high" confidenceScore={94}>
-                    <Button variant="outline" size="sm" className="gap-1 h-7" onClick={() => toggleSectionCompletion("Presenting Issues", true)}>
-                      <CheckCircle2Icon className="h-3.5 w-3.5" />
-                      Mark as Reviewed
-                    </Button>
+                    
                   </SectionHeader>
                   
                   <EditableField initialValue={presentingIssues} fieldType="textarea" onSave={setPresentingIssues} alwaysEditable={true} />
@@ -127,10 +113,7 @@ const ReviewPage = () => {
               <div className="section-container">
                 <Card className="border-0 shadow-sm">
                   <SectionHeader title="Medication Review" confidenceLevel="medium" confidenceScore={82}>
-                    <Button variant="outline" size="sm" className="gap-1 h-7" onClick={() => toggleSectionCompletion("Medication Review", true)}>
-                      <CheckCircle2Icon className="h-3.5 w-3.5" />
-                      Mark as Reviewed
-                    </Button>
+                    
                   </SectionHeader>
                   
                   <div className="space-y-3">
@@ -143,11 +126,9 @@ const ReviewPage = () => {
                   </div>
                 </Card>
               </div>
-            </>
-          )}
+            </>}
 
-          {currentPage === 2 && (
-            <>
+          {currentPage === 2 && <>
               {/* School and Social History Section */}
               <div className="section-container">
                 <Card className="border-0 shadow-sm">
@@ -175,11 +156,9 @@ const ReviewPage = () => {
                   <EditableField initialValue={familyHistory} fieldType="textarea" onSave={setFamilyHistory} alwaysEditable={true} />
                 </Card>
               </div>
-            </>
-          )}
+            </>}
 
-          {currentPage === 3 && (
-            <>
+          {currentPage === 3 && <>
               {/* Clinical Notes Section */}
               <div className="section-container">
                 <Card className="border-0 shadow-sm">
@@ -207,35 +186,25 @@ const ReviewPage = () => {
                   <EditableField initialValue={treatmentPlan} fieldType="textarea" onSave={setTreatmentPlan} alwaysEditable={true} />
                 </Card>
               </div>
-            </>
-          )}
+            </>}
         
           {/* Pagination */}
           <Pagination className="mt-8">
             <PaginationContent>
               <PaginationItem>
-                <PaginationPrevious 
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  className={currentPage === 1 ? "opacity-50 pointer-events-none" : ""}
-                />
+                <PaginationPrevious onClick={() => handlePageChange(currentPage - 1)} className={currentPage === 1 ? "opacity-50 pointer-events-none" : ""} />
               </PaginationItem>
               
-              {Array.from({length: totalPages}, (_, i) => i + 1).map(page => (
-                <PaginationItem key={page}>
-                  <PaginationLink 
-                    isActive={page === currentPage} 
-                    onClick={() => handlePageChange(page)}
-                  >
+              {Array.from({
+              length: totalPages
+            }, (_, i) => i + 1).map(page => <PaginationItem key={page}>
+                  <PaginationLink isActive={page === currentPage} onClick={() => handlePageChange(page)}>
                     {page}
                   </PaginationLink>
-                </PaginationItem>
-              ))}
+                </PaginationItem>)}
               
               <PaginationItem>
-                <PaginationNext 
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  className={currentPage === totalPages ? "opacity-50 pointer-events-none" : ""}
-                />
+                <PaginationNext onClick={() => handlePageChange(currentPage + 1)} className={currentPage === totalPages ? "opacity-50 pointer-events-none" : ""} />
               </PaginationItem>
             </PaginationContent>
           </Pagination>
@@ -244,9 +213,7 @@ const ReviewPage = () => {
       
       {/* Sticky Submit Button */}
       <div className="fixed bottom-6 right-6 z-10">
-        <Button size="lg" className="shadow-md rounded-md px-6 bg-blue-600 hover:bg-blue-700" onClick={handleSaveAll}>
-          Save to Patient Record
-        </Button>
+        <Button size="lg" onClick={handleSaveAll} className="shadow-md rounded-md px-6 bg-blue-900 hover:bg-blue-800">Next</Button>
       </div>
     </div>;
 };
