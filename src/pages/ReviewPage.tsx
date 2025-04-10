@@ -157,10 +157,7 @@ const ReviewPage = () => {
               <div className="section-container">
                 <Card className="border-0 shadow-sm">
                   <SectionHeader title="Clinical Notes" confidenceLevel="low" confidenceScore={65}>
-                    <Button variant="outline" size="sm" className="gap-1 h-7" onClick={() => toggleSectionCompletion("Clinical Notes", true)}>
-                      <CheckCircle2Icon className="h-3.5 w-3.5" />
-                      Mark as Reviewed
-                    </Button>
+                    
                   </SectionHeader>
                   
                   <EditableField initialValue={clinicalNotes} fieldType="textarea" onSave={setClinicalNotes} alwaysEditable={true} />
@@ -171,10 +168,7 @@ const ReviewPage = () => {
               <div className="section-container">
                 <Card className="border-0 shadow-sm">
                   <SectionHeader title="Treatment Plan" confidenceLevel="medium" confidenceScore={78}>
-                    <Button variant="outline" size="sm" className="gap-1 h-7" onClick={() => toggleSectionCompletion("Treatment Plan", true)}>
-                      <CheckCircle2Icon className="h-3.5 w-3.5" />
-                      Mark as Reviewed
-                    </Button>
+                    
                   </SectionHeader>
                   
                   <EditableField initialValue={treatmentPlan} fieldType="textarea" onSave={setTreatmentPlan} alwaysEditable={true} />
@@ -184,23 +178,7 @@ const ReviewPage = () => {
         
           {/* Pagination */}
           <Pagination className="mt-8">
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious onClick={() => handlePageChange(currentPage - 1)} className={currentPage === 1 ? "opacity-50 pointer-events-none" : ""} />
-              </PaginationItem>
-              
-              {Array.from({
-              length: totalPages
-            }, (_, i) => i + 1).map(page => <PaginationItem key={page}>
-                  <PaginationLink isActive={page === currentPage} onClick={() => handlePageChange(page)}>
-                    {page}
-                  </PaginationLink>
-                </PaginationItem>)}
-              
-              <PaginationItem>
-                <PaginationNext onClick={() => handlePageChange(currentPage + 1)} className={currentPage === totalPages ? "opacity-50 pointer-events-none" : ""} />
-              </PaginationItem>
-            </PaginationContent>
+            
           </Pagination>
         </div>
       </div>
