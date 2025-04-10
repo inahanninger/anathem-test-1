@@ -3,7 +3,7 @@ import { useState } from "react";
 import { AlertCircleIcon, CheckCircle2Icon, ClipboardCheckIcon, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 import SectionHeader from "@/components/SectionHeader";
 import EditableField from "@/components/EditableField";
 import MedicationItem, { Medication } from "@/components/MedicationItem";

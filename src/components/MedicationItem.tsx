@@ -1,9 +1,8 @@
-
 import { useState } from "react";
 import { CheckIcon, PencilIcon, TrashIcon, XIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 export interface Medication {
   id: string;

@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { CheckIcon, PencilIcon, XIcon } from "lucide-react";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
