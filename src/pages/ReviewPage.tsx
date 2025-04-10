@@ -3,14 +3,10 @@ import { useState } from "react";
 import { 
   AlertCircleIcon, 
   CheckCircle2Icon, 
-  ClipboardCheckIcon, 
   PlusIcon,
-  ChevronLeftIcon, 
-  ChevronRightIcon, 
   FileTextIcon, 
   ClipboardIcon, 
   BookIcon,
-  TableOfContentsIcon
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -20,13 +16,10 @@ import EditableField from "@/components/EditableField";
 import MedicationItem, { Medication } from "@/components/MedicationItem";
 import FormProgress from "@/components/FormProgress";
 import TableOfContents from "@/components/TableOfContents";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 const ReviewPage = () => {
   const [completedSections, setCompletedSections] = useState(2);
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 3;
   const [activeTab, setActiveTab] = useState("progress-notes");
 
   // Mock table of contents data
@@ -57,7 +50,7 @@ const ReviewPage = () => {
     { id: "dev-6", title: "Significant Life Events", level: 1 },
   ];
 
-  // Page 1 content
+  // Content data
   const [presentingIssues, setPresentingIssues] = useState("Patient reports experiencing moderate depressive symptoms for approximately 3 months, including low mood, decreased interest in activities, and poor sleep. Patient also mentions occasional anxiety in social situations that has increased in frequency over the past month.");
   const [medications, setMedications] = useState<Medication[]>([{
     id: "1",
@@ -71,7 +64,6 @@ const ReviewPage = () => {
     frequency: "As needed"
   }]);
 
-  // Page 2 content - Tabbed content
   const [progressNotes, setProgressNotes] = useState(`
 ## Session Summary
 Patient attended session today and reported improvements in sleep patterns following the implementation of sleep hygiene techniques discussed in our previous session.
@@ -147,7 +139,7 @@ Patient describes childhood household as "tense but functional" with parents who
 - Job promotion 2 years ago (positive but increased responsibility and stress)
 `);
 
-  // Page 3 content
+  // Additional content previously on separate pages
   const [socialHistory, setSocialHistory] = useState("Patient is a 28-year-old software engineer who works remotely full-time. They describe their work environment as moderately stressful. Patient completed a bachelor's degree in computer science in 2018. Patient reports having a small but supportive social network, primarily consisting of 3-4 close friends. They engage in social activities approximately once per week.");
   const [familyHistory, setFamilyHistory] = useState("Patient reports maternal history of depression and anxiety. Father has no known mental health conditions. Patient has one younger sibling with ADHD diagnosis. No known history of substance abuse disorders in immediate family.");
   const [clinicalNotes, setClinicalNotes] = useState("Patient presents with symptoms consistent with Major Depressive Disorder and Social Anxiety Disorder. Current medication regimen appears to be providing moderate symptom relief, but patient may benefit from increased psychosocial interventions, particularly around social anxiety. Recommend weekly CBT sessions for 8 weeks, focusing on cognitive restructuring and graduated exposure exercises.");
@@ -183,12 +175,6 @@ Patient describes childhood household as "tense but functional" with parents who
     toast(`${sectionName} ${isComplete ? "marked as reviewed" : "marked as pending"}`, {
       icon: isComplete ? <CheckCircle2Icon className="h-4 w-4 text-green-500" /> : <AlertCircleIcon className="h-4 w-4 text-amber-500" />
     });
-  };
-
-  const handlePageChange = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
   };
 
   const handleGenerateMoreNotes = () => {
@@ -227,10 +213,11 @@ Patient describes childhood household as "tense but functional" with parents who
     }
   };
 
-  return <div className="min-h-screen bg-white">
+  return (
+    <div className="min-h-screen bg-white">
       {/* Header Bar */}
       <div className="border-b border-gray-100 py-5 px-6">
-        <div className="container max-w-4xl mx-auto">
+        <div className="container max-w-5xl mx-auto">
           <div className="flex flex-col space-y-1">
             <span className="text-sm text-gray-500">{currentDate}</span>
             <h1 className="text-2xl font-medium">Patient Documentation Review</h1>
@@ -240,214 +227,176 @@ Patient describes childhood household as "tense but functional" with parents who
 
       {/* Status Bar */}
       <div className="border-b border-gray-100 bg-gray-50/80 py-3 px-6">
-        <div className="container max-w-4xl mx-auto">
+        <div className="container max-w-5xl mx-auto">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              
-              
+              {/* Any status indicators can go here */}
             </div>
             <FormProgress completedSections={completedSections} totalSections={6} />
           </div>
         </div>
       </div>
       
-      <div className="container max-w-4xl py-8 px-6">
-        <div className="space-y-6">
-          {currentPage === 1 && <>
-              {/* Presenting Issues Section */}
-              <div className="section-container rounded">
-                <Card className="border-0 shadow-sm">
-                  <SectionHeader title="Presenting Issues" confidenceLevel="high" confidenceScore={94}>
-                    
-                  </SectionHeader>
-                  
-                  <EditableField initialValue={presentingIssues} fieldType="textarea" onSave={setPresentingIssues} alwaysEditable={true} />
-                </Card>
+      {/* Main Content */}
+      <div className="container max-w-5xl mx-auto py-8 px-6">
+        <div className="flex">
+          {/* Left sidebar with TOC */}
+          <aside className="w-64 sticky top-5 self-start pr-6 hidden md:block">
+            <TableOfContents 
+              items={getCurrentTabToc()}
+              onSelectItem={scrollToSection}
+            />
+          </aside>
+          
+          {/* Main content area */}
+          <div className="flex-1 min-w-0 space-y-6">
+            {/* Tabs at the top */}
+            <Card className="border-0 shadow-sm overflow-hidden">
+              <div className="flex justify-between items-center px-4 py-2 border-b">
+                <h2 className="font-semibold text-base">Clinical Data</h2>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="h-8 gap-1 bg-white border-gray-200 hover:bg-gray-50 text-gray-700"
+                  onClick={handleGenerateMoreNotes}
+                >
+                  <PlusIcon className="h-4 w-4" />
+                  <span className="text-xs">Generate</span>
+                </Button>
               </div>
               
-              {/* Medication Review Section */}
-              <div className="section-container">
-                <Card className="border-0 shadow-sm">
-                  <SectionHeader title="Medication Review" confidenceLevel="medium" confidenceScore={82}>
-                    
-                  </SectionHeader>
-                  
-                  <div className="space-y-3">
-                    {medications.map(med => <MedicationItem key={med.id} medication={med} onUpdate={handleMedicationUpdate} onDelete={handleMedicationDelete} alwaysEditable={true} />)}
-                    
-                    <Button variant="outline" className="w-full mt-2 border-dashed gap-2" onClick={handleAddMedication}>
-                      <PlusIcon className="h-4 w-4" />
-                      Add Medication
-                    </Button>
-                  </div>
-                </Card>
-              </div>
-            </>}
+              <Tabs defaultValue="progress-notes" value={activeTab} onValueChange={setActiveTab} className="w-full">
+                <TabsList className="w-full flex bg-gray-100/70 p-0.5">
+                  <TabsTrigger value="progress-notes" className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm">
+                    <FileTextIcon className="h-3.5 w-3.5 mr-1.5" />
+                    Progress Notes
+                  </TabsTrigger>
+                  <TabsTrigger value="clinical-details" className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm">
+                    <ClipboardIcon className="h-3.5 w-3.5 mr-1.5" />
+                    Clinical Details
+                  </TabsTrigger>
+                  <TabsTrigger value="developmental-history" className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm">
+                    <BookIcon className="h-3.5 w-3.5 mr-1.5" />
+                    Developmental History
+                  </TabsTrigger>
+                </TabsList>
+                
+                {/* Mobile-only table of contents */}
+                <div className="md:hidden">
+                  <TableOfContents 
+                    items={getCurrentTabToc()}
+                    onSelectItem={scrollToSection}
+                  />
+                </div>
+                
+                <TabsContent value="progress-notes" className="m-0 p-4">
+                  <div dangerouslySetInnerHTML={{ __html: progressNotes.split('\n').map(line => {
+                    if (line.startsWith('## ')) {
+                      const id = line.substring(3).toLowerCase().replace(/\s+/g, '-');
+                      return `<h2 id="${id}" class="text-lg font-semibold mt-4 mb-2">${line.substring(3)}</h2>`;
+                    } else if (line.startsWith('### ')) {
+                      const id = line.substring(4).toLowerCase().replace(/\s+/g, '-');
+                      return `<h3 id="${id}" class="text-base font-medium mt-3 mb-1">${line.substring(4)}</h3>`;
+                    } else if (line.startsWith('- ')) {
+                      return `<li class="ml-5 list-disc">${line.substring(2)}</li>`;
+                    } else if (line.startsWith('1. ') || line.startsWith('2. ') || line.startsWith('3. ')) {
+                      return `<li class="ml-5 list-decimal">${line.substring(3)}</li>`;
+                    } else if (line === '') {
+                      return '<p>&nbsp;</p>';
+                    } else {
+                      return `<p>${line}</p>`;
+                    }
+                  }).join('')}} />
+                  <EditableField initialValue={progressNotes} fieldType="textarea" onSave={setProgressNotes} alwaysEditable={true} />
+                </TabsContent>
+                
+                <TabsContent value="clinical-details" className="m-0 p-4">
+                  <div dangerouslySetInnerHTML={{ __html: clinicalDetails.split('\n').map(line => {
+                    if (line.startsWith('## ')) {
+                      const id = line.substring(3).toLowerCase().replace(/\s+/g, '-');
+                      return `<h2 id="${id}" class="text-lg font-semibold mt-4 mb-2">${line.substring(3)}</h2>`;
+                    } else if (line.startsWith('### ')) {
+                      const id = line.substring(4).toLowerCase().replace(/\s+/g, '-');
+                      return `<h3 id="${id}" class="text-base font-medium mt-3 mb-1">${line.substring(4)}</h3>`;
+                    } else if (line.startsWith('- ')) {
+                      return `<li class="ml-5 list-disc">${line.substring(2)}</li>`;
+                    } else if (line === '') {
+                      return '<p>&nbsp;</p>';
+                    } else {
+                      return `<p>${line}</p>`;
+                    }
+                  }).join('')}} />
+                  <EditableField initialValue={clinicalDetails} fieldType="textarea" onSave={setClinicalDetails} alwaysEditable={true} />
+                </TabsContent>
+                
+                <TabsContent value="developmental-history" className="m-0 p-4">
+                  <div dangerouslySetInnerHTML={{ __html: developmentalHistory.split('\n').map(line => {
+                    if (line.startsWith('## ')) {
+                      const id = line.substring(3).toLowerCase().replace(/\s+/g, '-');
+                      return `<h2 id="${id}" class="text-lg font-semibold mt-4 mb-2">${line.substring(3)}</h2>`;
+                    } else if (line.startsWith('### ')) {
+                      const id = line.substring(4).toLowerCase().replace(/\s+/g, '-');
+                      return `<h3 id="${id}" class="text-base font-medium mt-3 mb-1">${line.substring(4)}</h3>`;
+                    } else if (line.startsWith('- ')) {
+                      return `<li class="ml-5 list-disc">${line.substring(2)}</li>`;
+                    } else if (line === '') {
+                      return '<p>&nbsp;</p>';
+                    } else {
+                      return `<p>${line}</p>`;
+                    }
+                  }).join('')}} />
+                  <EditableField initialValue={developmentalHistory} fieldType="textarea" onSave={setDevelopmentalHistory} alwaysEditable={true} />
+                </TabsContent>
+              </Tabs>
+            </Card>
 
-          {currentPage === 2 && <>
-              {/* Tabbed Section */}
-              <div className="section-container">
-                <Card className="border-0 shadow-sm">
-                  <div className="flex justify-between items-center mb-3">
-                    <h2 className="section-header font-semibold text-base">Clinical Data</h2>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="h-8 gap-1 bg-white border-gray-200 hover:bg-gray-50 text-gray-700"
-                      onClick={handleGenerateMoreNotes}
-                    >
-                      <PlusIcon className="h-4 w-4" />
-                      <span className="text-xs">Generate</span>
-                    </Button>
-                  </div>
-                  
-                  <Tabs defaultValue="progress-notes" value={activeTab} onValueChange={setActiveTab} className="w-full">
-                    <TabsList className="w-full flex bg-gray-100/70 p-0.5 mb-4">
-                      <TabsTrigger value="progress-notes" className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm">
-                        <FileTextIcon className="h-3.5 w-3.5 mr-1.5" />
-                        Progress Notes
-                      </TabsTrigger>
-                      <TabsTrigger value="clinical-details" className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm">
-                        <ClipboardIcon className="h-3.5 w-3.5 mr-1.5" />
-                        Clinical Details
-                      </TabsTrigger>
-                      <TabsTrigger value="developmental-history" className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm">
-                        <BookIcon className="h-3.5 w-3.5 mr-1.5" />
-                        Developmental History
-                      </TabsTrigger>
-                    </TabsList>
-                    
-                    {/* Table of Contents for current tab */}
-                    <TableOfContents 
-                      items={getCurrentTabToc()}
-                      onSelectItem={scrollToSection}
-                    />
-                    
-                    <TabsContent value="progress-notes" className="mt-0">
-                      <div dangerouslySetInnerHTML={{ __html: progressNotes.split('\n').map(line => {
-                        if (line.startsWith('## ')) {
-                          const id = line.substring(3).toLowerCase().replace(/\s+/g, '-');
-                          return `<h2 id="${id}" class="text-lg font-semibold mt-4 mb-2">${line.substring(3)}</h2>`;
-                        } else if (line.startsWith('### ')) {
-                          const id = line.substring(4).toLowerCase().replace(/\s+/g, '-');
-                          return `<h3 id="${id}" class="text-base font-medium mt-3 mb-1">${line.substring(4)}</h3>`;
-                        } else if (line.startsWith('- ')) {
-                          return `<li class="ml-5 list-disc">${line.substring(2)}</li>`;
-                        } else if (line.startsWith('1. ') || line.startsWith('2. ') || line.startsWith('3. ')) {
-                          return `<li class="ml-5 list-decimal">${line.substring(3)}</li>`;
-                        } else if (line === '') {
-                          return '<p>&nbsp;</p>';
-                        } else {
-                          return `<p>${line}</p>`;
-                        }
-                      }).join('')}} />
-                      <EditableField initialValue={progressNotes} fieldType="textarea" onSave={setProgressNotes} alwaysEditable={true} />
-                    </TabsContent>
-                    
-                    <TabsContent value="clinical-details" className="mt-0">
-                      <div dangerouslySetInnerHTML={{ __html: clinicalDetails.split('\n').map(line => {
-                        if (line.startsWith('## ')) {
-                          const id = line.substring(3).toLowerCase().replace(/\s+/g, '-');
-                          return `<h2 id="${id}" class="text-lg font-semibold mt-4 mb-2">${line.substring(3)}</h2>`;
-                        } else if (line.startsWith('### ')) {
-                          const id = line.substring(4).toLowerCase().replace(/\s+/g, '-');
-                          return `<h3 id="${id}" class="text-base font-medium mt-3 mb-1">${line.substring(4)}</h3>`;
-                        } else if (line.startsWith('- ')) {
-                          return `<li class="ml-5 list-disc">${line.substring(2)}</li>`;
-                        } else if (line === '') {
-                          return '<p>&nbsp;</p>';
-                        } else {
-                          return `<p>${line}</p>`;
-                        }
-                      }).join('')}} />
-                      <EditableField initialValue={clinicalDetails} fieldType="textarea" onSave={setClinicalDetails} alwaysEditable={true} />
-                    </TabsContent>
-                    
-                    <TabsContent value="developmental-history" className="mt-0">
-                      <div dangerouslySetInnerHTML={{ __html: developmentalHistory.split('\n').map(line => {
-                        if (line.startsWith('## ')) {
-                          const id = line.substring(3).toLowerCase().replace(/\s+/g, '-');
-                          return `<h2 id="${id}" class="text-lg font-semibold mt-4 mb-2">${line.substring(3)}</h2>`;
-                        } else if (line.startsWith('### ')) {
-                          const id = line.substring(4).toLowerCase().replace(/\s+/g, '-');
-                          return `<h3 id="${id}" class="text-base font-medium mt-3 mb-1">${line.substring(4)}</h3>`;
-                        } else if (line.startsWith('- ')) {
-                          return `<li class="ml-5 list-disc">${line.substring(2)}</li>`;
-                        } else if (line === '') {
-                          return '<p>&nbsp;</p>';
-                        } else {
-                          return `<p>${line}</p>`;
-                        }
-                      }).join('')}} />
-                      <EditableField initialValue={developmentalHistory} fieldType="textarea" onSave={setDevelopmentalHistory} alwaysEditable={true} />
-                    </TabsContent>
-                  </Tabs>
-                </Card>
+            {/* Presenting Issues Section */}
+            <Card className="border-0 shadow-sm">
+              <SectionHeader title="Presenting Issues" confidenceLevel="high" confidenceScore={94} />
+              <div className="px-4 pb-4">
+                <EditableField initialValue={presentingIssues} fieldType="textarea" onSave={setPresentingIssues} alwaysEditable={true} />
               </div>
-            </>}
-
-          {currentPage === 3 && <>
-              {/* Clinical Notes Section */}
-              <div className="section-container">
-                <Card className="border-0 shadow-sm">
-                  <SectionHeader title="School and Social History" confidenceLevel="high" confidenceScore={88}>
-                    
-                  </SectionHeader>
-                  
-                  <EditableField initialValue={socialHistory} fieldType="textarea" onSave={setSocialHistory} alwaysEditable={true} />
-                </Card>
+            </Card>
+            
+            {/* Medication Review Section */}
+            <Card className="border-0 shadow-sm">
+              <SectionHeader title="Medication Review" confidenceLevel="medium" confidenceScore={82} />
+              <div className="px-4 pb-4 space-y-3">
+                {medications.map(med => <MedicationItem key={med.id} medication={med} onUpdate={handleMedicationUpdate} onDelete={handleMedicationDelete} alwaysEditable={true} />)}
+                <Button variant="outline" className="w-full mt-2 border-dashed gap-2" onClick={handleAddMedication}>
+                  <PlusIcon className="h-4 w-4" />
+                  Add Medication
+                </Button>
               </div>
-              
-              {/* Treatment Plan Section */}
-              <div className="section-container">
-                <Card className="border-0 shadow-sm">
-                  <SectionHeader title="Family History" confidenceLevel="medium" confidenceScore={76}>
-                    
-                  </SectionHeader>
-                  
-                  <EditableField initialValue={familyHistory} fieldType="textarea" onSave={setFamilyHistory} alwaysEditable={true} />
-                </Card>
+            </Card>
+            
+            {/* Social History */}
+            <Card className="border-0 shadow-sm">
+              <SectionHeader title="School and Social History" confidenceLevel="high" confidenceScore={88} />
+              <div className="px-4 pb-4">
+                <EditableField initialValue={socialHistory} fieldType="textarea" onSave={setSocialHistory} alwaysEditable={true} />
               </div>
-            </>}
-        
-          {/* Pagination */}
-          <Pagination className="mt-8">
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious 
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  className={currentPage === 1 ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
-                />
-              </PaginationItem>
-
-              {[1, 2, 3].map((page) => (
-                <PaginationItem key={page}>
-                  <PaginationLink 
-                    isActive={currentPage === page}
-                    onClick={() => handlePageChange(page)}
-                    className="cursor-pointer"
-                  >
-                    {page}
-                  </PaginationLink>
-                </PaginationItem>
-              ))}
-
-              <PaginationItem>
-                <PaginationNext 
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  className={currentPage === totalPages ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+            </Card>
+            
+            {/* Family History */}
+            <Card className="border-0 shadow-sm">
+              <SectionHeader title="Family History" confidenceLevel="medium" confidenceScore={76} />
+              <div className="px-4 pb-4">
+                <EditableField initialValue={familyHistory} fieldType="textarea" onSave={setFamilyHistory} alwaysEditable={true} />
+              </div>
+            </Card>
+          </div>
         </div>
       </div>
       
       {/* Sticky Submit Button */}
       <div className="fixed bottom-6 right-6 z-10">
-        <Button size="lg" onClick={handleSaveAll} className="shadow-md rounded-md px-6 bg-blue-900 hover:bg-blue-800">Next</Button>
+        <Button size="lg" onClick={handleSaveAll} className="shadow-md rounded-md px-6 bg-blue-900 hover:bg-blue-800">
+          Save All
+        </Button>
       </div>
-    </div>;
+    </div>
+  );
 };
 
 export default ReviewPage;
