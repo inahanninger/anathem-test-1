@@ -181,7 +181,7 @@ const ClinicalTabsSection = ({
           <ProgressNotesTab progressNotes={progressNotes} setProgressNotes={setProgressNotes} />
         </TabsContent>
         
-        <TabsContent value="clinical-details" className="m-0 p-4">
+        <TabsContent value="clinical-details" className="m-0 p-4 px-0">
           <ClinicalDetailsTab clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} />
         </TabsContent>
         
