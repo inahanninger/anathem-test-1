@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { CheckCircle2Icon, AlertCircleIcon, BookOpenIcon, PlusIcon } from "lucide-react";
+import { CheckCircle2Icon, AlertCircleIcon, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Card } from "@/components/ui/card";
 import FormProgress from "@/components/FormProgress";
 import TableOfContents from "@/components/TableOfContents";
 import { Medication } from "@/components/MedicationItem";
@@ -12,11 +11,12 @@ import MedicationSection from "@/components/review/MedicationSection";
 import SocialHistorySection from "@/components/review/SocialHistorySection";
 import FamilyHistorySection from "@/components/review/FamilyHistorySection";
 import SectionHeader from "@/components/SectionHeader";
+import { Card } from "@/components/ui/card";
+
 const ReviewPage = () => {
   const [completedSections, setCompletedSections] = useState(2);
   const [activeTab, setActiveTab] = useState("progress-notes");
 
-  // Content data
   const [presentingIssues, setPresentingIssues] = useState("Patient reports experiencing moderate depressive symptoms for approximately 3 months, including low mood, decreased interest in activities, and poor sleep. Patient also mentions occasional anxiety in social situations that has increased in frequency over the past month.");
   const [medications, setMedications] = useState<Medication[]>([{
     id: "1",
@@ -102,11 +102,11 @@ Patient describes childhood household as "tense but functional" with parents who
 - Job promotion 2 years ago (positive but increased responsibility and stress)
 `);
 
-  // Additional content previously on separate pages
   const [socialHistory, setSocialHistory] = useState("Patient is a 28-year-old software engineer who works remotely full-time. They describe their work environment as moderately stressful. Patient completed a bachelor's degree in computer science in 2018. Patient reports having a small but supportive social network, primarily consisting of 3-4 close friends. They engage in social activities approximately once per week.");
   const [familyHistory, setFamilyHistory] = useState("Patient reports maternal history of depression and anxiety. Father has no known mental health conditions. Patient has one younger sibling with ADHD diagnosis. No known history of substance abuse disorders in immediate family.");
   const [clinicalNotes, setClinicalNotes] = useState("Patient presents with symptoms consistent with Major Depressive Disorder and Social Anxiety Disorder. Current medication regimen appears to be providing moderate symptom relief, but patient may benefit from increased psychosocial interventions, particularly around social anxiety. Recommend weekly CBT sessions for 8 weeks, focusing on cognitive restructuring and graduated exposure exercises.");
   const [treatmentPlan, setTreatmentPlan] = useState("1. Continue current medication regimen with follow-up in 4 weeks\n2. Begin weekly CBT with focus on social anxiety symptoms\n3. Patient to complete daily mood tracking\n4. Provide referral to support group for young professionals with anxiety");
+
   const handleMedicationUpdate = (id: string, updatedMed: Partial<Medication>) => {
     setMedications(medications.map(med => med.id === id ? {
       ...med,
@@ -179,7 +179,6 @@ Patient describes childhood household as "tense but functional" with parents who
     }
   };
   return <div className="min-h-screen bg-white">
-      {/* Header Bar */}
       <div className="border-b border-gray-100 py-5 px-6">
         <div className="container max-w-5xl mx-auto">
           <div className="flex flex-col space-y-1">
@@ -189,7 +188,6 @@ Patient describes childhood household as "tense but functional" with parents who
         </div>
       </div>
 
-      {/* Status Bar */}
       <div className="border-b border-gray-100 bg-gray-50/80 py-3 px-6">
         <div className="container max-w-5xl mx-auto">
           <div className="flex items-center justify-between">
@@ -201,38 +199,51 @@ Patient describes childhood household as "tense but functional" with parents who
         </div>
       </div>
       
-      {/* Main Content */}
       <div className="container max-w-5xl mx-auto py-8 px-6">
         <div className="flex">
-          {/* Left sidebar with TOC */}
           <aside className="w-64 sticky top-5 self-start pr-6 hidden md:block">
             <TableOfContents items={progressNotesToc} onSelectItem={scrollToSection} />
           </aside>
           
-          {/* Main content area */}
           <div className="flex-1 min-w-0 space-y-6">
-            {/* Tabs at the top */}
-            <ClinicalTabsSection progressNotes={progressNotes} setProgressNotes={setProgressNotes} clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} />
+            <ClinicalTabsSection 
+              progressNotes={progressNotes} 
+              setProgressNotes={setProgressNotes} 
+              clinicalDetails={clinicalDetails} 
+              setClinicalDetails={setClinicalDetails} 
+              developmentalHistory={developmentalHistory} 
+              setDevelopmentalHistory={setDevelopmentalHistory} 
+            />
 
-            {/* Presenting Issues Section */}
-            <PresentingIssuesSection presentingIssues={presentingIssues} setPresentingIssues={setPresentingIssues} />
+            <div className="border-b pb-4">
+              <SectionHeader title="Presenting Issues" confidenceLevel="high" confidenceScore={94} />
+              <div className="pb-4 px-0">
+                <PresentingIssuesSection presentingIssues={presentingIssues} setPresentingIssues={setPresentingIssues} />
+              </div>
+            </div>
             
-            {/* Medication Review Section */}
-            <Card className="border-0 shadow-sm">
+            <div className="border-b pb-4">
               <SectionHeader title="Medication Review" confidenceLevel="medium" confidenceScore={82} />
               <MedicationSection medications={medications} onUpdate={handleMedicationUpdate} onDelete={handleMedicationDelete} onAdd={handleAddMedication} />
-            </Card>
+            </div>
             
-            {/* Social History */}
-            <SocialHistorySection socialHistory={socialHistory} setSocialHistory={setSocialHistory} />
+            <div className="border-b pb-4">
+              <SectionHeader title="School and Social History" confidenceLevel="high" confidenceScore={88} />
+              <div className="pb-4 px-0">
+                <SocialHistorySection socialHistory={socialHistory} setSocialHistory={setSocialHistory} />
+              </div>
+            </div>
             
-            {/* Family History */}
-            <FamilyHistorySection familyHistory={familyHistory} setFamilyHistory={setFamilyHistory} />
+            <div className="border-b pb-4">
+              <SectionHeader title="Family History" confidenceLevel="medium" confidenceScore={76} />
+              <div className="pb-4 px-0">
+                <FamilyHistorySection familyHistory={familyHistory} setFamilyHistory={setFamilyHistory} />
+              </div>
+            </div>
           </div>
         </div>
       </div>
       
-      {/* Sticky Submit Button */}
       <div className="fixed bottom-6 right-6 z-10">
         <Button size="lg" onClick={handleSaveAll} className="shadow-md rounded-md px-6 bg-blue-900 hover:bg-blue-800">
           Save All

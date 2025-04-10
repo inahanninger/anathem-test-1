@@ -1,13 +1,16 @@
+
 import { useState } from "react";
 import { FileTextIcon, ClipboardIcon, BookIcon, PlusIcon, BookOpenIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import TableOfContents from "@/components/TableOfContents";
 import ProgressNotesTab from "./ProgressNotesTab";
 import ClinicalDetailsTab from "./ClinicalDetailsTab";
 import DevelopmentalHistoryTab from "./DevelopmentalHistoryTab";
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
+import SourcesPanel from "./SourcesPanel";
+
 interface TableOfContentsItem {
   id: string;
   title: string;
@@ -30,6 +33,8 @@ const ClinicalTabsSection = ({
   setDevelopmentalHistory
 }: ClinicalTabsSectionProps) => {
   const [activeTab, setActiveTab] = useState("progress-notes");
+  const [showSources, setShowSources] = useState(false);
+  const [tocVisible, setTocVisible] = useState(true);
 
   // Mock table of contents data
   const progressNotesToc = [{
@@ -112,8 +117,11 @@ const ClinicalTabsSection = ({
     // In a real application, this would trigger an API call to generate more content
   };
   const handleViewSources = () => {
-    toast.success("Viewing sources...");
-    // In a real application, this would show the sources of the content
+    setShowSources(!showSources);
+    // Collapse table of contents when showing sources
+    if (!showSources) {
+      setTocVisible(false);
+    }
   };
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -141,11 +149,16 @@ const ClinicalTabsSection = ({
         return [];
     }
   };
-  return <Card className="border-0 shadow-sm overflow-hidden">
+  return <div className="overflow-hidden">
       <div className="flex justify-between items-center py-2 border-b px-0">
         <h2 className="font-semibold text-base">Clinical Data</h2>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="h-8 gap-1 bg-white border-gray-200 hover:bg-gray-50 text-gray-700" onClick={handleViewSources}>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className={`h-8 gap-1 bg-white border-gray-200 hover:bg-gray-50 text-gray-700 ${showSources ? 'bg-gray-100' : ''}`} 
+            onClick={handleViewSources}
+          >
             <BookOpenIcon className="h-4 w-4" />
             <span className="text-xs">View Sources</span>
           </Button>
@@ -156,39 +169,87 @@ const ClinicalTabsSection = ({
         </div>
       </div>
       
-      <Tabs defaultValue="progress-notes" value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="w-full flex bg-gray-100/70 p-0.5">
-          <TabsTrigger value="progress-notes" className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm">
-            <FileTextIcon className="h-3.5 w-3.5 mr-1.5" />
-            Progress Notes
-          </TabsTrigger>
-          <TabsTrigger value="clinical-details" className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm">
-            <ClipboardIcon className="h-3.5 w-3.5 mr-1.5" />
-            Clinical Details
-          </TabsTrigger>
-          <TabsTrigger value="developmental-history" className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm">
-            <BookIcon className="h-3.5 w-3.5 mr-1.5" />
-            Developmental History
-          </TabsTrigger>
-        </TabsList>
-        
-        {/* Mobile-only table of contents */}
-        <div className="md:hidden">
-          <TableOfContents items={getCurrentTabToc()} onSelectItem={scrollToSection} />
-        </div>
-        
-        <TabsContent value="progress-notes" className="m-0 p-4 py-[16px] px-0">
-          <ProgressNotesTab progressNotes={progressNotes} setProgressNotes={setProgressNotes} />
-        </TabsContent>
-        
-        <TabsContent value="clinical-details" className="m-0 p-4 px-0">
-          <ClinicalDetailsTab clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} />
-        </TabsContent>
-        
-        <TabsContent value="developmental-history" className="m-0 p-4 px-0">
-          <DevelopmentalHistoryTab developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} />
-        </TabsContent>
-      </Tabs>
-    </Card>;
+      {showSources ? (
+        <ResizablePanelGroup direction="horizontal" className="min-h-[500px]">
+          <ResizablePanel defaultSize={50} minSize={30}>
+            <div className="p-2">
+              <Tabs defaultValue="progress-notes" value={activeTab} onValueChange={setActiveTab} className="w-full">
+                <TabsList className="w-full flex bg-gray-100/70 p-0.5">
+                  <TabsTrigger value="progress-notes" className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm">
+                    <FileTextIcon className="h-3.5 w-3.5 mr-1.5" />
+                    Progress Notes
+                  </TabsTrigger>
+                  <TabsTrigger value="clinical-details" className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm">
+                    <ClipboardIcon className="h-3.5 w-3.5 mr-1.5" />
+                    Clinical Details
+                  </TabsTrigger>
+                  <TabsTrigger value="developmental-history" className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm">
+                    <BookIcon className="h-3.5 w-3.5 mr-1.5" />
+                    Developmental History
+                  </TabsTrigger>
+                </TabsList>
+                
+                {/* Mobile-only table of contents */}
+                <div className="md:hidden">
+                  <TableOfContents items={getCurrentTabToc()} onSelectItem={scrollToSection} />
+                </div>
+                
+                <TabsContent value="progress-notes" className="m-0 p-4 py-[16px] px-0">
+                  <ProgressNotesTab progressNotes={progressNotes} setProgressNotes={setProgressNotes} />
+                </TabsContent>
+                
+                <TabsContent value="clinical-details" className="m-0 p-4 px-0">
+                  <ClinicalDetailsTab clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} />
+                </TabsContent>
+                
+                <TabsContent value="developmental-history" className="m-0 p-4 px-0">
+                  <DevelopmentalHistoryTab developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} />
+                </TabsContent>
+              </Tabs>
+            </div>
+          </ResizablePanel>
+          
+          <ResizableHandle withHandle />
+          
+          <ResizablePanel defaultSize={50} minSize={30}>
+            <SourcesPanel isVisible={showSources} />
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      ) : (
+        <Tabs defaultValue="progress-notes" value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="w-full flex bg-gray-100/70 p-0.5">
+            <TabsTrigger value="progress-notes" className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm">
+              <FileTextIcon className="h-3.5 w-3.5 mr-1.5" />
+              Progress Notes
+            </TabsTrigger>
+            <TabsTrigger value="clinical-details" className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm">
+              <ClipboardIcon className="h-3.5 w-3.5 mr-1.5" />
+              Clinical Details
+            </TabsTrigger>
+            <TabsTrigger value="developmental-history" className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm">
+              <BookIcon className="h-3.5 w-3.5 mr-1.5" />
+              Developmental History
+            </TabsTrigger>
+          </TabsList>
+          
+          {/* Mobile-only table of contents */}
+          <div className="md:hidden">
+            <TableOfContents items={getCurrentTabToc()} onSelectItem={scrollToSection} />
+          </div>
+          
+          <TabsContent value="progress-notes" className="m-0 p-4 py-[16px] px-0">
+            <ProgressNotesTab progressNotes={progressNotes} setProgressNotes={setProgressNotes} />
+          </TabsContent>
+          
+          <TabsContent value="clinical-details" className="m-0 p-4 px-0">
+            <ClinicalDetailsTab clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} />
+          </TabsContent>
+          
+          <TabsContent value="developmental-history" className="m-0 p-4 px-0">
+            <DevelopmentalHistoryTab developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} />
+          </TabsContent>
+        </Tabs>
+      )}
+    </div>;
 };
 export default ClinicalTabsSection;
