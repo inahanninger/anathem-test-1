@@ -185,7 +185,7 @@ const ClinicalTabsSection = ({
           <ClinicalDetailsTab clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} />
         </TabsContent>
         
-        <TabsContent value="developmental-history" className="m-0 p-4">
+        <TabsContent value="developmental-history" className="m-0 p-4 px-0">
           <DevelopmentalHistoryTab developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} />
         </TabsContent>
       </Tabs>
