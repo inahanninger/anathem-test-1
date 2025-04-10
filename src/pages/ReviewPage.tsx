@@ -12,7 +12,6 @@ import MedicationSection from "@/components/review/MedicationSection";
 import SocialHistorySection from "@/components/review/SocialHistorySection";
 import FamilyHistorySection from "@/components/review/FamilyHistorySection";
 import SectionHeader from "@/components/SectionHeader";
-
 const ReviewPage = () => {
   const [completedSections, setCompletedSections] = useState(2);
   const [activeTab, setActiveTab] = useState("progress-notes");
@@ -30,7 +29,6 @@ const ReviewPage = () => {
     dosage: "0.5mg",
     frequency: "As needed"
   }]);
-
   const [progressNotes, setProgressNotes] = useState(`
 ## Session Summary
 Patient attended session today and reported improvements in sleep patterns following the implementation of sleep hygiene techniques discussed in our previous session.
@@ -52,7 +50,6 @@ We explored coping strategies, specifically mindfulness practices and scheduled 
 2. Complete thought records when experiencing anxiety
 3. Maintain sleep hygiene practices
 `);
-
   const [clinicalDetails, setClinicalDetails] = useState(`
 ## Assessment Scores
 - Current GAD-7 score: 12 (moderate anxiety)
@@ -79,7 +76,6 @@ Most recent labs from 3/15/2025:
 - Major Depressive Disorder, Recurrent, Moderate (F33.1)
 - Generalized Anxiety Disorder (F41.1)
 `);
-
   const [developmentalHistory, setDevelopmentalHistory] = useState(`
 ## Early Childhood
 Patient reports unremarkable early developmental history. Met developmental milestones within expected timeframes.
@@ -111,18 +107,15 @@ Patient describes childhood household as "tense but functional" with parents who
   const [familyHistory, setFamilyHistory] = useState("Patient reports maternal history of depression and anxiety. Father has no known mental health conditions. Patient has one younger sibling with ADHD diagnosis. No known history of substance abuse disorders in immediate family.");
   const [clinicalNotes, setClinicalNotes] = useState("Patient presents with symptoms consistent with Major Depressive Disorder and Social Anxiety Disorder. Current medication regimen appears to be providing moderate symptom relief, but patient may benefit from increased psychosocial interventions, particularly around social anxiety. Recommend weekly CBT sessions for 8 weeks, focusing on cognitive restructuring and graduated exposure exercises.");
   const [treatmentPlan, setTreatmentPlan] = useState("1. Continue current medication regimen with follow-up in 4 weeks\n2. Begin weekly CBT with focus on social anxiety symptoms\n3. Patient to complete daily mood tracking\n4. Provide referral to support group for young professionals with anxiety");
-
   const handleMedicationUpdate = (id: string, updatedMed: Partial<Medication>) => {
     setMedications(medications.map(med => med.id === id ? {
       ...med,
       ...updatedMed
     } : med));
   };
-
   const handleMedicationDelete = (id: string) => {
     setMedications(medications.filter(med => med.id !== id));
   };
-
   const handleAddMedication = () => {
     const newId = (Math.max(0, ...medications.map(m => parseInt(m.id))) + 1).toString();
     setMedications([...medications, {
@@ -132,37 +125,52 @@ Patient describes childhood household as "tense but functional" with parents who
       frequency: ""
     }]);
   };
-
   const handleSaveAll = () => {
     toast.success("All changes saved to patient record");
   };
-
   const toggleSectionCompletion = (sectionName: string, isComplete: boolean) => {
     setCompletedSections(prev => isComplete ? prev + 1 : Math.max(0, prev - 1));
     toast(`${sectionName} ${isComplete ? "marked as reviewed" : "marked as pending"}`, {
       icon: isComplete ? <CheckCircle2Icon className="h-4 w-4 text-green-500" /> : <AlertCircleIcon className="h-4 w-4 text-amber-500" />
     });
   };
-
   const currentDate = new Date().toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'long',
     year: 'numeric'
   });
-
-  const progressNotesToc = [
-    { id: "section-1", title: "Session Summary", level: 1 },
-    { id: "section-2", title: "Current Symptoms", level: 1 },
-    { id: "section-3", title: "Sleep Patterns", level: 2 },
-    { id: "section-4", title: "Mood Status", level: 2 },
-    { id: "section-5", title: "Intervention Progress", level: 1 },
-    { id: "section-6", title: "Homework Assigned", level: 1 },
-  ];
-
+  const progressNotesToc = [{
+    id: "section-1",
+    title: "Session Summary",
+    level: 1
+  }, {
+    id: "section-2",
+    title: "Current Symptoms",
+    level: 1
+  }, {
+    id: "section-3",
+    title: "Sleep Patterns",
+    level: 2
+  }, {
+    id: "section-4",
+    title: "Mood Status",
+    level: 2
+  }, {
+    id: "section-5",
+    title: "Intervention Progress",
+    level: 1
+  }, {
+    id: "section-6",
+    title: "Homework Assigned",
+    level: 1
+  }];
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
       // Highlight the section briefly
       element.classList.add("bg-yellow-50");
       setTimeout(() => {
@@ -170,15 +178,13 @@ Patient describes childhood household as "tense but functional" with parents who
       }, 2000);
     }
   };
-
-  return (
-    <div className="min-h-screen bg-white">
+  return <div className="min-h-screen bg-white">
       {/* Header Bar */}
       <div className="border-b border-gray-100 py-5 px-6">
         <div className="container max-w-5xl mx-auto">
           <div className="flex flex-col space-y-1">
             <span className="text-sm text-gray-500">{currentDate}</span>
-            <h1 className="text-2xl font-medium">Patient Documentation Review</h1>
+            <h1 className="text-xl font-semibold">Patient Documentation Review</h1>
           </div>
         </div>
       </div>
@@ -200,52 +206,28 @@ Patient describes childhood household as "tense but functional" with parents who
         <div className="flex">
           {/* Left sidebar with TOC */}
           <aside className="w-64 sticky top-5 self-start pr-6 hidden md:block">
-            <TableOfContents 
-              items={progressNotesToc}
-              onSelectItem={scrollToSection}
-            />
+            <TableOfContents items={progressNotesToc} onSelectItem={scrollToSection} />
           </aside>
           
           {/* Main content area */}
           <div className="flex-1 min-w-0 space-y-6">
             {/* Tabs at the top */}
-            <ClinicalTabsSection
-              progressNotes={progressNotes}
-              setProgressNotes={setProgressNotes}
-              clinicalDetails={clinicalDetails}
-              setClinicalDetails={setClinicalDetails}
-              developmentalHistory={developmentalHistory}
-              setDevelopmentalHistory={setDevelopmentalHistory}
-            />
+            <ClinicalTabsSection progressNotes={progressNotes} setProgressNotes={setProgressNotes} clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} />
 
             {/* Presenting Issues Section */}
-            <PresentingIssuesSection 
-              presentingIssues={presentingIssues}
-              setPresentingIssues={setPresentingIssues}
-            />
+            <PresentingIssuesSection presentingIssues={presentingIssues} setPresentingIssues={setPresentingIssues} />
             
             {/* Medication Review Section */}
             <Card className="border-0 shadow-sm">
               <SectionHeader title="Medication Review" confidenceLevel="medium" confidenceScore={82} />
-              <MedicationSection
-                medications={medications}
-                onUpdate={handleMedicationUpdate}
-                onDelete={handleMedicationDelete}
-                onAdd={handleAddMedication}
-              />
+              <MedicationSection medications={medications} onUpdate={handleMedicationUpdate} onDelete={handleMedicationDelete} onAdd={handleAddMedication} />
             </Card>
             
             {/* Social History */}
-            <SocialHistorySection
-              socialHistory={socialHistory}
-              setSocialHistory={setSocialHistory}
-            />
+            <SocialHistorySection socialHistory={socialHistory} setSocialHistory={setSocialHistory} />
             
             {/* Family History */}
-            <FamilyHistorySection
-              familyHistory={familyHistory}
-              setFamilyHistory={setFamilyHistory}
-            />
+            <FamilyHistorySection familyHistory={familyHistory} setFamilyHistory={setFamilyHistory} />
           </div>
         </div>
       </div>
@@ -256,8 +238,6 @@ Patient describes childhood household as "tense but functional" with parents who
           Save All
         </Button>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default ReviewPage;
