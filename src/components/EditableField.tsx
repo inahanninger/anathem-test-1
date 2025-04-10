@@ -11,15 +11,17 @@ interface EditableFieldProps {
   fieldType?: "text" | "textarea";
   onSave?: (value: string) => void;
   placeholder?: string;
+  alwaysEditable?: boolean;
 }
 
 const EditableField = ({ 
   initialValue, 
   fieldType = "text", 
   onSave,
-  placeholder = "Enter text..."
+  placeholder = "Enter text...",
+  alwaysEditable = false
 }: EditableFieldProps) => {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(alwaysEditable);
   const [value, setValue] = useState(initialValue);
   const [previousValue, setPreviousValue] = useState(initialValue);
   
@@ -30,16 +32,53 @@ const EditableField = ({
   
   const handleCancel = () => {
     setValue(previousValue);
-    setIsEditing(false);
+    setIsEditing(alwaysEditable);
   };
   
   const handleSave = () => {
-    setIsEditing(false);
+    setIsEditing(alwaysEditable);
     if (onSave) {
       onSave(value);
     }
     toast.success("Changes saved");
   };
+
+  if (alwaysEditable) {
+    return (
+      <div className="w-full">
+        <div className="space-y-2">
+          {fieldType === "textarea" ? (
+            <Textarea
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              placeholder={placeholder}
+              className="min-h-[120px] focus:ring-1 focus:ring-blue-400 border-gray-200 resize-none"
+              autoFocus={false}
+            />
+          ) : (
+            <Input 
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              placeholder={placeholder}
+              className="focus:ring-1 focus:ring-blue-400 border-gray-200"
+              autoFocus={false}
+            />
+          )}
+          <div className="flex justify-end gap-2">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleSave}
+              className="gap-1 text-blue-600 border-blue-200 hover:bg-blue-50"
+            >
+              <CheckIcon className="h-3.5 w-3.5" />
+              Save Changes
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
   
   return (
     <div className="w-full">
@@ -50,7 +89,7 @@ const EditableField = ({
               value={value}
               onChange={(e) => setValue(e.target.value)}
               placeholder={placeholder}
-              className="min-h-[120px] focus:ring-1 focus:ring-primary"
+              className="min-h-[120px] focus:ring-1 focus:ring-blue-400 border-gray-200"
               autoFocus
             />
           ) : (
@@ -58,7 +97,7 @@ const EditableField = ({
               value={value}
               onChange={(e) => setValue(e.target.value)}
               placeholder={placeholder}
-              className="focus:ring-1 focus:ring-primary"
+              className="focus:ring-1 focus:ring-blue-400 border-gray-200"
               autoFocus
             />
           )}

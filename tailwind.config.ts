@@ -13,9 +13,9 @@ export default {
 	theme: {
 		container: {
 			center: true,
-			padding: '2rem',
+			padding: '1rem',
 			screens: {
-				'2xl': '1400px'
+				'2xl': '1280px'
 			}
 		},
 		extend: {
@@ -65,12 +65,12 @@ export default {
 				},
 				// Clinical interface colors
 				clinical: {
-					blue: '#7E69AB',
-					'blue-light': '#E5DEFF',
-					green: '#4CAF87',
-					'green-light': '#F2FCE2',
-					neutral: '#F6F6F7',
-					'neutral-dark': '#403E43',
+					blue: '#3B82F6',
+					'blue-light': '#EFF6FF',
+					green: '#10B981',
+					'green-light': '#ECFDF5',
+					neutral: '#F9FAFB',
+					'neutral-dark': '#374151',
 					border: '#E5E7EB',
 				}
 			},
@@ -84,7 +84,7 @@ export default {
 			},
 			boxShadow: {
 				'input': '0 1px 2px rgba(0, 0, 0, 0.05)',
-				'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+				'card': '0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)',
 			},
 			keyframes: {
 				'accordion-down': {

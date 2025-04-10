@@ -1,5 +1,6 @@
+
 import { useState } from "react";
-import { CheckIcon, PencilIcon, TrashIcon, XIcon } from "lucide-react";
+import { TrashIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -13,125 +14,113 @@ export interface Medication {
 
 interface MedicationItemProps {
   medication: Medication;
-  onUpdate: (id: string, updatedMed: Partial<Medication>) => void;
+  onUpdate: (id: string, medication: Partial<Medication>) => void;
   onDelete: (id: string) => void;
+  alwaysEditable?: boolean;
 }
 
-const MedicationItem = ({ medication, onUpdate, onDelete }: MedicationItemProps) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedMed, setEditedMed] = useState<Medication>({ ...medication });
-  
-  const handleStartEdit = () => {
-    setEditedMed({ ...medication });
-    setIsEditing(true);
-  };
-  
-  const handleCancel = () => {
-    setIsEditing(false);
-  };
-  
+const MedicationItem = ({ medication, onUpdate, onDelete, alwaysEditable = false }: MedicationItemProps) => {
+  const [isEditing, setIsEditing] = useState(alwaysEditable);
+  const [name, setName] = useState(medication.name);
+  const [dosage, setDosage] = useState(medication.dosage);
+  const [frequency, setFrequency] = useState(medication.frequency);
+
   const handleSave = () => {
-    onUpdate(medication.id, editedMed);
-    setIsEditing(false);
+    onUpdate(medication.id, { name, dosage, frequency });
+    if (!alwaysEditable) {
+      setIsEditing(false);
+    }
     toast.success("Medication updated");
   };
-  
+
   const handleDelete = () => {
     onDelete(medication.id);
     toast.success("Medication removed");
   };
-  
-  const handleChange = (field: keyof Medication, value: string) => {
-    setEditedMed((prev) => ({ ...prev, [field]: value }));
-  };
-  
-  return (
-    <div className="p-3 border border-clinical-border rounded-lg hover:bg-clinical-neutral/50 transition-colors">
-      {isEditing ? (
-        <div className="space-y-3">
-          <div className="grid grid-cols-3 gap-3">
-            <div>
-              <label className="input-label">Medication</label>
+
+  if (alwaysEditable || isEditing) {
+    return (
+      <div className="p-3 border border-gray-200 rounded-md bg-white">
+        <div className="grid grid-cols-12 gap-3">
+          <div className="col-span-5">
+            <Input 
+              placeholder="Medication name" 
+              value={name} 
+              onChange={(e) => setName(e.target.value)}
+              className="focus:ring-1 focus:ring-blue-400 border-gray-200"
+            />
+          </div>
+          <div className="col-span-3">
+            <Input 
+              placeholder="Dosage" 
+              value={dosage} 
+              onChange={(e) => setDosage(e.target.value)}
+              className="focus:ring-1 focus:ring-blue-400 border-gray-200"
+            />
+          </div>
+          <div className="col-span-4">
+            <div className="flex gap-2">
               <Input 
-                value={editedMed.name}
-                onChange={(e) => handleChange("name", e.target.value)}
-                className="focus:ring-1 focus:ring-primary"
+                placeholder="Frequency" 
+                value={frequency} 
+                onChange={(e) => setFrequency(e.target.value)}
+                className="focus:ring-1 focus:ring-blue-400 border-gray-200"
               />
-            </div>
-            <div>
-              <label className="input-label">Dosage</label>
-              <Input 
-                value={editedMed.dosage}
-                onChange={(e) => handleChange("dosage", e.target.value)}
-                className="focus:ring-1 focus:ring-primary"
-              />
-            </div>
-            <div>
-              <label className="input-label">Frequency</label>
-              <Input 
-                value={editedMed.frequency}
-                onChange={(e) => handleChange("frequency", e.target.value)}
-                className="focus:ring-1 focus:ring-primary"
-              />
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={handleDelete}
+                className="text-gray-500 hover:text-red-500"
+              >
+                <TrashIcon className="h-4 w-4" />
+              </Button>
             </div>
           </div>
-          <div className="flex justify-end gap-2">
+        </div>
+        {!alwaysEditable && (
+          <div className="flex justify-end mt-2">
+            <Button size="sm" onClick={handleSave}>Save</Button>
+          </div>
+        )}
+        {alwaysEditable && (
+          <div className="flex justify-end mt-2">
             <Button 
               variant="outline" 
               size="sm" 
-              onClick={handleCancel}
-              className="gap-1"
-            >
-              <XIcon className="h-3.5 w-3.5" />
-              Cancel
-            </Button>
-            <Button 
-              variant="default" 
-              size="sm" 
               onClick={handleSave}
-              className="gap-1"
+              className="text-blue-600 border-blue-200 hover:bg-blue-50"
             >
-              <CheckIcon className="h-3.5 w-3.5" />
-              Save
+              Save Changes
             </Button>
           </div>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div 
+      className="p-3 border border-gray-100 rounded-md hover:border-gray-200 transition-colors cursor-pointer"
+      onClick={() => setIsEditing(true)}
+    >
+      <div className="grid grid-cols-12 gap-3">
+        <div className="col-span-5 font-medium">{medication.name || "Unnamed medication"}</div>
+        <div className="col-span-3 text-gray-600">{medication.dosage || "No dosage"}</div>
+        <div className="col-span-3 text-gray-600">{medication.frequency || "No frequency"}</div>
+        <div className="col-span-1 flex justify-end">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDelete();
+            }}
+            className="text-gray-500 hover:text-red-500"
+          >
+            <TrashIcon className="h-4 w-4" />
+          </Button>
         </div>
-      ) : (
-        <div className="flex items-center justify-between">
-          <div className="grid grid-cols-3 gap-4 flex-1">
-            <div>
-              <div className="text-xs text-muted-foreground mb-0.5">Medication</div>
-              <div className="font-medium">{medication.name}</div>
-            </div>
-            <div>
-              <div className="text-xs text-muted-foreground mb-0.5">Dosage</div>
-              <div>{medication.dosage}</div>
-            </div>
-            <div>
-              <div className="text-xs text-muted-foreground mb-0.5">Frequency</div>
-              <div>{medication.frequency}</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-1 ml-3">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 text-muted-foreground hover:text-primary"
-              onClick={handleStartEdit}
-            >
-              <PencilIcon className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 text-muted-foreground hover:text-destructive"
-              onClick={handleDelete}
-            >
-              <TrashIcon className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      )}
+      </div>
     </div>
   );
 };
