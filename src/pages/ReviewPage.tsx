@@ -1,6 +1,17 @@
 
 import { useState } from "react";
-import { AlertCircleIcon, CheckCircle2Icon, ClipboardCheckIcon, PlusIcon, ChevronLeftIcon, ChevronRightIcon, FileTextIcon, ClipboardIcon, BookIcon } from "lucide-react";
+import { 
+  AlertCircleIcon, 
+  CheckCircle2Icon, 
+  ClipboardCheckIcon, 
+  PlusIcon,
+  ChevronLeftIcon, 
+  ChevronRightIcon, 
+  FileTextIcon, 
+  ClipboardIcon, 
+  BookIcon,
+  TableOfContentsIcon
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
@@ -8,6 +19,7 @@ import SectionHeader from "@/components/SectionHeader";
 import EditableField from "@/components/EditableField";
 import MedicationItem, { Medication } from "@/components/MedicationItem";
 import FormProgress from "@/components/FormProgress";
+import TableOfContents from "@/components/TableOfContents";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
@@ -16,6 +28,34 @@ const ReviewPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 3;
   const [activeTab, setActiveTab] = useState("progress-notes");
+
+  // Mock table of contents data
+  const progressNotesToc = [
+    { id: "section-1", title: "Session Summary", level: 1 },
+    { id: "section-2", title: "Current Symptoms", level: 1 },
+    { id: "section-3", title: "Sleep Patterns", level: 2 },
+    { id: "section-4", title: "Mood Status", level: 2 },
+    { id: "section-5", title: "Intervention Progress", level: 1 },
+    { id: "section-6", title: "Homework Assigned", level: 1 },
+  ];
+
+  const clinicalDetailsToc = [
+    { id: "clinical-1", title: "Assessment Scores", level: 1 },
+    { id: "clinical-2", title: "Medication Compliance", level: 1 },
+    { id: "clinical-3", title: "Risk Assessment", level: 1 },
+    { id: "clinical-4", title: "Vital Signs", level: 2 },
+    { id: "clinical-5", title: "Labs Review", level: 2 },
+    { id: "clinical-6", title: "Current Diagnosis", level: 1 },
+  ];
+
+  const developmentalToc = [
+    { id: "dev-1", title: "Early Childhood", level: 1 },
+    { id: "dev-2", title: "Middle Childhood", level: 1 },
+    { id: "dev-3", title: "Adolescence", level: 1 },
+    { id: "dev-4", title: "Educational History", level: 2 },
+    { id: "dev-5", title: "Family Dynamics", level: 2 },
+    { id: "dev-6", title: "Significant Life Events", level: 1 },
+  ];
 
   // Page 1 content
   const [presentingIssues, setPresentingIssues] = useState("Patient reports experiencing moderate depressive symptoms for approximately 3 months, including low mood, decreased interest in activities, and poor sleep. Patient also mentions occasional anxiety in social situations that has increased in frequency over the past month.");
@@ -32,9 +72,80 @@ const ReviewPage = () => {
   }]);
 
   // Page 2 content - Tabbed content
-  const [progressNotes, setProgressNotes] = useState("Patient attended session today and reported improvements in sleep patterns following the implementation of sleep hygiene techniques discussed in our previous session. Patient expressed continued concerns about work-related stressors and how these impact their mood. We explored coping strategies, specifically mindfulness practices and scheduled breaks throughout the workday.");
-  const [clinicalDetails, setClinicalDetails] = useState("Current GAD-7 score: 12 (moderate anxiety)\nCurrent PHQ-9 score: 14 (moderate depression)\nPatient reports compliance with medication regimen with some improvement in mood stability. Sleep quality remains inconsistent with an average of 5-6 hours per night. Patient denies any suicidal ideation or intent.");
-  const [developmentalHistory, setDevelopmentalHistory] = useState("Patient reports unremarkable early developmental history. Met developmental milestones within expected timeframes. Attended public school with average academic performance. No history of learning disabilities reported. Patient describes childhood household as 'tense but functional' with parents who divorced when patient was 14 years old. Patient was involved in team sports until high school and reports this was a positive experience.");
+  const [progressNotes, setProgressNotes] = useState(`
+## Session Summary
+Patient attended session today and reported improvements in sleep patterns following the implementation of sleep hygiene techniques discussed in our previous session.
+
+## Current Symptoms
+Patient expressed continued concerns about work-related stressors and how these impact their mood. 
+
+### Sleep Patterns
+Sleep has improved from 4-5 hours per night to 6-7 hours with implementation of sleep hygiene protocols. Patient still reports middle insomnia with 20-30 minute awakening periods.
+
+### Mood Status
+Patient rates mood as 5/10 (improved from 3/10 at last session). Anxiety remains situational, primarily in work meetings and social gatherings.
+
+## Intervention Progress
+We explored coping strategies, specifically mindfulness practices and scheduled breaks throughout the workday. Patient demonstrated good understanding and commitment to implementing these techniques.
+
+## Homework Assigned
+1. Continue daily meditation practice for 10 minutes
+2. Complete thought records when experiencing anxiety
+3. Maintain sleep hygiene practices
+`);
+
+  const [clinicalDetails, setClinicalDetails] = useState(`
+## Assessment Scores
+- Current GAD-7 score: 12 (moderate anxiety)
+- Current PHQ-9 score: 14 (moderate depression)
+
+## Medication Compliance
+Patient reports compliance with medication regimen with some improvement in mood stability.
+
+## Risk Assessment
+Patient denies any suicidal ideation or intent. No homicidal ideation or psychotic symptoms reported.
+
+### Vital Signs
+- BP: 118/76
+- HR: 72
+- Weight: 165 lbs (stable from last visit)
+
+### Labs Review
+Most recent labs from 3/15/2025:
+- TSH: 2.4 mIU/L (within normal range)
+- Complete metabolic panel: within normal limits
+- Lipid panel: borderline elevated LDL (142 mg/dL)
+
+## Current Diagnosis
+- Major Depressive Disorder, Recurrent, Moderate (F33.1)
+- Generalized Anxiety Disorder (F41.1)
+`);
+
+  const [developmentalHistory, setDevelopmentalHistory] = useState(`
+## Early Childhood
+Patient reports unremarkable early developmental history. Met developmental milestones within expected timeframes.
+
+## Middle Childhood
+Attended public school with average academic performance. No history of learning disabilities reported.
+
+## Adolescence
+Patient describes typical adolescent adjustment with some social anxiety beginning around age 15.
+
+### Educational History
+- Elementary: Public school, good academic performance
+- Middle School: Public school, maintained B average
+- High School: Public school, B average, participated in chess club and debate team
+- College: State university, graduated with Bachelor's in Business Administration (3.2 GPA)
+
+### Family Dynamics
+Patient describes childhood household as "tense but functional" with parents who divorced when patient was 14 years old.
+
+## Significant Life Events
+- Parents' divorce at age 14
+- First panic attack at age 15 before class presentation
+- College graduation (positive achievement)
+- Job promotion 2 years ago (positive but increased responsibility and stress)
+`);
 
   // Page 3 content
   const [socialHistory, setSocialHistory] = useState("Patient is a 28-year-old software engineer who works remotely full-time. They describe their work environment as moderately stressful. Patient completed a bachelor's degree in computer science in 2018. Patient reports having a small but supportive social network, primarily consisting of 3-4 close friends. They engage in social activities approximately once per week.");
@@ -85,11 +196,36 @@ const ReviewPage = () => {
     // In a real application, this would trigger an API call to generate more content
   };
 
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Highlight the section briefly
+      element.classList.add("bg-yellow-50");
+      setTimeout(() => {
+        element.classList.remove("bg-yellow-50");
+      }, 2000);
+    }
+  };
+
   const currentDate = new Date().toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'long',
     year: 'numeric'
   });
+
+  const getCurrentTabToc = () => {
+    switch(activeTab) {
+      case "progress-notes":
+        return progressNotesToc;
+      case "clinical-details":
+        return clinicalDetailsToc;
+      case "developmental-history":
+        return developmentalToc;
+      default:
+        return [];
+    }
+  };
 
   return <div className="min-h-screen bg-white">
       {/* Header Bar */}
@@ -181,15 +317,68 @@ const ReviewPage = () => {
                       </TabsTrigger>
                     </TabsList>
                     
+                    {/* Table of Contents for current tab */}
+                    <TableOfContents 
+                      items={getCurrentTabToc()}
+                      onSelectItem={scrollToSection}
+                    />
+                    
                     <TabsContent value="progress-notes" className="mt-0">
+                      <div dangerouslySetInnerHTML={{ __html: progressNotes.split('\n').map(line => {
+                        if (line.startsWith('## ')) {
+                          const id = line.substring(3).toLowerCase().replace(/\s+/g, '-');
+                          return `<h2 id="${id}" class="text-lg font-semibold mt-4 mb-2">${line.substring(3)}</h2>`;
+                        } else if (line.startsWith('### ')) {
+                          const id = line.substring(4).toLowerCase().replace(/\s+/g, '-');
+                          return `<h3 id="${id}" class="text-base font-medium mt-3 mb-1">${line.substring(4)}</h3>`;
+                        } else if (line.startsWith('- ')) {
+                          return `<li class="ml-5 list-disc">${line.substring(2)}</li>`;
+                        } else if (line.startsWith('1. ') || line.startsWith('2. ') || line.startsWith('3. ')) {
+                          return `<li class="ml-5 list-decimal">${line.substring(3)}</li>`;
+                        } else if (line === '') {
+                          return '<p>&nbsp;</p>';
+                        } else {
+                          return `<p>${line}</p>`;
+                        }
+                      }).join('')}} />
                       <EditableField initialValue={progressNotes} fieldType="textarea" onSave={setProgressNotes} alwaysEditable={true} />
                     </TabsContent>
                     
                     <TabsContent value="clinical-details" className="mt-0">
+                      <div dangerouslySetInnerHTML={{ __html: clinicalDetails.split('\n').map(line => {
+                        if (line.startsWith('## ')) {
+                          const id = line.substring(3).toLowerCase().replace(/\s+/g, '-');
+                          return `<h2 id="${id}" class="text-lg font-semibold mt-4 mb-2">${line.substring(3)}</h2>`;
+                        } else if (line.startsWith('### ')) {
+                          const id = line.substring(4).toLowerCase().replace(/\s+/g, '-');
+                          return `<h3 id="${id}" class="text-base font-medium mt-3 mb-1">${line.substring(4)}</h3>`;
+                        } else if (line.startsWith('- ')) {
+                          return `<li class="ml-5 list-disc">${line.substring(2)}</li>`;
+                        } else if (line === '') {
+                          return '<p>&nbsp;</p>';
+                        } else {
+                          return `<p>${line}</p>`;
+                        }
+                      }).join('')}} />
                       <EditableField initialValue={clinicalDetails} fieldType="textarea" onSave={setClinicalDetails} alwaysEditable={true} />
                     </TabsContent>
                     
                     <TabsContent value="developmental-history" className="mt-0">
+                      <div dangerouslySetInnerHTML={{ __html: developmentalHistory.split('\n').map(line => {
+                        if (line.startsWith('## ')) {
+                          const id = line.substring(3).toLowerCase().replace(/\s+/g, '-');
+                          return `<h2 id="${id}" class="text-lg font-semibold mt-4 mb-2">${line.substring(3)}</h2>`;
+                        } else if (line.startsWith('### ')) {
+                          const id = line.substring(4).toLowerCase().replace(/\s+/g, '-');
+                          return `<h3 id="${id}" class="text-base font-medium mt-3 mb-1">${line.substring(4)}</h3>`;
+                        } else if (line.startsWith('- ')) {
+                          return `<li class="ml-5 list-disc">${line.substring(2)}</li>`;
+                        } else if (line === '') {
+                          return '<p>&nbsp;</p>';
+                        } else {
+                          return `<p>${line}</p>`;
+                        }
+                      }).join('')}} />
                       <EditableField initialValue={developmentalHistory} fieldType="textarea" onSave={setDevelopmentalHistory} alwaysEditable={true} />
                     </TabsContent>
                   </Tabs>
