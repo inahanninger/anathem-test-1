@@ -1,19 +1,15 @@
-
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { FileTextIcon, UploadIcon } from "lucide-react";
-
 interface SourcesPanelProps {
   isVisible: boolean;
 }
-
-const SourcesPanel = ({ isVisible }: SourcesPanelProps) => {
+const SourcesPanel = ({
+  isVisible
+}: SourcesPanelProps) => {
   const [activeTab, setActiveTab] = useState("transcript");
-
   if (!isVisible) return null;
-
-  return (
-    <div className="h-full">
+  return <div className="h-full">
       <div className="border-b pb-2 mb-2">
         <h3 className="font-semibold text-base px-4">Source Material</h3>
       </div>
@@ -45,25 +41,9 @@ const SourcesPanel = ({ isVisible }: SourcesPanelProps) => {
         </TabsContent>
         
         <TabsContent value="file-upload" className="m-0 p-4 px-4">
-          <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-            <UploadIcon className="mx-auto h-12 w-12 text-gray-400" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900">Upload session recording</h3>
-            <p className="mt-1 text-xs text-gray-500">
-              MP3, WAV, or MP4 up to 500MB
-            </p>
-            <div className="mt-4">
-              <button
-                type="button"
-                className="inline-flex items-center rounded-md bg-white px-3 py-2 text-xs font-medium text-gray-700 border border-gray-300 hover:bg-gray-50"
-              >
-                Select file
-              </button>
-            </div>
-          </div>
+          
         </TabsContent>
       </Tabs>
-    </div>
-  );
+    </div>;
 };
-
 export default SourcesPanel;
