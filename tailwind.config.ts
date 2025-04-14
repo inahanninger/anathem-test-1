@@ -65,7 +65,7 @@ export default {
 				},
 				// Clinical interface colors
 				clinical: {
-					blue: '#3B82F6',
+					blue: '#1E40AF', // blue-800
 					'blue-light': '#EFF6FF',
 					green: '#10B981',
 					'green-light': '#ECFDF5',

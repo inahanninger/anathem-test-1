@@ -16,7 +16,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 14% 18%;
 
-    --primary: 221 83% 53%;
+    --primary: 217 91% 40%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 40% 96.1%;
@@ -25,7 +25,7 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 221 83% 96%;
+    --accent: 217 91% 96%;
     --accent-foreground: 222 47% 11.2%;
 
     --destructive: 0 84% 60%;
@@ -33,18 +33,18 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 221 83% 53%;
+    --ring: 217 91% 40%;
 
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 222 14% 18%;
-    --sidebar-primary: 222 47% 11.2%;
+    --sidebar-primary: 217 91% 40%;
     --sidebar-primary-foreground: 0 0% 98%;
     --sidebar-accent: 210 40% 96.1%;
     --sidebar-accent-foreground: 222 47% 11.2%;
     --sidebar-border: 214.3 31.8% 91.4%;
-    --sidebar-ring: 221 83% 60%;
+    --sidebar-ring: 217 91% 40%;
   }
 
   * {
@@ -95,5 +95,44 @@
 
   .status-bar {
     @apply bg-white border-b border-gray-100 py-3 px-4 sticky top-0 z-10 flex justify-between items-center;
+  }
+  
+  /* New animations for clinical tool */
+  @keyframes slide-in {
+    from {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-slide-in {
+    animation: slide-in 0.2s ease-out;
+  }
+
+  /* Button styles for clinical tool */
+  .btn-primary {
+    @apply bg-blue-800 text-white hover:bg-blue-900 transition-colors;
+  }
+
+  /* Card styling for clinical tool */
+  .clinical-report-card {
+    @apply border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+
+  /* Step indicator styling */
+  .step-active {
+    @apply bg-blue-800 text-white;
+  }
+  
+  .step-completed {
+    @apply bg-blue-800 text-white;
+  }
+  
+  .step-upcoming {
+    @apply bg-gray-100 text-gray-500;
   }
 }
