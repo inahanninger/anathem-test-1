@@ -69,32 +69,32 @@ export const clinicalDetailsToc = [
 export const developmentalToc = [
   {
     id: "dev-1",
-    title: "Early Childhood",
+    title: "Demographic & Background Information",
     level: 1
   },
   {
     id: "dev-2",
-    title: "Middle Childhood",
+    title: "Pregnancy & Birth History",
     level: 1
   },
   {
     id: "dev-3",
-    title: "Adolescence",
+    title: "Early Developmental Milestones",
     level: 1
   },
   {
     id: "dev-4",
-    title: "Educational History",
-    level: 2
+    title: "Early Childhood Behaviour",
+    level: 1
   },
   {
     id: "dev-5",
-    title: "Family Dynamics",
-    level: 2
+    title: "School History",
+    level: 1
   },
   {
     id: "dev-6",
-    title: "Significant Life Events",
+    title: "Additional Notes",
     level: 1
   }
 ];

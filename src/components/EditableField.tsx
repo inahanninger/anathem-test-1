@@ -52,8 +52,15 @@ const EditableField = ({
               value={value} 
               onChange={e => setValue(e.target.value)} 
               placeholder={placeholder} 
-              className="min-h-[200px] focus:ring-1 focus:ring-blue-400 border-gray-200 resize-none text-xs" 
+              className="focus:ring-1 focus:ring-blue-400 border-gray-200 resize-none text-xs h-auto" 
               autoFocus={false} 
+              rows={1}
+              style={{ height: 'auto', minHeight: '2.5rem', overflow: 'hidden' }}
+              onInput={(e) => {
+                const target = e.target as HTMLTextAreaElement;
+                target.style.height = 'auto';
+                target.style.height = `${target.scrollHeight}px`;
+              }}
             />
           ) : (
             <Input 
