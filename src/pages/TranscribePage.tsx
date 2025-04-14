@@ -120,7 +120,7 @@ const TranscribePage = () => {
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbLink href="/generate" className="text-xs text-neutral-600 flex items-center gap-1">
-                  <span>Generate Report</span>
+                  <span>Review</span>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbItem className="ml-auto">
