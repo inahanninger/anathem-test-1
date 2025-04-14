@@ -3,14 +3,12 @@ import { ArrowRightIcon, MicIcon, UploadIcon, SettingsIcon, FileTextIcon, TrashI
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import FormProgress from "@/components/FormProgress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Link } from "react-router-dom";
+import WorkflowHeader from "@/components/workflow/WorkflowHeader";
+import { mainWorkflowSteps } from "@/constants/workflowSteps";
 
 type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
 interface FileUpload {
@@ -20,6 +18,7 @@ interface FileUpload {
   dateUploaded: Date;
   size: number;
 }
+
 const TranscribePage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
@@ -32,15 +31,14 @@ const TranscribePage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const completedSections = 1;
   const totalSections = 6;
+  
   const handleFileUpload = (files: FileList | null) => {
     if (!files || files.length === 0) return;
     Array.from(files).forEach(file => {
-      // Create new file upload
       const newUpload: FileUpload = {
         id: crypto.randomUUID(),
         name: file.name,
         type: "",
-        // Empty by default, user will select from dropdown
         dateUploaded: new Date(),
         size: file.size
       };
@@ -48,21 +46,25 @@ const TranscribePage = () => {
       toast.success(`${file.name} uploaded successfully`);
     });
   };
+
   const handleFileTypeChange = (fileId: string, type: string) => {
     setUploads(uploads.map(upload => upload.id === fileId ? {
       ...upload,
       type: type as UploadType
     } : upload));
   };
+
   const handleDeleteFile = (fileId: string) => {
     setUploads(uploads.filter(upload => upload.id !== fileId));
     toast.success("File deleted successfully");
   };
+
   const formatFileSize = (bytes: number) => {
     if (bytes < 1024) return `${bytes} bytes`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
+
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("en-GB", {
       day: "numeric",
@@ -70,18 +72,19 @@ const TranscribePage = () => {
       year: "numeric"
     });
   };
+
   const toggleRecording = () => {
     if (isRecording) {
       setIsRecording(false);
       toast.success("Recording stopped");
-      // Simulating a transcription result
-      setTranscription("This is a sample transcription that would be generated from the recording.");
+      setTranscription("");
     } else {
       setIsRecording(true);
       toast.success("Recording started");
       setTranscription("");
     }
   };
+
   const handleContinue = () => {
     if (uploads.length === 0 && !transcription) {
       toast.error("Please upload a file or create a transcription");
@@ -90,71 +93,41 @@ const TranscribePage = () => {
     toast.success("Continuing to Generate Report");
     window.location.href = "/generate";
   };
+
   const handleClickUpload = () => {
     fileInputRef.current?.click();
   };
+
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(true);
   };
+
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
   };
+
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
     const files = e.dataTransfer.files;
     handleFileUpload(files);
   };
-  return <div className="min-h-screen bg-white">
-      <div className="border-b border-gray-100 px-6 bg-white py-0">
-        <div className="container max-w-5xl mx-auto">
-          <Breadcrumb className="py-2">
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbPage className="font-medium text-xs">Transcribe</BreadcrumbPage>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <Link to="/generate" className="text-xs text-neutral-600">Generate</Link>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <Link to="/report" className="text-xs text-neutral-600 flex items-center gap-1">
-                  <span>Review</span>
-                </Link>
-              </BreadcrumbItem>
-              <BreadcrumbItem className="ml-auto">
-                <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
-                  Back
-                </Button>
-                <Button className="bg-blue-800 hover:bg-blue-900 text-sm ml-2 flex items-center gap-1" onClick={handleContinue}>
-                  Continue <ArrowRightIcon size={16} />
-                </Button>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </div>
 
-      <div className="border-b border-gray-100 bg-gray-50/80 py-3 px-6">
-        <div className="container max-w-5xl mx-auto">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="flex flex-col">
-                <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
-                <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} className="h-8 w-[180px] text-sm" />
-              </div>
-              <div className="flex flex-col">
-                <Label htmlFor="nhsNumber" className="text-xs text-muted-foreground mb-1">NHS Number</Label>
-                <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="h-8 w-[140px] text-sm" />
-              </div>
-            </div>
-            <FormProgress completedSections={completedSections} totalSections={totalSections} />
-          </div>
-        </div>
-      </div>
+  return <div className="min-h-screen bg-white">
+      <WorkflowHeader 
+        patientName={patientName}
+        setPatientName={setPatientName}
+        nhsNumber={nhsNumber}
+        setNhsNumber={setNhsNumber}
+        completedSections={completedSections}
+        totalSections={totalSections}
+        currentStep={1}
+        steps={mainWorkflowSteps}
+        nextLink="/generate"
+        nextButtonText="Continue"
+      />
       
       <div className="container max-w-5xl mx-auto px-6 py-6">
         <div className="grid grid-cols-2 md:grid-cols-2 gap-3">
@@ -256,4 +229,5 @@ const TranscribePage = () => {
       </div>
     </div>;
 };
+
 export default TranscribePage;
