@@ -70,7 +70,8 @@ const GeneratePage = () => {
                 <BreadcrumbLink href="/risk" className="text-xs text-neutral-600">
                   Risk Assessment
                 </BreadcrumbLink>
-              </BreadcrumbSeparator>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbPage className="font-medium text-xs">Generate Report</BreadcrumbPage>
               </BreadcrumbItem>
@@ -214,4 +215,3 @@ const GeneratePage = () => {
 };
 
 export default GeneratePage;
-
