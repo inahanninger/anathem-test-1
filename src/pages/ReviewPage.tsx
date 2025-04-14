@@ -191,7 +191,7 @@ Patient describes childhood household as "tense but functional" with parents who
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/risk" className="text-blue-600">
+                <BreadcrumbLink href="/risk" className="text-neutral-600">
                   Risk Assessment
                 </BreadcrumbLink>
               </BreadcrumbItem>
@@ -230,7 +230,7 @@ Patient describes childhood household as "tense but functional" with parents who
         </div>
       </div>
       
-      <div className="container max-w-5xl mx-auto px-6 py-0">
+      <div className="container max-w-5xl mx-auto px-6 py-[12px]">
         <div className="flex">
           <div className="flex-1 min-w-0 space-y-6">
             <ClinicalTabsSection progressNotes={progressNotes} setProgressNotes={setProgressNotes} clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} />
