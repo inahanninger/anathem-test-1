@@ -117,7 +117,7 @@ const UploadDocumentPage = () => {
       <div className="border-b border-gray-100 bg-gray-50/80 py-6 px-6">
         <div className="container max-w-5xl mx-auto">
           <div className="">
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex items-center gap-4">
               <div className="flex flex-col">
                 <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
                 <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} className="h-8 w-[180px] text-sm" />
