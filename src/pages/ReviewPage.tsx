@@ -12,9 +12,14 @@ import SocialHistorySection from "@/components/review/SocialHistorySection";
 import FamilyHistorySection from "@/components/review/FamilyHistorySection";
 import SectionHeader from "@/components/SectionHeader";
 import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
 const ReviewPage = () => {
   const [completedSections, setCompletedSections] = useState(2);
   const [activeTab, setActiveTab] = useState("progress-notes");
+  const [patientName, setPatientName] = useState("James Wilson");
+  const [nhsNumber, setNhsNumber] = useState("NHS123456789");
   const [presentingIssues, setPresentingIssues] = useState("Patient reports experiencing moderate depressive symptoms for approximately 3 months, including low mood, decreased interest in activities, and poor sleep. Patient also mentions occasional anxiety in social situations that has increased in frequency over the past month.");
   const [medications, setMedications] = useState<Medication[]>([{
     id: "1",
@@ -103,15 +108,18 @@ Patient describes childhood household as "tense but functional" with parents who
   const [familyHistory, setFamilyHistory] = useState("Patient reports maternal history of depression and anxiety. Father has no known mental health conditions. Patient has one younger sibling with ADHD diagnosis. No known history of substance abuse disorders in immediate family.");
   const [clinicalNotes, setClinicalNotes] = useState("Patient presents with symptoms consistent with Major Depressive Disorder and Social Anxiety Disorder. Current medication regimen appears to be providing moderate symptom relief, but patient may benefit from increased psychosocial interventions, particularly around social anxiety. Recommend weekly CBT sessions for 8 weeks, focusing on cognitive restructuring and graduated exposure exercises.");
   const [treatmentPlan, setTreatmentPlan] = useState("1. Continue current medication regimen with follow-up in 4 weeks\n2. Begin weekly CBT with focus on social anxiety symptoms\n3. Patient to complete daily mood tracking\n4. Provide referral to support group for young professionals with anxiety");
+
   const handleMedicationUpdate = (id: string, updatedMed: Partial<Medication>) => {
     setMedications(medications.map(med => med.id === id ? {
       ...med,
       ...updatedMed
     } : med));
   };
+
   const handleMedicationDelete = (id: string) => {
     setMedications(medications.filter(med => med.id !== id));
   };
+
   const handleAddMedication = () => {
     const newId = (Math.max(0, ...medications.map(m => parseInt(m.id))) + 1).toString();
     setMedications([...medications, {
@@ -121,45 +129,57 @@ Patient describes childhood household as "tense but functional" with parents who
       frequency: ""
     }]);
   };
+
   const handleSaveAll = () => {
     toast.success("All changes saved to patient record");
   };
+
   const toggleSectionCompletion = (sectionName: string, isComplete: boolean) => {
     setCompletedSections(prev => isComplete ? prev + 1 : Math.max(0, prev - 1));
     toast(`${sectionName} ${isComplete ? "marked as reviewed" : "marked as pending"}`, {
       icon: isComplete ? <CheckCircle2Icon className="h-4 w-4 text-green-500" /> : <AlertCircleIcon className="h-4 w-4 text-amber-500" />
     });
   };
+
   const currentDate = new Date().toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'long',
     year: 'numeric'
   });
-  const progressNotesToc = [{
-    id: "section-1",
-    title: "Session Summary",
-    level: 1
-  }, {
-    id: "section-2",
-    title: "Current Symptoms",
-    level: 1
-  }, {
-    id: "section-3",
-    title: "Sleep Patterns",
-    level: 2
-  }, {
-    id: "section-4",
-    title: "Mood Status",
-    level: 2
-  }, {
-    id: "section-5",
-    title: "Intervention Progress",
-    level: 1
-  }, {
-    id: "section-6",
-    title: "Homework Assigned",
-    level: 1
-  }];
+
+  const progressNotesToc = [
+    {
+      id: "section-1",
+      title: "Session Summary",
+      level: 1
+    },
+    {
+      id: "section-2",
+      title: "Current Symptoms",
+      level: 1
+    },
+    {
+      id: "section-3",
+      title: "Sleep Patterns",
+      level: 2
+    },
+    {
+      id: "section-4",
+      title: "Mood Status",
+      level: 2
+    },
+    {
+      id: "section-5",
+      title: "Intervention Progress",
+      level: 1
+    },
+    {
+      id: "section-6",
+      title: "Homework Assigned",
+      level: 1
+    }
+  ];
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -167,13 +187,13 @@ Patient describes childhood household as "tense but functional" with parents who
         behavior: "smooth",
         block: "start"
       });
-      // Highlight the section briefly
       element.classList.add("bg-yellow-50");
       setTimeout(() => {
         element.classList.remove("bg-yellow-50");
       }, 2000);
     }
   };
+
   return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 py-5 px-6">
         <div className="container max-w-5xl mx-auto">
@@ -187,28 +207,35 @@ Patient describes childhood household as "tense but functional" with parents who
       <div className="border-b border-gray-100 bg-gray-50/80 py-3 px-6">
         <div className="container max-w-5xl mx-auto">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              {/* Any status indicators can go here */}
-            </div>
             <FormProgress completedSections={completedSections} totalSections={6} />
+            <div className="flex items-center gap-4">
+              <div className="flex flex-col items-end">
+                <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
+                <Input 
+                  id="patientName"
+                  value={patientName}
+                  onChange={(e) => setPatientName(e.target.value)}
+                  className="h-8 w-[180px] text-sm"
+                />
+              </div>
+              <div className="flex flex-col items-end">
+                <Label htmlFor="nhsNumber" className="text-xs text-muted-foreground mb-1">NHS Number</Label>
+                <Input 
+                  id="nhsNumber"
+                  value={nhsNumber}
+                  onChange={(e) => setNhsNumber(e.target.value)}
+                  className="h-8 w-[140px] text-sm"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
       
       <div className="container max-w-5xl mx-auto py-8 px-6">
         <div className="flex">
-          
-          
           <div className="flex-1 min-w-0 space-y-6">
             <ClinicalTabsSection progressNotes={progressNotes} setProgressNotes={setProgressNotes} clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} />
-
-            
-            
-            
-            
-            
-            
-            
           </div>
         </div>
       </div>
@@ -220,4 +247,5 @@ Patient describes childhood household as "tense but functional" with parents who
       </div>
     </div>;
 };
+
 export default ReviewPage;
