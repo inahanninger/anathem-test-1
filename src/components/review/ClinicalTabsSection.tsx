@@ -1,8 +1,10 @@
+
 import { useState } from "react";
 import { TableOfContentsItem, progressNotesToc, clinicalDetailsToc, developmentalToc } from "./tabs/TabContentData";
 import ActionButtons from "./tabs/ActionButtons";
 import SplitView from "./tabs/SplitView";
 import StandardView from "./tabs/StandardView";
+
 interface ClinicalTabsSectionProps {
   progressNotes: string;
   setProgressNotes: (value: string) => void;
@@ -11,6 +13,7 @@ interface ClinicalTabsSectionProps {
   developmentalHistory: string;
   setDevelopmentalHistory: (value: string) => void;
 }
+
 const ClinicalTabsSection = ({
   progressNotes,
   setProgressNotes,
@@ -22,6 +25,7 @@ const ClinicalTabsSection = ({
   const [activeTab, setActiveTab] = useState("progress-notes");
   const [showSources, setShowSources] = useState(false);
   const [tocVisible, setTocVisible] = useState(true);
+
   const handleViewSources = () => {
     setShowSources(!showSources);
     if (!showSources) {
@@ -30,6 +34,7 @@ const ClinicalTabsSection = ({
       setTocVisible(true);
     }
   };
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -43,6 +48,7 @@ const ClinicalTabsSection = ({
       }, 2000);
     }
   };
+
   const getCurrentTabToc = () => {
     switch (activeTab) {
       case "progress-notes":
@@ -55,13 +61,43 @@ const ClinicalTabsSection = ({
         return [];
     }
   };
-  return <div className="overflow-hidden">
+
+  return (
+    <div className="overflow-hidden">
       <div className="flex justify-between items-center py-2 border-b px-0">
-        <h2 className="font-semibold text-base">Review Information</h2>
+        <h2 className="font-semibold text-base">Clinical Data</h2>
         <ActionButtons showSources={showSources} handleViewSources={handleViewSources} />
       </div>
       
-      {showSources ? <SplitView activeTab={activeTab} setActiveTab={setActiveTab} progressNotes={progressNotes} setProgressNotes={setProgressNotes} clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} showSources={showSources} /> : <StandardView activeTab={activeTab} setActiveTab={setActiveTab} progressNotes={progressNotes} setProgressNotes={setProgressNotes} clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} tocVisible={tocVisible} tocItems={getCurrentTabToc()} onSelectItem={scrollToSection} />}
-    </div>;
+      {showSources ? (
+        <SplitView 
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          progressNotes={progressNotes}
+          setProgressNotes={setProgressNotes}
+          clinicalDetails={clinicalDetails}
+          setClinicalDetails={setClinicalDetails}
+          developmentalHistory={developmentalHistory}
+          setDevelopmentalHistory={setDevelopmentalHistory}
+          showSources={showSources}
+        />
+      ) : (
+        <StandardView 
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          progressNotes={progressNotes}
+          setProgressNotes={setProgressNotes}
+          clinicalDetails={clinicalDetails}
+          setClinicalDetails={setClinicalDetails}
+          developmentalHistory={developmentalHistory}
+          setDevelopmentalHistory={setDevelopmentalHistory}
+          tocVisible={tocVisible}
+          tocItems={getCurrentTabToc()}
+          onSelectItem={scrollToSection}
+        />
+      )}
+    </div>
+  );
 };
+
 export default ClinicalTabsSection;

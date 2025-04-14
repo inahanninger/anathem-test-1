@@ -197,7 +197,9 @@ Patient describes childhood household as "tense but functional" with parents who
       
       <div className="container max-w-5xl mx-auto py-8 px-6">
         <div className="flex">
-          
+          <aside className="w-64 sticky top-5 self-start pr-6 hidden md:block">
+            <TableOfContents items={progressNotesToc} onSelectItem={scrollToSection} />
+          </aside>
           
           <div className="flex-1 min-w-0 space-y-6">
             <ClinicalTabsSection progressNotes={progressNotes} setProgressNotes={setProgressNotes} clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} />
