@@ -8,55 +8,63 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-const consultations = [{
-  id: 1,
-  patientName: "John Doe",
-  appointmentType: "ADHD/Autism Combined",
-  files: 5,
-  status: "Review drafts",
-  statusType: "review",
-  date: "18/11/23, 9:34 am"
-}, {
-  id: 2,
-  patientName: "John Doe",
-  appointmentType: "ADHD/Autism Combined",
-  files: 1,
-  status: "Generate Drafts",
-  statusType: "generate",
-  date: "18/11/23, 9:34 am"
-}, {
-  id: 3,
-  patientName: "Cody Fisher",
-  appointmentType: "ADHD/Autism Combined",
-  files: 0,
-  status: "Generate Drafts",
-  statusType: "generate",
-  date: "18/11/23, 9:34 am"
-}, {
-  id: 4,
-  patientName: "Floyd Miles",
-  appointmentType: "ADHD/Autism Combined",
-  files: 3,
-  status: "Scheduled",
-  statusType: "scheduled",
-  date: "18/11/23, 9:34 am"
-}, {
-  id: 5,
-  patientName: "Robert Brown",
-  appointmentType: "ADHD/Autism Combined",
-  files: 2,
-  status: "Generate Drafts",
-  statusType: "generate",
-  date: "17/11/23, 10:45 am"
-}];
+
+const consultations = [
+  {
+    id: 1,
+    patientName: "John Doe",
+    appointmentType: "ADHD/Autism Combined",
+    files: 5,
+    status: "Review drafts",
+    statusType: "review",
+    date: "18/11/23, 9:34 am"
+  },
+  {
+    id: 2,
+    patientName: "John Doe",
+    appointmentType: "ADHD/Autism Combined",
+    files: 1,
+    status: "Generate Drafts",
+    statusType: "generate",
+    date: "18/11/23, 9:34 am"
+  },
+  {
+    id: 3,
+    patientName: "Cody Fisher",
+    appointmentType: "ADHD/Autism Combined",
+    files: 0,
+    status: "Generate Drafts",
+    statusType: "generate",
+    date: "18/11/23, 9:34 am"
+  },
+  {
+    id: 4,
+    patientName: "Floyd Miles",
+    appointmentType: "ADHD/Autism Combined",
+    files: 3,
+    status: "Scheduled",
+    statusType: "scheduled",
+    date: "18/11/23, 9:34 am"
+  },
+  {
+    id: 5,
+    patientName: "Robert Brown",
+    appointmentType: "ADHD/Autism Combined",
+    files: 2,
+    status: "Generate Drafts",
+    statusType: "generate",
+    date: "17/11/23, 10:45 am"
+  }
+];
+
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState("Consultations");
 
-  // Get current date in the format "Today, Day, DD Month"
   const today = new Date();
   const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const formattedDate = `Today, ${dayNames[today.getDay()]}, ${today.getDate()} ${monthNames[today.getMonth()]}`;
+
   return <div className="min-h-screen bg-white">
       <div className="container max-w-6xl px-4 pt-8 pb-12 mx-auto">
         <h1 className="font-bold mb-6 text-neutral-900 text-xl">{formattedDate}</h1>
@@ -88,7 +96,7 @@ const HomePage = () => {
               <p className="text-sm text-gray-600 mb-6">Generate reports with multiple file uploads and consultation recordings.</p>
               
               <Button asChild className="w-full bg-blue-600 hover:bg-blue-700">
-                <Link to="/generate" className="flex items-center justify-center gap-2">
+                <Link to="/workflow/upload" className="flex items-center justify-center gap-2">
                   Create Report
                 </Link>
               </Button>
@@ -200,4 +208,5 @@ const HomePage = () => {
       </div>
     </div>;
 };
+
 export default HomePage;
