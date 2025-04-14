@@ -114,23 +114,7 @@ const GenerateAssessmentPage = () => {
               </div>
             </div>
             
-            <div>
-              <Label className="text-body font-semibold mb-3 block">Summary Type</Label>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="brief" checked={summaryTypes.includes("brief")} onCheckedChange={() => handleSummaryTypeChange("brief")} />
-                  <Label htmlFor="brief" className="text-base text-sm">Brief</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="detailed" checked={summaryTypes.includes("detailed")} onCheckedChange={() => handleSummaryTypeChange("detailed")} />
-                  <Label htmlFor="detailed" className="text-base text-sm">Detailed</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="mental-state" checked={summaryTypes.includes("mental-state")} onCheckedChange={() => handleSummaryTypeChange("mental-state")} />
-                  <Label htmlFor="mental-state" className="text-base text-sm">Mental state examination</Label>
-                </div>
-              </div>
-            </div>
+            
           </div>
           
           <div className="mt-8">
