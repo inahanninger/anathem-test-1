@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,15 +9,22 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbS
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
-
-const workflowSteps = [
-  { name: "Upload", path: "/workflow/upload" },
-  { name: "Review", path: "/workflow/review" },
-  { name: "Transcribe", path: "/workflow/transcribe" },
-  { name: "Generate", path: "/workflow/generate" },
-  { name: "Report", path: "/workflow/report" }
-];
-
+const workflowSteps = [{
+  name: "Upload",
+  path: "/workflow/upload"
+}, {
+  name: "Review",
+  path: "/workflow/review"
+}, {
+  name: "Transcribe",
+  path: "/workflow/transcribe"
+}, {
+  name: "Generate",
+  path: "/workflow/generate"
+}, {
+  name: "Report",
+  path: "/workflow/report"
+}];
 const ReviewInformationPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
@@ -28,13 +34,10 @@ const ReviewInformationPage = () => {
   const [email, setEmail] = useState("james.wilson@example.com");
   const [medicalSummary, setMedicalSummary] = useState("Patient reports experiencing moderate depressive symptoms for approximately 3 months, including low mood, decreased interest in activities, and poor sleep. Patient also mentions occasional anxiety in social situations.");
   const [assessmentNotes, setAssessmentNotes] = useState("Initial assessment indicates mild to moderate depression with comorbid social anxiety. Patient is responsive to cognitive behavioral approaches and shows good insight into their condition.");
-
   const handleSave = () => {
     toast.success("Patient information saved");
   };
-
-  return (
-    <div className="min-h-screen bg-white">
+  return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 px-6 bg-white py-4">
         <div className="container max-w-5xl mx-auto">
           <Breadcrumb>
@@ -106,32 +109,20 @@ const ReviewInformationPage = () => {
           <Button onClick={handleSave} className="w-full md:w-auto">Save Patient Details</Button>
         </Card>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-8">
           <Card className="p-6">
             <h2 className="text-lg font-semibold mb-4">Medical Summary</h2>
-            <Textarea 
-              value={medicalSummary} 
-              onChange={e => setMedicalSummary(e.target.value)}
-              className="min-h-[200px] mb-4"
-              placeholder="Enter medical summary here..."
-            />
+            <Textarea value={medicalSummary} onChange={e => setMedicalSummary(e.target.value)} className="min-h-[200px] mb-4" placeholder="Enter medical summary here..." />
             <Button onClick={handleSave}>Save Summary</Button>
           </Card>
           
           <Card className="p-6">
             <h2 className="text-lg font-semibold mb-4">Assessment Notes</h2>
-            <Textarea 
-              value={assessmentNotes} 
-              onChange={e => setAssessmentNotes(e.target.value)}
-              className="min-h-[200px] mb-4"
-              placeholder="Enter assessment notes here..."
-            />
+            <Textarea value={assessmentNotes} onChange={e => setAssessmentNotes(e.target.value)} className="min-h-[200px] mb-4" placeholder="Enter assessment notes here..." />
             <Button onClick={handleSave}>Save Notes</Button>
           </Card>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default ReviewInformationPage;
