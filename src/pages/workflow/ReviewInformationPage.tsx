@@ -74,7 +74,7 @@ const ReviewInformationPage = () => {
       
       <div className="container max-w-5xl mx-auto px-6 py-8">
         <h1 className="font-bold mb-1 text-lg">Review Patient Information</h1>
-        <p className="text-gray-600 mb-8">
+        <p className="text-gray-600 mb-8 text-sm">
           Please review and update the patient information below.
         </p>
         
