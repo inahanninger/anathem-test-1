@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { BookOpenIcon, PlusIcon } from "lucide-react";
+import { BookOpenIcon, PlusIcon, SaveIcon } from "lucide-react";
 import { toast } from "sonner";
 
 interface ActionButtonsProps {
@@ -11,6 +11,10 @@ interface ActionButtonsProps {
 const ActionButtons = ({ showSources, handleViewSources }: ActionButtonsProps) => {
   const handleGenerateMoreNotes = () => {
     toast.success("Generating additional notes...");
+  };
+
+  const handleSaveDetails = () => {
+    toast.success("Patient details saved successfully");
   };
 
   return (
@@ -32,6 +36,15 @@ const ActionButtons = ({ showSources, handleViewSources }: ActionButtonsProps) =
       >
         <PlusIcon className="h-4 w-4" />
         <span className="text-xs">Generate</span>
+      </Button>
+      <Button 
+        variant="default" 
+        size="sm" 
+        className="h-8 gap-1" 
+        onClick={handleSaveDetails}
+      >
+        <SaveIcon className="h-4 w-4" />
+        <span className="text-xs">Save</span>
       </Button>
     </div>
   );
