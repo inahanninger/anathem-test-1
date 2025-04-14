@@ -191,11 +191,13 @@ Patient describes childhood household as "tense but functional" with parents who
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/risk" className="text-xs text-neutral-600">Generate</BreadcrumbLink>
+                <BreadcrumbLink href="/risk" className="text-xs text-neutral-600">
+                  Risk Assessment
+                </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage className="font-medium text-xs">Review</BreadcrumbPage>
+                <BreadcrumbPage className="font-medium text-xs">Summary View</BreadcrumbPage>
               </BreadcrumbItem>
               <BreadcrumbItem className="ml-auto">
                 <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
