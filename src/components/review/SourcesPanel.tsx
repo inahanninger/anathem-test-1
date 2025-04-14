@@ -24,7 +24,7 @@ const SourcesPanel = ({
           </TabsTrigger>
         </TabsList>
         
-        <TabsContent value="transcript" className="m-0 p-4 px-4 text-sm overflow-auto flex-1">
+        <TabsContent value="transcript" className="m-0 p-4 text-sm overflow-auto flex-1 px-[4px]">
           <div className="space-y-4">
             <div className="flex justify-between items-start py-2 border-b border-gray-100">
               <div>
