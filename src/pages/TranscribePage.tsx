@@ -1,4 +1,3 @@
-
 import { useState, useRef } from "react";
 import { ArrowRightIcon, MicIcon, UploadIcon, SettingsIcon, FileTextIcon, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,9 +10,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import FormProgress from "@/components/FormProgress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-
 type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
-
 interface FileUpload {
   id: string;
   name: string;
@@ -21,7 +18,6 @@ interface FileUpload {
   dateUploaded: Date;
   size: number;
 }
-
 const TranscribePage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
@@ -31,47 +27,40 @@ const TranscribePage = () => {
   const [clinicalNotes, setClinicalNotes] = useState("");
   const [activeTab, setActiveTab] = useState<string>("clinical-notes");
   const [isDragging, setIsDragging] = useState(false);
-  
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
   const completedSections = 1;
   const totalSections = 6;
-
   const handleFileUpload = (files: FileList | null) => {
     if (!files || files.length === 0) return;
-    
     Array.from(files).forEach(file => {
       // Create new file upload
       const newUpload: FileUpload = {
         id: crypto.randomUUID(),
         name: file.name,
-        type: "", // Empty by default, user will select from dropdown
+        type: "",
+        // Empty by default, user will select from dropdown
         dateUploaded: new Date(),
         size: file.size
       };
-      
       setUploads(prev => [...prev, newUpload]);
       toast.success(`${file.name} uploaded successfully`);
     });
   };
-  
   const handleFileTypeChange = (fileId: string, type: string) => {
-    setUploads(uploads.map(upload => 
-      upload.id === fileId ? { ...upload, type: type as UploadType } : upload
-    ));
+    setUploads(uploads.map(upload => upload.id === fileId ? {
+      ...upload,
+      type: type as UploadType
+    } : upload));
   };
-
   const handleDeleteFile = (fileId: string) => {
     setUploads(uploads.filter(upload => upload.id !== fileId));
     toast.success("File deleted successfully");
   };
-  
   const formatFileSize = (bytes: number) => {
     if (bytes < 1024) return `${bytes} bytes`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
-  
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("en-GB", {
       day: "numeric",
@@ -79,7 +68,6 @@ const TranscribePage = () => {
       year: "numeric"
     });
   };
-  
   const toggleRecording = () => {
     if (isRecording) {
       setIsRecording(false);
@@ -92,7 +80,6 @@ const TranscribePage = () => {
       setTranscription("");
     }
   };
-  
   const handleContinue = () => {
     if (uploads.length === 0 && !transcription) {
       toast.error("Please upload a file or create a transcription");
@@ -101,31 +88,24 @@ const TranscribePage = () => {
     toast.success("Continuing to Generate Report");
     window.location.href = "/generate";
   };
-  
   const handleClickUpload = () => {
     fileInputRef.current?.click();
   };
-  
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(true);
   };
-  
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
   };
-  
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
-    
     const files = e.dataTransfer.files;
     handleFileUpload(files);
   };
-
-  return (
-    <div className="min-h-screen bg-white">
+  return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 px-6 bg-white py-0">
         <div className="container max-w-5xl mx-auto">
           <Breadcrumb className="py-2">
@@ -197,14 +177,10 @@ const TranscribePage = () => {
                 </div>
               </div>
               <div className="p-4 min-h-[400px] bg-white">
-                {transcription ? (
-                  <div className="p-4">{transcription}</div>
-                ) : (
-                  <div className="flex flex-col items-center justify-center h-full text-center p-8 text-gray-500 bg-gray-50 rounded-md">
+                {transcription ? <div className="p-4 text-sm">{transcription}</div> : <div className="flex flex-col items-center justify-center h-full text-center p-8 text-gray-500 bg-gray-50 rounded-md">
                     <p className="text-sm">Click the button above to start recording your consultation.</p>
                     <p className="text-sm">Transcription will appear here once active.</p>
-                  </div>
-                )}
+                  </div>}
               </div>
             </Card>
           </div>
@@ -227,12 +203,7 @@ const TranscribePage = () => {
                 </div>
                 
                 <TabsContent value="clinical-notes" className="p-4 min-h-[400px] m-0 border-0">
-                  <Textarea 
-                    placeholder="Enter clinical notes here..." 
-                    value={clinicalNotes} 
-                    onChange={e => setClinicalNotes(e.target.value)} 
-                    className="min-h-[370px] resize-none border-0 focus-visible:ring-0" 
-                  />
+                  <Textarea placeholder="Enter clinical notes here..." value={clinicalNotes} onChange={e => setClinicalNotes(e.target.value)} className="min-h-[370px] resize-none border-0 focus-visible:ring-0" />
                   <div className="text-xs text-gray-400 mt-2 text-right">
                     Changes are automatically saved
                   </div>
@@ -240,33 +211,19 @@ const TranscribePage = () => {
                 
                 <TabsContent value="file-upload" className="m-0 p-4 min-h-[400px] border-0">
                   {/* Drag and drop area */}
-                  <div 
-                    className={`border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center mb-4 transition-colors h-48
-                      ${isDragging ? 'bg-blue-50 border-blue-300' : 'border-gray-300 bg-gray-50'}`}
-                    onDragOver={handleDragOver}
-                    onDragLeave={handleDragLeave}
-                    onDrop={handleDrop}
-                    onClick={handleClickUpload}
-                  >
-                    <input 
-                      type="file" 
-                      ref={fileInputRef}
-                      onChange={(e) => handleFileUpload(e.target.files)}
-                      className="hidden" 
-                      multiple 
-                    />
+                  <div className={`border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center mb-4 transition-colors h-48
+                      ${isDragging ? 'bg-blue-50 border-blue-300' : 'border-gray-300 bg-gray-50'}`} onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop} onClick={handleClickUpload}>
+                    <input type="file" ref={fileInputRef} onChange={e => handleFileUpload(e.target.files)} className="hidden" multiple />
                     <UploadIcon className="h-12 w-12 text-gray-400 mb-4" />
                     <p className="text-blue-600 font-medium mb-2">Click to upload or drag and drop</p>
                     <p className="text-gray-500 text-sm">PDF, DOC, DOCX, JPG, PNG up to 10MB</p>
                   </div>
                   
                   {/* Uploaded files list */}
-                  {uploads.length > 0 && (
-                    <div>
+                  {uploads.length > 0 && <div>
                       <h3 className="font-medium text-lg mb-3">Uploaded Documents</h3>
                       <div className="space-y-3">
-                        {uploads.map((file) => (
-                          <div key={file.id} className="border rounded-lg p-4 flex items-center justify-between bg-white">
+                        {uploads.map(file => <div key={file.id} className="border rounded-lg p-4 flex items-center justify-between bg-white">
                             <div className="flex items-center space-x-3">
                               <div className="bg-blue-50 p-3 rounded-lg">
                                 <FileTextIcon className="h-6 w-6 text-blue-600" />
@@ -277,10 +234,7 @@ const TranscribePage = () => {
                               </div>
                             </div>
                             <div className="flex items-center space-x-2">
-                              <Select 
-                                value={file.type} 
-                                onValueChange={(value) => handleFileTypeChange(file.id, value)}
-                              >
+                              <Select value={file.type} onValueChange={value => handleFileTypeChange(file.id, value)}>
                                 <SelectTrigger className="w-44">
                                   <SelectValue placeholder="Select category" />
                                 </SelectTrigger>
@@ -291,27 +245,19 @@ const TranscribePage = () => {
                                   <SelectItem value="patient notes">Patient Notes</SelectItem>
                                 </SelectContent>
                               </Select>
-                              <Button 
-                                variant="ghost" 
-                                size="icon"
-                                onClick={() => handleDeleteFile(file.id)}
-                              >
+                              <Button variant="ghost" size="icon" onClick={() => handleDeleteFile(file.id)}>
                                 <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
                               </Button>
                             </div>
-                          </div>
-                        ))}
+                          </div>)}
                       </div>
-                    </div>
-                  )}
+                    </div>}
                 </TabsContent>
               </Tabs>
             </Card>
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default TranscribePage;
