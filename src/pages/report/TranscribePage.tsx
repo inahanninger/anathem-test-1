@@ -94,120 +94,126 @@ export default function TranscribePage() {
   };
 
   return (
-    <div className="container px-4 py-8 max-w-6xl mx-auto">
-      <div className="mb-8">
-        <Stepper steps={steps} currentStep={3} />
+    <div className="min-h-screen bg-white">
+      <div className="border-b border-gray-100 px-6 bg-white py-3">
+        <div className="container max-w-5xl mx-auto">
+          <div className="mb-6 mt-4">
+            <Stepper steps={steps} currentStep={3} />
+          </div>
+        </div>
       </div>
 
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle className="text-xl text-blue-800">Consultation Recording</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col items-center space-y-6">
-            <div className="flex flex-col items-center">
-              {recordingState === RecordingState.INACTIVE ? (
-                <div className="mb-4 text-center">
-                  <Mic className="h-16 w-16 mx-auto text-blue-800 mb-2" />
-                  <p className="text-gray-600">Click below to start recording your consultation</p>
-                </div>
-              ) : (
-                <div className="mb-4 text-center">
-                  <div className="relative">
-                    <Mic className={`h-16 w-16 mx-auto ${recordingState === RecordingState.RECORDING ? 'text-red-500' : 'text-blue-800'}`} />
-                    {recordingState === RecordingState.RECORDING && (
-                      <span className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <span className="animate-ping absolute h-12 w-12 rounded-full bg-red-400 opacity-75"></span>
-                      </span>
-                    )}
+      <div className="container max-w-5xl mx-auto px-6 py-6">
+        <Card className="mb-6 shadow-sm border-gray-100">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-xl font-semibold text-blue-800">Consultation Recording</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-col items-center space-y-6">
+              <div className="flex flex-col items-center">
+                {recordingState === RecordingState.INACTIVE ? (
+                  <div className="mb-4 text-center">
+                    <Mic className="h-16 w-16 mx-auto text-blue-800 mb-2" />
+                    <p className="text-gray-600">Click below to start recording your consultation</p>
                   </div>
-                  <p className="text-xl font-medium mt-2">{formatTime(recordingTime)}</p>
-                </div>
-              )}
-
-              <div className="flex gap-4">
-                {recordingState === RecordingState.INACTIVE && (
-                  <Button 
-                    onClick={startRecording} 
-                    className="bg-red-500 hover:bg-red-600 text-white"
-                  >
-                    Start Recording
-                  </Button>
+                ) : (
+                  <div className="mb-4 text-center">
+                    <div className="relative">
+                      <Mic className={`h-16 w-16 mx-auto ${recordingState === RecordingState.RECORDING ? 'text-red-500' : 'text-blue-800'}`} />
+                      {recordingState === RecordingState.RECORDING && (
+                        <span className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                          <span className="animate-ping absolute h-12 w-12 rounded-full bg-red-400 opacity-75"></span>
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xl font-medium mt-2">{formatTime(recordingTime)}</p>
+                  </div>
                 )}
-                
-                {(recordingState === RecordingState.RECORDING || recordingState === RecordingState.PAUSED) && (
-                  <>
+
+                <div className="flex gap-4">
+                  {recordingState === RecordingState.INACTIVE && (
                     <Button 
-                      onClick={pauseRecording} 
+                      onClick={startRecording} 
+                      className="bg-red-500 hover:bg-red-600 text-white"
+                    >
+                      Start Recording
+                    </Button>
+                  )}
+                  
+                  {(recordingState === RecordingState.RECORDING || recordingState === RecordingState.PAUSED) && (
+                    <>
+                      <Button 
+                        onClick={pauseRecording} 
+                        variant="outline"
+                        className="border-gray-300"
+                      >
+                        {recordingState === RecordingState.RECORDING ? (
+                          <><Pause className="h-4 w-4 mr-2" /> Pause</>
+                        ) : (
+                          <><Play className="h-4 w-4 mr-2" /> Resume</>
+                        )}
+                      </Button>
+                      
+                      <Button 
+                        onClick={stopRecording}
+                        variant="outline"
+                        className="border-gray-300"
+                      >
+                        <Square className="h-4 w-4 mr-2" /> Stop
+                      </Button>
+                    </>
+                  )}
+
+                  {recordingState === RecordingState.COMPLETED && (
+                    <Button 
+                      onClick={togglePlayback} 
                       variant="outline"
                       className="border-gray-300"
                     >
-                      {recordingState === RecordingState.RECORDING ? (
+                      {isPlaying ? (
                         <><Pause className="h-4 w-4 mr-2" /> Pause</>
                       ) : (
-                        <><Play className="h-4 w-4 mr-2" /> Resume</>
+                        <><Play className="h-4 w-4 mr-2" /> Play Recording</>
                       )}
                     </Button>
-                    
-                    <Button 
-                      onClick={stopRecording}
-                      variant="outline"
-                      className="border-gray-300"
-                    >
-                      <Square className="h-4 w-4 mr-2" /> Stop
-                    </Button>
-                  </>
-                )}
-
-                {recordingState === RecordingState.COMPLETED && (
-                  <Button 
-                    onClick={togglePlayback} 
-                    variant="outline"
-                    className="border-gray-300"
-                  >
-                    {isPlaying ? (
-                      <><Pause className="h-4 w-4 mr-2" /> Pause</>
-                    ) : (
-                      <><Play className="h-4 w-4 mr-2" /> Play Recording</>
-                    )}
-                  </Button>
-                )}
+                  )}
+                </div>
               </div>
+
+              {recordingState === RecordingState.COMPLETED && (
+                <div className="w-full mt-8">
+                  <h3 className="text-lg font-medium mb-2">Transcription</h3>
+                  <Textarea 
+                    value={transcription} 
+                    onChange={(e) => setTranscription(e.target.value)}
+                    className="min-h-[200px]"
+                    placeholder="Transcription will appear here..."
+                  />
+                  <p className="text-sm text-gray-500 mt-2">
+                    You can edit the transcription text as needed for accuracy.
+                  </p>
+                </div>
+              )}
             </div>
+          </CardContent>
+        </Card>
 
-            {recordingState === RecordingState.COMPLETED && (
-              <div className="w-full mt-8">
-                <h3 className="text-lg font-medium mb-2">Transcription</h3>
-                <Textarea 
-                  value={transcription} 
-                  onChange={(e) => setTranscription(e.target.value)}
-                  className="min-h-[200px]"
-                  placeholder="Transcription will appear here..."
-                />
-                <p className="text-sm text-gray-500 mt-2">
-                  You can edit the transcription text as needed for accuracy.
-                </p>
-              </div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-
-      <div className="flex justify-between mt-8">
-        <Button 
-          variant="outline" 
-          onClick={() => navigate("/report/review")}
-          className="flex items-center gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" /> Back
-        </Button>
-        <Button 
-          onClick={() => navigate("/report/select")}
-          className="flex items-center gap-2"
-          disabled={recordingState !== RecordingState.COMPLETED}
-        >
-          Continue <ArrowRight className="h-4 w-4" />
-        </Button>
+        <div className="flex justify-between mt-8">
+          <Button 
+            variant="outline" 
+            onClick={() => navigate("/report/review")}
+            className="flex items-center gap-2 border-gray-300 text-gray-700"
+          >
+            <ArrowLeft className="h-4 w-4" /> Back
+          </Button>
+          <Button 
+            onClick={() => navigate("/report/select")}
+            className="flex items-center gap-2 bg-blue-800 hover:bg-blue-900"
+            disabled={recordingState !== RecordingState.COMPLETED}
+          >
+            Continue <ArrowRight className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
     </div>
   );

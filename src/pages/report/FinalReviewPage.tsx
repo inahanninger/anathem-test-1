@@ -1,9 +1,9 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, CheckCircle, Split, FileText, Download } from "lucide-react";
+import { ArrowLeft, CheckCircle, FileText, Download } from "lucide-react";
 import Stepper from "@/components/Stepper";
 import { Switch } from "@/components/ui/switch";
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
@@ -86,84 +86,90 @@ export default function FinalReviewPage() {
   };
 
   return (
-    <div className="container px-4 py-8 max-w-6xl mx-auto">
-      <div className="mb-8">
-        <Stepper steps={steps} currentStep={5} />
-      </div>
-
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold text-blue-800">Final Report Review</h2>
-        <div className="flex items-center space-x-2">
-          <span className="text-sm text-gray-600">Split View</span>
-          <Switch checked={splitView} onCheckedChange={toggleSplitView} />
+    <div className="min-h-screen bg-white">
+      <div className="border-b border-gray-100 px-6 bg-white py-3">
+        <div className="container max-w-5xl mx-auto">
+          <div className="mb-6 mt-4">
+            <Stepper steps={steps} currentStep={5} />
+          </div>
         </div>
       </div>
 
-      {splitView ? (
-        <ResizablePanelGroup 
-          direction="horizontal" 
-          className="min-h-[500px] border rounded-lg"
-        >
-          <ResizablePanel defaultSize={50} minSize={30}>
-            <div className="h-full p-4 bg-white">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="font-medium">Edit</h3>
-                <FileText className="h-4 w-4 text-gray-500" />
+      <div className="container max-w-5xl mx-auto px-6 py-6">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold text-blue-800">Final Report Review</h2>
+          <div className="flex items-center space-x-2">
+            <span className="text-sm text-gray-600">Split View</span>
+            <Switch checked={splitView} onCheckedChange={toggleSplitView} />
+          </div>
+        </div>
+
+        {splitView ? (
+          <ResizablePanelGroup 
+            direction="horizontal" 
+            className="min-h-[500px] border rounded-lg"
+          >
+            <ResizablePanel defaultSize={50} minSize={30}>
+              <div className="h-full p-4 bg-white">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="font-medium">Edit</h3>
+                  <FileText className="h-4 w-4 text-gray-500" />
+                </div>
+                <Textarea 
+                  value={reportContent} 
+                  onChange={handleReportChange} 
+                  className="h-[calc(100%-30px)] font-mono text-sm resize-none border-0 focus-visible:ring-0 p-0"
+                />
               </div>
+            </ResizablePanel>
+            <ResizableHandle withHandle className="bg-gray-200" />
+            <ResizablePanel defaultSize={50} minSize={30}>
+              <div className="h-full p-4 overflow-y-auto bg-gray-50">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="font-medium">Preview</h3>
+                  <FileText className="h-4 w-4 text-gray-500" />
+                </div>
+                <div 
+                  className="prose max-w-none" 
+                  dangerouslySetInnerHTML={{ __html: previewHTML }} 
+                />
+              </div>
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        ) : (
+          <Card className="shadow-sm border-gray-100">
+            <CardContent className="p-6">
               <Textarea 
                 value={reportContent} 
                 onChange={handleReportChange} 
-                className="h-[calc(100%-30px)] font-mono text-sm resize-none border-0 focus-visible:ring-0 p-0"
+                className="min-h-[500px] font-mono text-sm"
               />
-            </div>
-          </ResizablePanel>
-          <ResizableHandle withHandle />
-          <ResizablePanel defaultSize={50} minSize={30}>
-            <div className="h-full p-4 overflow-y-auto bg-gray-50">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="font-medium">Preview</h3>
-                <FileText className="h-4 w-4 text-gray-500" />
-              </div>
-              <div 
-                className="prose max-w-none" 
-                dangerouslySetInnerHTML={{ __html: previewHTML }} 
-              />
-            </div>
-          </ResizablePanel>
-        </ResizablePanelGroup>
-      ) : (
-        <Card>
-          <CardContent className="p-6">
-            <Textarea 
-              value={reportContent} 
-              onChange={handleReportChange} 
-              className="min-h-[500px] font-mono text-sm"
-            />
-          </CardContent>
-        </Card>
-      )}
+            </CardContent>
+          </Card>
+        )}
 
-      <div className="flex justify-between mt-8">
-        <Button 
-          variant="outline" 
-          onClick={() => navigate("/report/select")}
-          className="flex items-center gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" /> Back
-        </Button>
-        <div className="flex gap-3">
+        <div className="flex justify-between mt-8">
           <Button 
-            variant="outline"
-            className="flex items-center gap-2"
+            variant="outline" 
+            onClick={() => navigate("/report/select")}
+            className="flex items-center gap-2 border-gray-300 text-gray-700"
           >
-            <Download className="h-4 w-4" /> Export PDF
+            <ArrowLeft className="h-4 w-4" /> Back
           </Button>
-          <Button 
-            onClick={handleComplete}
-            className="flex items-center gap-2 bg-blue-800 hover:bg-blue-900"
-          >
-            <CheckCircle className="h-4 w-4" /> Complete Report
-          </Button>
+          <div className="flex gap-3">
+            <Button 
+              variant="outline"
+              className="flex items-center gap-2 border-gray-300 text-gray-700"
+            >
+              <Download className="h-4 w-4" /> Export PDF
+            </Button>
+            <Button 
+              onClick={handleComplete}
+              className="flex items-center gap-2 bg-blue-800 hover:bg-blue-900"
+            >
+              <CheckCircle className="h-4 w-4" /> Complete Report
+            </Button>
+          </div>
         </div>
       </div>
     </div>

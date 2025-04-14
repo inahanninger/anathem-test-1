@@ -63,68 +63,74 @@ export default function SelectReportPage() {
   };
 
   return (
-    <div className="container px-4 py-8 max-w-6xl mx-auto">
-      <div className="mb-8">
-        <Stepper steps={steps} currentStep={4} />
+    <div className="min-h-screen bg-white">
+      <div className="border-b border-gray-100 px-6 bg-white py-3">
+        <div className="container max-w-5xl mx-auto">
+          <div className="mb-6 mt-4">
+            <Stepper steps={steps} currentStep={4} />
+          </div>
+        </div>
       </div>
 
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle className="text-xl text-blue-800">Select Report Type</CardTitle>
-          <CardDescription>
-            Choose the type of report you want to generate based on the collected information
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {reportTypes.map((reportType) => (
-              <Card 
-                key={reportType.id}
-                className={`cursor-pointer transition-all duration-200 hover:shadow-md ${
-                  selectedReportType === reportType.id 
-                    ? 'border-blue-800 ring-2 ring-blue-800 ring-opacity-50' 
-                    : 'border-gray-200'
-                }`}
-                onClick={() => handleSelectReport(reportType.id)}
-              >
-                <CardContent className="pt-6 relative">
-                  {reportType.recommended && (
-                    <span className="absolute top-0 right-0 transform translate-x-1 -translate-y-1/2 bg-blue-800 text-white text-xs px-2 py-0.5 rounded-full">
-                      Recommended
-                    </span>
-                  )}
-                  <div className="flex items-start space-x-4">
-                    <div className="text-3xl">{reportType.icon}</div>
-                    <div className="flex-1">
-                      <h3 className="font-medium">{reportType.title}</h3>
-                      <p className="text-sm text-gray-600 mt-1">{reportType.description}</p>
-                    </div>
-                    {selectedReportType === reportType.id && (
-                      <CheckCircle2 className="h-5 w-5 text-blue-800" />
+      <div className="container max-w-5xl mx-auto px-6 py-6">
+        <Card className="mb-6 shadow-sm border-gray-100">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-xl font-semibold text-blue-800">Select Report Type</CardTitle>
+            <CardDescription>
+              Choose the type of report you want to generate based on the collected information
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {reportTypes.map((reportType) => (
+                <Card 
+                  key={reportType.id}
+                  className={`cursor-pointer transition-all duration-200 hover:shadow-md ${
+                    selectedReportType === reportType.id 
+                      ? 'border-blue-800 ring-2 ring-blue-800 ring-opacity-50' 
+                      : 'border-gray-200'
+                  }`}
+                  onClick={() => handleSelectReport(reportType.id)}
+                >
+                  <CardContent className="pt-6 relative">
+                    {reportType.recommended && (
+                      <span className="absolute top-0 right-0 transform translate-x-1 -translate-y-1/2 bg-blue-800 text-white text-xs px-2 py-0.5 rounded-full">
+                        Recommended
+                      </span>
                     )}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+                    <div className="flex items-start space-x-4">
+                      <div className="text-3xl">{reportType.icon}</div>
+                      <div className="flex-1">
+                        <h3 className="font-medium">{reportType.title}</h3>
+                        <p className="text-sm text-gray-600 mt-1">{reportType.description}</p>
+                      </div>
+                      {selectedReportType === reportType.id && (
+                        <CheckCircle2 className="h-5 w-5 text-blue-800" />
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
-      <div className="flex justify-between mt-8">
-        <Button 
-          variant="outline" 
-          onClick={() => navigate("/report/transcribe")}
-          className="flex items-center gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" /> Back
-        </Button>
-        <Button 
-          onClick={() => navigate("/report/final-review")}
-          className="flex items-center gap-2"
-          disabled={!selectedReportType}
-        >
-          Continue <ArrowRight className="h-4 w-4" />
-        </Button>
+        <div className="flex justify-between mt-8">
+          <Button 
+            variant="outline" 
+            onClick={() => navigate("/report/transcribe")}
+            className="flex items-center gap-2 border-gray-300 text-gray-700"
+          >
+            <ArrowLeft className="h-4 w-4" /> Back
+          </Button>
+          <Button 
+            onClick={() => navigate("/report/final-review")}
+            className="flex items-center gap-2 bg-blue-800 hover:bg-blue-900"
+            disabled={!selectedReportType}
+          >
+            Continue <ArrowRight className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
     </div>
   );

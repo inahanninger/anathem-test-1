@@ -90,77 +90,85 @@ export default function UploadPage() {
   };
 
   return (
-    <div className="container px-4 py-8 max-w-6xl mx-auto">
-      <div className="mb-8">
-        <Stepper steps={steps} currentStep={1} />
+    <div className="min-h-screen bg-white">
+      <div className="border-b border-gray-100 px-6 bg-white py-3">
+        <div className="container max-w-5xl mx-auto">
+          <div className="mb-6 mt-4">
+            <Stepper steps={steps} currentStep={1} />
+          </div>
+        </div>
       </div>
 
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle className="text-xl text-blue-800">Upload Supporting Documents</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-            className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-              isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300"
-            }`}
-          >
-            <Upload className="h-12 w-12 mx-auto text-blue-800 mb-4" />
-            <h3 className="text-lg font-medium mb-2">Drag and drop files here</h3>
-            <p className="text-gray-500 mb-4">or click to browse</p>
-            <Button>
-              <input
-                type="file"
-                multiple
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                onChange={handleFileSelect}
-              />
-              Browse Files
-            </Button>
-            <p className="text-xs text-gray-400 mt-3">
-              Supported formats: PDF, DOC, DOCX, JPG, PNG (Max 10MB)
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-
-      {uploadedFiles.length > 0 && (
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle className="text-xl text-blue-800">Uploaded Documents</CardTitle>
+      <div className="container max-w-5xl mx-auto px-6 py-6">
+        <Card className="mb-6 shadow-sm border-gray-100">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-xl font-semibold text-blue-800">Upload Supporting Documents</CardTitle>
           </CardHeader>
           <CardContent>
-            <ul className="divide-y">
-              {uploadedFiles.map((file) => (
-                <li key={file.id} className="py-3 flex items-center justify-between">
-                  <div className="flex items-center">
-                    {getFileIcon(file.type)}
-                    <div className="ml-4">
-                      <p className="text-sm font-medium text-gray-900">{file.name}</p>
-                      <p className="text-xs text-gray-500">{formatFileSize(file.size)}</p>
-                    </div>
-                  </div>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={() => removeFile(file.id)}
-                    className="text-gray-500"
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                </li>
-              ))}
-            </ul>
+            <div
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+                isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300"
+              }`}
+            >
+              <Upload className="h-12 w-12 mx-auto text-blue-800 mb-4" />
+              <h3 className="text-lg font-medium mb-2">Drag and drop files here</h3>
+              <p className="text-gray-500 mb-4">or click to browse</p>
+              <Button className="bg-blue-800 hover:bg-blue-900">
+                <input
+                  type="file"
+                  multiple
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  onChange={handleFileSelect}
+                />
+                Browse Files
+              </Button>
+              <p className="text-xs text-gray-400 mt-3">
+                Supported formats: PDF, DOC, DOCX, JPG, PNG (Max 10MB)
+              </p>
+            </div>
           </CardContent>
         </Card>
-      )}
 
-      <div className="flex justify-end mt-8 space-x-4">
-        <Button variant="outline">Cancel</Button>
-        <Button onClick={handleContinue}>Continue to Review</Button>
+        {uploadedFiles.length > 0 && (
+          <Card className="mb-6 shadow-sm border-gray-100">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-xl font-semibold text-blue-800">Uploaded Documents</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="divide-y">
+                {uploadedFiles.map((file) => (
+                  <li key={file.id} className="py-3 flex items-center justify-between">
+                    <div className="flex items-center">
+                      {getFileIcon(file.type)}
+                      <div className="ml-4">
+                        <p className="text-sm font-medium text-gray-900">{file.name}</p>
+                        <p className="text-xs text-gray-500">{formatFileSize(file.size)}</p>
+                      </div>
+                    </div>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => removeFile(file.id)}
+                      className="text-gray-500"
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        )}
+
+        <div className="flex justify-end mt-8 space-x-4">
+          <Button variant="outline" className="border-gray-300 text-gray-700">Cancel</Button>
+          <Button onClick={handleContinue} className="bg-blue-800 hover:bg-blue-900">
+            Continue to Review
+          </Button>
+        </div>
       </div>
     </div>
   );
