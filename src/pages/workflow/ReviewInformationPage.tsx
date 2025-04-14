@@ -111,13 +111,13 @@ const ReviewInformationPage = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-8">
           <Card className="p-6">
-            <h2 className="text-lg font-semibold mb-4">Medical Summary</h2>
+            <h2 className="text-lg font-semibold mb-4">QB Summary</h2>
             <Textarea value={medicalSummary} onChange={e => setMedicalSummary(e.target.value)} className="min-h-[200px] mb-4" placeholder="Enter medical summary here..." />
             
           </Card>
           
           <Card className="p-6">
-            <h2 className="text-lg font-semibold mb-4">Assessment Notes</h2>
+            <h2 className="text-lg font-semibold mb-4">Connor's Questionnaire Summary</h2>
             <Textarea value={assessmentNotes} onChange={e => setAssessmentNotes(e.target.value)} className="min-h-[200px] mb-4" placeholder="Enter assessment notes here..." />
             
           </Card>
