@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from "react";
 import { ArrowRightIcon, ArrowLeftIcon, MicIcon, UploadIcon, SettingsIcon, FileTextIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,21 +9,27 @@ import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-
-const workflowSteps = [
-  { name: "Upload", path: "/workflow/upload" },
-  { name: "Review", path: "/workflow/review" },
-  { name: "Transcribe", path: "/workflow/transcribe" },
-  { name: "Generate", path: "/workflow/generate" },
-  { name: "Report", path: "/workflow/report" }
-];
-
+const workflowSteps = [{
+  name: "Upload",
+  path: "/workflow/upload"
+}, {
+  name: "Review",
+  path: "/workflow/review"
+}, {
+  name: "Transcribe",
+  path: "/workflow/transcribe"
+}, {
+  name: "Generate",
+  path: "/workflow/generate"
+}, {
+  name: "Report",
+  path: "/workflow/report"
+}];
 const WorkflowTranscribePage = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [transcription, setTranscription] = useState("");
   const [clinicalNotes, setClinicalNotes] = useState("");
   const [activeTab, setActiveTab] = useState<string>("clinical-notes");
-
   const toggleRecording = () => {
     if (isRecording) {
       setIsRecording(false);
@@ -36,9 +41,7 @@ const WorkflowTranscribePage = () => {
       toast.success("Recording started");
     }
   };
-
-  return (
-    <div className="min-h-screen bg-white">
+  return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 px-6 bg-white py-4">
         <div className="container max-w-5xl mx-auto">
           <Breadcrumb>
@@ -74,8 +77,8 @@ const WorkflowTranscribePage = () => {
       </div>
       
       <div className="container max-w-5xl mx-auto px-6 py-8">
-        <h1 className="text-2xl font-bold mb-6">Transcribe Consultation</h1>
-        <p className="text-gray-600 mb-8">
+        <h1 className="font-bold mb-1 text-lg">Transcribe Consultation</h1>
+        <p className="text-gray-600 mb-8 text-sm">
           Record and transcribe your consultation or add clinical notes manually.
         </p>
         
@@ -87,10 +90,7 @@ const WorkflowTranscribePage = () => {
                 <h2 className="text-base font-semibold">Transcription</h2>
               </div>
               <div className="flex gap-2">
-                <Button 
-                  className={`px-4 ${isRecording ? 'bg-red-600 hover:bg-red-700' : 'bg-red-700 hover:bg-red-800'}`} 
-                  onClick={toggleRecording}
-                >
+                <Button className={`px-4 ${isRecording ? 'bg-red-600 hover:bg-red-700' : 'bg-red-700 hover:bg-red-800'}`} onClick={toggleRecording}>
                   <MicIcon className="w-4 h-4 mr-2" />
                   {isRecording ? 'Stop Recording' : 'Start Recording'}
                 </Button>
@@ -100,13 +100,9 @@ const WorkflowTranscribePage = () => {
               </div>
             </div>
             <div className="p-4 min-h-[400px] bg-white">
-              {transcription ? (
-                <div className="p-4 text-sm px-[8px] py-[8px]">{transcription}</div>
-              ) : (
-                <div className="flex flex-col items-center justify-center h-full text-center p-8 text-gray-500 bg-gray-50 rounded-md">
+              {transcription ? <div className="p-4 text-sm px-[8px] py-[8px]">{transcription}</div> : <div className="flex flex-col items-center justify-center h-full text-center p-8 text-gray-500 bg-gray-50 rounded-md">
                   <p className="text-sm">Click the button above to start recording your consultation. Transcription will appear here once active.</p>
-                </div>
-              )}
+                </div>}
             </div>
           </Card>
 
@@ -122,12 +118,7 @@ const WorkflowTranscribePage = () => {
               </div>
               
               <TabsContent value="clinical-notes" className="p-4 min-h-[400px] m-0 border-0">
-                <Textarea 
-                  placeholder="Enter clinical notes here..." 
-                  value={clinicalNotes} 
-                  onChange={e => setClinicalNotes(e.target.value)} 
-                  className="min-h-[370px] resize-none border-0 focus-visible:ring-0" 
-                />
+                <Textarea placeholder="Enter clinical notes here..." value={clinicalNotes} onChange={e => setClinicalNotes(e.target.value)} className="min-h-[370px] resize-none border-0 focus-visible:ring-0" />
                 <div className="text-xs text-gray-400 mt-2 text-right">
                   Changes are automatically saved
                 </div>
@@ -136,8 +127,6 @@ const WorkflowTranscribePage = () => {
           </Card>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default WorkflowTranscribePage;
