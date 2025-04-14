@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { CheckIcon, PencilIcon, XIcon } from "lucide-react";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
@@ -24,6 +23,18 @@ const EditableField = ({
   const [isEditing, setIsEditing] = useState(alwaysEditable);
   const [value, setValue] = useState(initialValue);
   const [previousValue, setPreviousValue] = useState(initialValue);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const adjustHeight = () => {
+      if (textareaRef.current) {
+        textareaRef.current.style.height = 'auto';
+        textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+      }
+    };
+
+    adjustHeight();
+  }, [value]);
 
   const handleStartEdit = () => {
     setPreviousValue(value);
@@ -49,18 +60,12 @@ const EditableField = ({
         <div className="space-y-2">
           {fieldType === "textarea" ? (
             <Textarea 
+              ref={textareaRef}
               value={value} 
               onChange={e => setValue(e.target.value)} 
               placeholder={placeholder} 
-              className="focus:ring-1 focus:ring-blue-400 border-gray-200 resize-none text-xs h-auto" 
-              autoFocus={false} 
+              className="focus:ring-1 focus:ring-blue-400 border-gray-200 resize-none text-xs h-auto min-h-[2.5rem]" 
               rows={1}
-              style={{ height: 'auto', minHeight: '2.5rem', overflow: 'hidden' }}
-              onInput={(e) => {
-                const target = e.target as HTMLTextAreaElement;
-                target.style.height = 'auto';
-                target.style.height = `${target.scrollHeight}px`;
-              }}
             />
           ) : (
             <Input 
@@ -68,7 +73,6 @@ const EditableField = ({
               onChange={e => setValue(e.target.value)} 
               placeholder={placeholder} 
               className="focus:ring-1 focus:ring-blue-400 border-gray-200 text-xs" 
-              autoFocus={false} 
             />
           )}
         </div>
@@ -82,10 +86,11 @@ const EditableField = ({
         <div className="space-y-2">
           {fieldType === "textarea" ? (
             <Textarea 
+              ref={textareaRef}
               value={value} 
               onChange={e => setValue(e.target.value)} 
               placeholder={placeholder} 
-              className="min-h-[120px] focus:ring-1 focus:ring-blue-400 border-gray-200 text-xs" 
+              className="focus:ring-1 focus:ring-blue-400 border-gray-200 resize-none text-xs h-auto min-h-[2.5rem]" 
               autoFocus 
             />
           ) : (
