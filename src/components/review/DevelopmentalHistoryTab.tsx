@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import EditableField from "@/components/EditableField";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -6,10 +7,12 @@ import { developmentalToc } from "./tabs/TabContentData";
 interface DevelopmentalHistoryTabProps {
   developmentalHistory: string;
   setDevelopmentalHistory: (value: string) => void;
+  showSources?: boolean;
 }
 const DevelopmentalHistoryTab = ({
   developmentalHistory,
-  setDevelopmentalHistory
+  setDevelopmentalHistory,
+  showSources = false
 }: DevelopmentalHistoryTabProps) => {
   // Parse the developmentalHistory into sections based on markdown headers
   const sections = {
@@ -66,10 +69,13 @@ ${medicalHistory}
     }
   };
   return <div className="flex">
-      <div className="w-1/4 pr-4 hidden md:block">
-        <TableOfContents items={developmentalToc} onSelectItem={scrollToSection} visible={true} />
-      </div>
-      <div className="flex-1">
+      {/* Hide the TableOfContents when showSources is true */}
+      {!showSources && (
+        <div className="w-1/4 pr-4 hidden md:block">
+          <TableOfContents items={developmentalToc} onSelectItem={scrollToSection} visible={true} />
+        </div>
+      )}
+      <div className={`${showSources ? "flex-1" : "flex-1"}`}>
         <ScrollArea className="h-[calc(100vh-220px)]">
           <div className="space-y-6">
             <div id="dev-1">

@@ -36,7 +36,11 @@ const TabsContentSection = ({
       </TabsContent>
       
       <TabsContent value="developmental-history" className={`m-0 p-4 ${padding} flex-1 overflow-auto`}>
-        <DevelopmentalHistoryTab developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} />
+        <DevelopmentalHistoryTab 
+          developmentalHistory={developmentalHistory} 
+          setDevelopmentalHistory={setDevelopmentalHistory} 
+          showSources={showSources}
+        />
       </TabsContent>
     </>
   );

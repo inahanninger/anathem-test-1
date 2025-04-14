@@ -1,3 +1,4 @@
+
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 import { Tabs } from "@/components/ui/tabs";
 import SourcesPanel from "../SourcesPanel";
@@ -31,7 +32,15 @@ const SplitView = ({
           <Tabs defaultValue="progress-notes" value={activeTab} onValueChange={setActiveTab} className="w-full h-full flex flex-col">
             <TabsHeader activeTab={activeTab} />
             
-            <TabsContentSection progressNotes={progressNotes} setProgressNotes={setProgressNotes} clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} showSources={true} />
+            <TabsContentSection 
+              progressNotes={progressNotes} 
+              setProgressNotes={setProgressNotes} 
+              clinicalDetails={clinicalDetails} 
+              setClinicalDetails={setClinicalDetails} 
+              developmentalHistory={developmentalHistory} 
+              setDevelopmentalHistory={setDevelopmentalHistory} 
+              showSources={showSources} 
+            />
           </Tabs>
         </div>
       </ResizablePanel>
