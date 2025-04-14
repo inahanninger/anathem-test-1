@@ -115,9 +115,7 @@ const TranscribePage = () => {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/risk" className="text-xs text-neutral-600">
-                  Risk Assessment
-                </BreadcrumbLink>
+                <BreadcrumbLink href="/risk" className="text-xs text-neutral-600">Generate</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
