@@ -176,8 +176,8 @@ const TranscribePage = () => {
               </div>
               <div className="p-4 min-h-[400px] bg-white">
                 {transcription ? <div className="p-4 text-sm px-[8px] py-[8px]">{transcription}</div> : <div className="flex flex-col items-center justify-center h-full text-center p-8 text-gray-500 bg-gray-50 rounded-md">
-                    <p className="text-sm">Click the button above to start recording your consultation.</p>
-                    <p className="text-sm">Transcription will appear here once active.</p>
+                    <p className="text-sm">Click the button above to start recording your consultation. Transcription will appear here once active.</p>
+                    
                   </div>}
               </div>
             </Card>
