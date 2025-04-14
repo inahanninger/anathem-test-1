@@ -164,7 +164,7 @@ const TranscribePage = () => {
               <div className="bg-gray-50 p-4 flex items-center justify-between border-b">
                 <div className="flex items-center gap-2">
                   <MicIcon className="w-5 h-5 text-blue-800" />
-                  <h2 className="text-lg font-medium">Transcription</h2>
+                  <h2 className="text-base font-semibold">Transcription</h2>
                 </div>
                 <div className="flex gap-2">
                   <Button className={`px-4 ${isRecording ? 'bg-red-600 hover:bg-red-700' : 'bg-red-700 hover:bg-red-800'}`} onClick={toggleRecording}>
