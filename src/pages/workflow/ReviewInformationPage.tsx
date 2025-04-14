@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -42,7 +41,7 @@ const ReviewInformationPage = () => {
     toast.success("Patient information saved");
   };
   return <div className="min-h-screen bg-white">
-      <div className="border-b border-gray-100 px-6 bg-white py-4">
+      <div className="border-b border-gray-100 px-6 bg-white py-[4px]">
         <div className="container max-w-5xl mx-auto">
           <Breadcrumb>
             <BreadcrumbList>
@@ -119,12 +118,7 @@ const ReviewInformationPage = () => {
             </div>
             <div className="md:col-span-2">
               <Label htmlFor="referralReason" className="mb-1 block">Reason for Referral</Label>
-              <Textarea 
-                id="referralReason" 
-                value={referralReason} 
-                onChange={e => setReferralReason(e.target.value)}
-                className="min-h-[100px]" 
-              />
+              <Textarea id="referralReason" value={referralReason} onChange={e => setReferralReason(e.target.value)} className="min-h-[100px]" />
             </div>
           </div>
           
