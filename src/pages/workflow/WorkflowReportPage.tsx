@@ -57,7 +57,8 @@ const WorkflowReportPage = () => {
       <div className="border-b border-gray-100 bg-gray-50/80 py-6 px-6">
         <div className="container max-w-5xl mx-auto">
           <div className="flex flex-col">
-            <div className="flex items-center gap-4 mb-6">
+            <StepProgress currentStep={5} steps={workflowSteps} />
+            <div className="flex items-center gap-4 mt-6">
               <div className="flex flex-col">
                 <label className="text-xs text-muted-foreground mb-1">Patient Name</label>
                 <div className="text-sm">James Wilson</div>
@@ -67,7 +68,6 @@ const WorkflowReportPage = () => {
                 <div className="text-sm">NHS123456789</div>
               </div>
             </div>
-            <StepProgress currentStep={5} steps={workflowSteps} />
           </div>
         </div>
       </div>
