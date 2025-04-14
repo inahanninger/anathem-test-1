@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -31,7 +30,6 @@ const GenerateAssessmentPage = () => {
   const [summaryTypes, setSummaryTypes] = useState<string[]>([]);
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
-  
   const handleAssessmentChange = (assessment: string) => {
     if (selectedAssessments.includes(assessment)) {
       setSelectedAssessments(selectedAssessments.filter(item => item !== assessment));
@@ -82,7 +80,7 @@ const GenerateAssessmentPage = () => {
         </div>
       </div>
 
-      <div className="border-b border-gray-100 bg-gray-50/80 py-6 px-6">
+      <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
         <div className="container max-w-5xl mx-auto">
           <div className="flex items-center gap-4">
             <div className="flex flex-col">
