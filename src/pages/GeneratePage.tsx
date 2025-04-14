@@ -96,10 +96,10 @@ const GeneratePage = () => {
         </div>
       </div>
       
-      <div className="container max-w-5xl mx-auto px-4 py-[12px]">
+      <div className="container max-w-5xl mx-auto px-4 py-[16px]">
         <h1 className="font-semibold mb-8 text-lg">Select the Drafts You Need</h1>
         
-        <Card className="p-6 mb-8">
+        <Card className="p-6 mb-8 py-[24px]">
           <div className="space-y-6">
             <div>
               <Label htmlFor="appointment-type" className="text-body font-semibold mb-2 block">Appointment type</Label>
