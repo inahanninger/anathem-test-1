@@ -50,16 +50,11 @@ const ClinicalTabsSection = ({
   };
 
   const getCurrentTabToc = () => {
-    switch (activeTab) {
-      case "progress-notes":
-        return progressNotesToc;
-      case "clinical-details":
-        return clinicalDetailsToc;
-      case "developmental-history":
-        return developmentalToc;
-      default:
-        return [];
+    // Only return table of contents for the developmental history tab
+    if (activeTab === "developmental-history") {
+      return developmentalToc;
     }
+    return [];
   };
 
   return (

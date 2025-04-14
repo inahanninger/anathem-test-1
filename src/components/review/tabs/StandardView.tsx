@@ -32,11 +32,16 @@ const StandardView = ({
   tocItems,
   onSelectItem
 }: StandardViewProps) => {
+  // Only show table of contents in mobile view if it's the developmental history tab
+  const showTocInMobile = activeTab === 'developmental-history';
+  
   return (
     <div>
-      <div className="md:hidden">
-        <TableOfContents items={tocItems} onSelectItem={onSelectItem} visible={tocVisible} />
-      </div>
+      {showTocInMobile && (
+        <div className="md:hidden">
+          <TableOfContents items={tocItems} onSelectItem={onSelectItem} visible={tocVisible} />
+        </div>
+      )}
       
       <Tabs defaultValue="progress-notes" value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsHeader activeTab={activeTab} />
