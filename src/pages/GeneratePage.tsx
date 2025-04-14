@@ -9,7 +9,6 @@ import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import FormProgress from "@/components/FormProgress";
-
 const GeneratePage = () => {
   const [appointmentType, setAppointmentType] = useState<string>("");
   const [summaryTypes, setSummaryTypes] = useState<string[]>([]);
@@ -18,7 +17,6 @@ const GeneratePage = () => {
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
   const completedSections = 2; // This could be dynamically calculated based on user's progress
   const totalSections = 6;
-  
   const handleSummaryTypeChange = (type: string) => {
     if (summaryTypes.includes(type)) {
       setSummaryTypes(summaryTypes.filter(item => item !== type));
@@ -26,7 +24,6 @@ const GeneratePage = () => {
       setSummaryTypes([...summaryTypes, type]);
     }
   };
-  
   const handleDocumentChange = (doc: string) => {
     if (selectedDocuments.includes(doc)) {
       setSelectedDocuments(selectedDocuments.filter(item => item !== doc));
@@ -34,7 +31,6 @@ const GeneratePage = () => {
       setSelectedDocuments([...selectedDocuments, doc]);
     }
   };
-  
   const handleGenerate = () => {
     if (!appointmentType) {
       toast.error("Please select an appointment type");
@@ -48,12 +44,9 @@ const GeneratePage = () => {
       toast.error("Please select at least one document");
       return;
     }
-    
     toast.success("Starting report generation");
   };
-  
-  return (
-    <div className="min-h-screen bg-white">
+  return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 px-6 bg-white py-0">
         <div className="container max-w-5xl mx-auto">
           <Breadcrumb className="py-2">
@@ -66,22 +59,17 @@ const GeneratePage = () => {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/risk" className="text-xs text-neutral-600">
-                  Risk Assessment
-                </BreadcrumbLink>
+                <BreadcrumbLink href="/risk" className="text-xs text-neutral-600">Generate</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage className="font-medium text-xs">Generate Report</BreadcrumbPage>
+                <BreadcrumbPage className="font-medium text-xs">Review</BreadcrumbPage>
               </BreadcrumbItem>
               <BreadcrumbItem className="ml-auto">
                 <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
                   Back
                 </Button>
-                <Button 
-                  className="bg-blue-800 hover:bg-blue-900 text-sm ml-2"
-                  onClick={handleGenerate}
-                >
+                <Button className="bg-blue-800 hover:bg-blue-900 text-sm ml-2" onClick={handleGenerate}>
                   Generate
                 </Button>
               </BreadcrumbItem>
@@ -96,21 +84,11 @@ const GeneratePage = () => {
             <div className="flex items-center gap-4">
               <div className="flex flex-col">
                 <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
-                <Input 
-                  id="patientName" 
-                  value={patientName} 
-                  onChange={e => setPatientName(e.target.value)} 
-                  className="h-8 w-[180px] text-sm" 
-                />
+                <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} className="h-8 w-[180px] text-sm" />
               </div>
               <div className="flex flex-col">
                 <Label htmlFor="nhsNumber" className="text-xs text-muted-foreground mb-1">NHS Number</Label>
-                <Input 
-                  id="nhsNumber" 
-                  value={nhsNumber} 
-                  onChange={e => setNhsNumber(e.target.value)} 
-                  className="h-8 w-[140px] text-sm" 
-                />
+                <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="h-8 w-[140px] text-sm" />
               </div>
             </div>
             <FormProgress completedSections={completedSections} totalSections={totalSections} />
@@ -181,8 +159,6 @@ const GeneratePage = () => {
           </div>
         </Card>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default GeneratePage;
