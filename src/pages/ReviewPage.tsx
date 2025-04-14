@@ -179,7 +179,7 @@ Patient describes childhood household as "tense but functional" with parents who
     }
   };
   return <div className="min-h-screen bg-white">
-      <div className="border-b border-gray-100 py-3 px-6 bg-white">
+      <div className="border-b border-gray-100 px-6 bg-white py-0">
         <div className="container max-w-5xl mx-auto">
           <Breadcrumb className="py-2">
             <BreadcrumbList>
