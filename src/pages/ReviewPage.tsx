@@ -201,31 +201,9 @@ Patient describes childhood household as "tense but functional" with parents who
     }
   };
   return <div className="min-h-screen bg-white">
-      <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
-        <div className="container max-w-5xl mx-auto">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="flex flex-col">
-                <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
-                <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} className="h-8 w-[180px] text-sm" />
-              </div>
-              <div className="flex flex-col">
-                <Label htmlFor="nhsNumber" className="text-xs text-muted-foreground mb-1">NHS Number</Label>
-                <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="h-8 w-[140px] text-sm" />
-              </div>
-            </div>
-            <FormProgress completedSections={completedSections} totalSections={6} />
-          </div>
-        </div>
-      </div>
       
-      <div className="py-4 px-6 bg-transparent">
-        <div className="container max-w-5xl mx-auto">
-          <div className="flex flex-col">
-            <StepProgress currentStep={5} steps={workflowSteps} />
-          </div>
-        </div>
-      </div>
+      
+      
       
       <div className="container max-w-5xl mx-auto px-6 py-[12px]">
         <div className="flex">

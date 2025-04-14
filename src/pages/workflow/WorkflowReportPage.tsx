@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -27,7 +26,6 @@ const workflowSteps = [{
 const WorkflowReportPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
-
   return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 px-6 bg-white py-[4px]">
         <div className="container max-w-5xl mx-auto">
@@ -57,7 +55,7 @@ const WorkflowReportPage = () => {
         </div>
       </div>
 
-      <div className="border-b border-gray-100 bg-gray-50/80 py-6 px-6">
+      <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
         <div className="container max-w-5xl mx-auto">
           <div className="flex items-center gap-4">
             <div className="flex flex-col">
