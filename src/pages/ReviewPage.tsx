@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { CheckCircle2Icon, AlertCircleIcon, PlusIcon, ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -17,7 +16,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import StepProgress from "@/components/StepProgress";
-
 const ReviewPage = () => {
   const [completedSections, setCompletedSections] = useState(2);
   const [activeTab, setActiveTab] = useState("progress-notes");
@@ -111,17 +109,27 @@ Patient describes childhood household as "tense but functional" with parents who
   const [familyHistory, setFamilyHistory] = useState("Patient reports maternal history of depression and anxiety. Father has no known mental health conditions. Patient has one younger sibling with ADHD diagnosis. No known history of substance abuse disorders in immediate family.");
   const [clinicalNotes, setClinicalNotes] = useState("Patient presents with symptoms consistent with Major Depressive Disorder and Social Anxiety Disorder. Current medication regimen appears to be providing moderate symptom relief, but patient may benefit from increased psychosocial interventions, particularly around social anxiety. Recommend weekly CBT sessions for 8 weeks, focusing on cognitive restructuring and graduated exposure exercises.");
   const [treatmentPlan, setTreatmentPlan] = useState("1. Continue current medication regimen with follow-up in 4 weeks\n2. Begin weekly CBT with focus on social anxiety symptoms\n3. Patient to complete daily mood tracking\n4. Provide referral to support group for young professionals with anxiety");
-  
-  // Updated to match StepProgress component's expected props shape
-  const workflowSteps = [
-    { name: "Progress Notes", path: "/workflow/progress-notes" },
-    { name: "Presenting Issues", path: "/workflow/presenting-issues" },
-    { name: "Medication", path: "/workflow/medication" },
-    { name: "Social History", path: "/workflow/social-history" },
-    { name: "Family History", path: "/workflow/family-history" },
-    { name: "Clinical Notes", path: "/workflow/clinical-notes" }
-  ];
 
+  // Updated to match StepProgress component's expected props shape
+  const workflowSteps = [{
+    name: "Progress Notes",
+    path: "/workflow/progress-notes"
+  }, {
+    name: "Presenting Issues",
+    path: "/workflow/presenting-issues"
+  }, {
+    name: "Medication",
+    path: "/workflow/medication"
+  }, {
+    name: "Social History",
+    path: "/workflow/social-history"
+  }, {
+    name: "Family History",
+    path: "/workflow/family-history"
+  }, {
+    name: "Clinical Notes",
+    path: "/workflow/clinical-notes"
+  }];
   const handleMedicationUpdate = (id: string, updatedMed: Partial<Medication>) => {
     setMedications(medications.map(med => med.id === id ? {
       ...med,
@@ -192,9 +200,8 @@ Patient describes childhood household as "tense but functional" with parents who
       }, 2000);
     }
   };
-
   return <div className="min-h-screen bg-white">
-      <div className="border-b border-gray-100 bg-gray-50/80 py-3 px-6">
+      <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
         <div className="container max-w-5xl mx-auto">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -233,5 +240,4 @@ Patient describes childhood household as "tense but functional" with parents who
       </div>
     </div>;
 };
-
 export default ReviewPage;

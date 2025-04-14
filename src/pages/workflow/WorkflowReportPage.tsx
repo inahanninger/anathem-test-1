@@ -51,14 +51,7 @@ const WorkflowReportPage = () => {
         </div>
       </div>
 
-      <div className="py-3 px-6 bg-transparent">
-        <div className="container max-w-5xl mx-auto">
-          <div className="flex flex-col">
-            <StepProgress currentStep={5} steps={workflowSteps} />
-            
-          </div>
-        </div>
-      </div>
+      
       
       <div className="mt-4">
         <ReviewPage />
