@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,18 +5,24 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbS
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
 import ReviewPage from "../ReviewPage";
-
-const workflowSteps = [
-  { name: "Upload", path: "/workflow/upload" },
-  { name: "Review", path: "/workflow/review" },
-  { name: "Transcribe", path: "/workflow/transcribe" },
-  { name: "Generate", path: "/workflow/generate" },
-  { name: "Report", path: "/workflow/report" }
-];
-
+const workflowSteps = [{
+  name: "Upload",
+  path: "/workflow/upload"
+}, {
+  name: "Review",
+  path: "/workflow/review"
+}, {
+  name: "Transcribe",
+  path: "/workflow/transcribe"
+}, {
+  name: "Generate",
+  path: "/workflow/generate"
+}, {
+  name: "Report",
+  path: "/workflow/report"
+}];
 const WorkflowReportPage = () => {
-  return (
-    <div className="min-h-screen bg-white">
+  return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 px-6 bg-white py-4">
         <div className="container max-w-5xl mx-auto">
           <Breadcrumb>
@@ -46,7 +51,7 @@ const WorkflowReportPage = () => {
         </div>
       </div>
 
-      <div className="border-b border-gray-100 bg-gray-50/80 py-6 px-6">
+      <div className=" py-3 px-4 bg-transparent">
         <div className="container max-w-5xl mx-auto">
           <StepProgress currentStep={5} steps={workflowSteps} />
         </div>
@@ -55,8 +60,6 @@ const WorkflowReportPage = () => {
       <div className="mt-4">
         <ReviewPage />
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default WorkflowReportPage;
