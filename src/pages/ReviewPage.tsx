@@ -15,6 +15,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+
 const ReviewPage = () => {
   const [completedSections, setCompletedSections] = useState(2);
   const [activeTab, setActiveTab] = useState("progress-notes");
@@ -108,6 +109,15 @@ Patient describes childhood household as "tense but functional" with parents who
   const [familyHistory, setFamilyHistory] = useState("Patient reports maternal history of depression and anxiety. Father has no known mental health conditions. Patient has one younger sibling with ADHD diagnosis. No known history of substance abuse disorders in immediate family.");
   const [clinicalNotes, setClinicalNotes] = useState("Patient presents with symptoms consistent with Major Depressive Disorder and Social Anxiety Disorder. Current medication regimen appears to be providing moderate symptom relief, but patient may benefit from increased psychosocial interventions, particularly around social anxiety. Recommend weekly CBT sessions for 8 weeks, focusing on cognitive restructuring and graduated exposure exercises.");
   const [treatmentPlan, setTreatmentPlan] = useState("1. Continue current medication regimen with follow-up in 4 weeks\n2. Begin weekly CBT with focus on social anxiety symptoms\n3. Patient to complete daily mood tracking\n4. Provide referral to support group for young professionals with anxiety");
+  const [workflowSteps, setWorkflowSteps] = useState([
+    { id: "step-1", title: "Progress Notes", completed: false },
+    { id: "step-2", title: "Presenting Issues", completed: false },
+    { id: "step-3", title: "Medication", completed: false },
+    { id: "step-4", title: "Social History", completed: false },
+    { id: "step-5", title: "Family History", completed: false },
+    { id: "step-6", title: "Clinical Notes", completed: false }
+  ]);
+
   const handleMedicationUpdate = (id: string, updatedMed: Partial<Medication>) => {
     setMedications(medications.map(med => med.id === id ? {
       ...med,
@@ -178,9 +188,8 @@ Patient describes childhood household as "tense but functional" with parents who
       }, 2000);
     }
   };
-  return <div className="min-h-screen bg-white">
-      
 
+  return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 bg-gray-50/80 py-3 px-6">
         <div className="container max-w-5xl mx-auto">
           <div className="flex items-center justify-between">
@@ -199,6 +208,14 @@ Patient describes childhood household as "tense but functional" with parents who
         </div>
       </div>
       
+      <div className="py-3 px-6 bg-transparent">
+        <div className="container max-w-5xl mx-auto">
+          <div className="flex flex-col">
+            <StepProgress currentStep={5} steps={workflowSteps} />
+          </div>
+        </div>
+      </div>
+      
       <div className="container max-w-5xl mx-auto px-6 py-[12px]">
         <div className="flex">
           <div className="flex-1 min-w-0 space-y-6">
@@ -212,4 +229,5 @@ Patient describes childhood household as "tense but functional" with parents who
       </div>
     </div>;
 };
+
 export default ReviewPage;
