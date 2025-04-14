@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect } from "react";
 import { CheckIcon, PencilIcon, XIcon } from "lucide-react";
 import { toast } from "sonner";
@@ -64,7 +65,7 @@ const EditableField = ({
               value={value} 
               onChange={e => setValue(e.target.value)} 
               placeholder={placeholder} 
-              className="focus:ring-1 focus:ring-blue-400 border-gray-200 resize-none text-xs h-auto min-h-[2.5rem]" 
+              className="focus:ring-1 focus:ring-blue-400 border-gray-200 resize-none text-xs h-auto min-h-[2.5rem] overflow-visible" 
               rows={1}
             />
           ) : (
@@ -90,7 +91,7 @@ const EditableField = ({
               value={value} 
               onChange={e => setValue(e.target.value)} 
               placeholder={placeholder} 
-              className="focus:ring-1 focus:ring-blue-400 border-gray-200 resize-none text-xs h-auto min-h-[2.5rem]" 
+              className="focus:ring-1 focus:ring-blue-400 border-gray-200 resize-none text-xs h-auto min-h-[2.5rem] overflow-visible" 
               autoFocus 
             />
           ) : (
