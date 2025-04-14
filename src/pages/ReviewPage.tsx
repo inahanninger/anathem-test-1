@@ -201,9 +201,7 @@ Patient describes childhood household as "tense but functional" with parents who
                 <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
                   Back
                 </Button>
-                <Button className="bg-blue-800 hover:bg-blue-900 text-sm">
-                  Save All
-                </Button>
+                <Button className="bg-blue-800 hover:bg-blue-900 text-sm">Download Paperwork</Button>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
