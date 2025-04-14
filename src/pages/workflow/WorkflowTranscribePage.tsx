@@ -10,7 +10,6 @@ import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -27,7 +26,6 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
-
 const WorkflowTranscribePage = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [transcription, setTranscription] = useState("");
@@ -35,7 +33,6 @@ const WorkflowTranscribePage = () => {
   const [activeTab, setActiveTab] = useState<string>("clinical-notes");
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
-  
   const toggleRecording = () => {
     if (isRecording) {
       setIsRecording(false);
@@ -76,7 +73,7 @@ const WorkflowTranscribePage = () => {
         </div>
       </div>
 
-      <div className="border-b border-gray-100 bg-gray-50/80 py-6 px-6">
+      <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
         <div className="container max-w-5xl mx-auto">
           <div className="flex items-center gap-4">
             <div className="flex flex-col">
@@ -148,5 +145,4 @@ const WorkflowTranscribePage = () => {
       </div>
     </div>;
 };
-
 export default WorkflowTranscribePage;
