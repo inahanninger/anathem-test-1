@@ -179,34 +179,7 @@ Patient describes childhood household as "tense but functional" with parents who
     }
   };
   return <div className="min-h-screen bg-white">
-      <div className="border-b border-gray-100 px-6 bg-white py-0">
-        <div className="container max-w-5xl mx-auto">
-          <Breadcrumb className="py-2">
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/" className="flex items-center gap-1 text-blue-600">
-                  <ArrowLeftIcon size={16} />
-                  <span className="text-xs text-neutral-600">Transcribe</span>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/risk" className="text-xs text-neutral-600">Generate</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage className="font-medium text-xs">Review</BreadcrumbPage>
-              </BreadcrumbItem>
-              <BreadcrumbItem className="ml-auto">
-                <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
-                  Back
-                </Button>
-                <Button className="bg-blue-800 hover:bg-blue-900 text-sm">Download Paperwork</Button>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </div>
+      
 
       <div className="border-b border-gray-100 bg-gray-50/80 py-3 px-6">
         <div className="container max-w-5xl mx-auto">
