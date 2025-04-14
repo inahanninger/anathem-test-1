@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,19 +9,25 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
-
-const workflowSteps = [
-  { name: "Upload", path: "/workflow/upload" },
-  { name: "Review", path: "/workflow/review" },
-  { name: "Transcribe", path: "/workflow/transcribe" },
-  { name: "Generate", path: "/workflow/generate" },
-  { name: "Report", path: "/workflow/report" }
-];
-
+const workflowSteps = [{
+  name: "Upload",
+  path: "/workflow/upload"
+}, {
+  name: "Review",
+  path: "/workflow/review"
+}, {
+  name: "Transcribe",
+  path: "/workflow/transcribe"
+}, {
+  name: "Generate",
+  path: "/workflow/generate"
+}, {
+  name: "Report",
+  path: "/workflow/report"
+}];
 const GenerateAssessmentPage = () => {
   const [selectedAssessments, setSelectedAssessments] = useState<string[]>([]);
   const [summaryTypes, setSummaryTypes] = useState<string[]>([]);
-
   const handleAssessmentChange = (assessment: string) => {
     if (selectedAssessments.includes(assessment)) {
       setSelectedAssessments(selectedAssessments.filter(item => item !== assessment));
@@ -30,7 +35,6 @@ const GenerateAssessmentPage = () => {
       setSelectedAssessments([...selectedAssessments, assessment]);
     }
   };
-
   const handleSummaryTypeChange = (type: string) => {
     if (summaryTypes.includes(type)) {
       setSummaryTypes(summaryTypes.filter(item => item !== type));
@@ -38,18 +42,14 @@ const GenerateAssessmentPage = () => {
       setSummaryTypes([...summaryTypes, type]);
     }
   };
-
   const handleGenerate = () => {
     if (selectedAssessments.length === 0) {
       toast.error("Please select at least one assessment type");
       return;
     }
-    
     toast.success("Starting report generation");
   };
-
-  return (
-    <div className="min-h-screen bg-white">
+  return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 px-6 bg-white py-4">
         <div className="container max-w-5xl mx-auto">
           <Breadcrumb>
@@ -85,8 +85,8 @@ const GenerateAssessmentPage = () => {
       </div>
       
       <div className="container max-w-5xl mx-auto px-6 py-8">
-        <h1 className="text-2xl font-bold mb-6">Generate Assessment</h1>
-        <p className="text-gray-600 mb-8">
+        <h1 className="font-bold mb-1 text-lg">Generate Assessment</h1>
+        <p className="text-gray-600 mb-8 text-sm">
           Select the assessment types you need to generate.
         </p>
         
@@ -96,35 +96,19 @@ const GenerateAssessmentPage = () => {
               <Label className="text-body font-semibold mb-3 block">Assessment Type</Label>
               <div className="space-y-3">
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="adhd" 
-                    checked={selectedAssessments.includes("adhd")} 
-                    onCheckedChange={() => handleAssessmentChange("adhd")} 
-                  />
+                  <Checkbox id="adhd" checked={selectedAssessments.includes("adhd")} onCheckedChange={() => handleAssessmentChange("adhd")} />
                   <Label htmlFor="adhd" className="text-base text-sm">ADHD Assessment</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="autism" 
-                    checked={selectedAssessments.includes("autism")} 
-                    onCheckedChange={() => handleAssessmentChange("autism")} 
-                  />
+                  <Checkbox id="autism" checked={selectedAssessments.includes("autism")} onCheckedChange={() => handleAssessmentChange("autism")} />
                   <Label htmlFor="autism" className="text-base text-sm">Autism Assessment</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="memory" 
-                    checked={selectedAssessments.includes("memory")} 
-                    onCheckedChange={() => handleAssessmentChange("memory")} 
-                  />
+                  <Checkbox id="memory" checked={selectedAssessments.includes("memory")} onCheckedChange={() => handleAssessmentChange("memory")} />
                   <Label htmlFor="memory" className="text-base text-sm">Memory Assessment</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="combined" 
-                    checked={selectedAssessments.includes("combined")} 
-                    onCheckedChange={() => handleAssessmentChange("combined")} 
-                  />
+                  <Checkbox id="combined" checked={selectedAssessments.includes("combined")} onCheckedChange={() => handleAssessmentChange("combined")} />
                   <Label htmlFor="combined" className="text-base text-sm">ADHD/Autism Combined Assessment</Label>
                 </div>
               </div>
@@ -134,27 +118,15 @@ const GenerateAssessmentPage = () => {
               <Label className="text-body font-semibold mb-3 block">Summary Type</Label>
               <div className="space-y-3">
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="brief" 
-                    checked={summaryTypes.includes("brief")} 
-                    onCheckedChange={() => handleSummaryTypeChange("brief")} 
-                  />
+                  <Checkbox id="brief" checked={summaryTypes.includes("brief")} onCheckedChange={() => handleSummaryTypeChange("brief")} />
                   <Label htmlFor="brief" className="text-base text-sm">Brief</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="detailed" 
-                    checked={summaryTypes.includes("detailed")} 
-                    onCheckedChange={() => handleSummaryTypeChange("detailed")} 
-                  />
+                  <Checkbox id="detailed" checked={summaryTypes.includes("detailed")} onCheckedChange={() => handleSummaryTypeChange("detailed")} />
                   <Label htmlFor="detailed" className="text-base text-sm">Detailed</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="mental-state" 
-                    checked={summaryTypes.includes("mental-state")} 
-                    onCheckedChange={() => handleSummaryTypeChange("mental-state")} 
-                  />
+                  <Checkbox id="mental-state" checked={summaryTypes.includes("mental-state")} onCheckedChange={() => handleSummaryTypeChange("mental-state")} />
                   <Label htmlFor="mental-state" className="text-base text-sm">Mental state examination</Label>
                 </div>
               </div>
@@ -168,8 +140,6 @@ const GenerateAssessmentPage = () => {
           </div>
         </Card>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default GenerateAssessmentPage;
