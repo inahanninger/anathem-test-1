@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ArrowRightIcon, MicIcon, UploadIcon, SettingsIcon, FileTextIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,9 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import FormProgress from "@/components/FormProgress";
-
 type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
-
 interface FileUpload {
   id: string;
   name: string;
@@ -20,7 +17,6 @@ interface FileUpload {
   dateUploaded: Date;
   size: number;
 }
-
 const TranscribePage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
@@ -31,47 +27,41 @@ const TranscribePage = () => {
   const [clinicalNotes, setClinicalNotes] = useState("");
   const completedSections = 1;
   const totalSections = 6;
-
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
     if (!uploadType) {
       toast.error("Please select an upload type");
       return;
     }
-
     const file = e.target.files[0];
-    
+
     // Create new file upload with selected tag
     const newUpload: FileUpload = {
       id: crypto.randomUUID(),
       name: file.name,
       type: uploadType as UploadType,
       dateUploaded: new Date(),
-      size: file.size,
+      size: file.size
     };
-
     setUploads([...uploads, newUpload]);
     toast.success(`${file.name} uploaded successfully as ${uploadType}`);
-    
+
     // Reset file input and upload type
     e.target.value = "";
     setUploadType("");
   };
-
   const formatFileSize = (bytes: number) => {
     if (bytes < 1024) return `${bytes} bytes`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
-
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("en-GB", {
       day: "numeric",
       month: "short",
-      year: "numeric",
+      year: "numeric"
     });
   };
-
   const toggleRecording = () => {
     if (isRecording) {
       setIsRecording(false);
@@ -84,19 +74,15 @@ const TranscribePage = () => {
       setTranscription("");
     }
   };
-
   const handleContinue = () => {
     if (uploads.length === 0 && !transcription) {
       toast.error("Please upload a file or create a transcription");
       return;
     }
-    
     toast.success("Continuing to Generate Report");
     window.location.href = "/generate";
   };
-
-  return (
-    <div className="min-h-screen bg-white">
+  return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 px-6 bg-white py-0">
         <div className="container max-w-5xl mx-auto">
           <Breadcrumb className="py-2">
@@ -120,10 +106,7 @@ const TranscribePage = () => {
                 <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
                   Back
                 </Button>
-                <Button 
-                  className="bg-blue-800 hover:bg-blue-900 text-sm ml-2 flex items-center gap-1"
-                  onClick={handleContinue}
-                >
+                <Button className="bg-blue-800 hover:bg-blue-900 text-sm ml-2 flex items-center gap-1" onClick={handleContinue}>
                   Continue <ArrowRightIcon size={16} />
                 </Button>
               </BreadcrumbItem>
@@ -138,21 +121,11 @@ const TranscribePage = () => {
             <div className="flex items-center gap-4">
               <div className="flex flex-col">
                 <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
-                <Input 
-                  id="patientName" 
-                  value={patientName} 
-                  onChange={e => setPatientName(e.target.value)} 
-                  className="h-8 w-[180px] text-sm" 
-                />
+                <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} className="h-8 w-[180px] text-sm" />
               </div>
               <div className="flex flex-col">
                 <Label htmlFor="nhsNumber" className="text-xs text-muted-foreground mb-1">NHS Number</Label>
-                <Input 
-                  id="nhsNumber" 
-                  value={nhsNumber} 
-                  onChange={e => setNhsNumber(e.target.value)} 
-                  className="h-8 w-[140px] text-sm" 
-                />
+                <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="h-8 w-[140px] text-sm" />
               </div>
             </div>
             <FormProgress completedSections={completedSections} totalSections={totalSections} />
@@ -171,10 +144,7 @@ const TranscribePage = () => {
                   <h2 className="text-lg font-medium">Transcription</h2>
                 </div>
                 <div className="flex gap-2">
-                  <Button 
-                    className={`px-4 ${isRecording ? 'bg-red-600 hover:bg-red-700' : 'bg-red-700 hover:bg-red-800'}`}
-                    onClick={toggleRecording}
-                  >
+                  <Button className={`px-4 ${isRecording ? 'bg-red-600 hover:bg-red-700' : 'bg-red-700 hover:bg-red-800'}`} onClick={toggleRecording}>
                     <MicIcon className="w-4 h-4 mr-2" />
                     {isRecording ? 'Stop Recording' : 'Start Recording'}
                   </Button>
@@ -184,14 +154,10 @@ const TranscribePage = () => {
                 </div>
               </div>
               <div className="p-4 min-h-[400px] bg-white">
-                {transcription ? (
-                  <div className="p-4">{transcription}</div>
-                ) : (
-                  <div className="flex flex-col items-center justify-center h-full text-center p-8 text-gray-500 bg-gray-50 rounded-md">
-                    <p>Click the button above to start recording your consultation.</p>
-                    <p>Transcription will appear here once active.</p>
-                  </div>
-                )}
+                {transcription ? <div className="p-4">{transcription}</div> : <div className="flex flex-col items-center justify-center h-full text-center p-8 text-gray-500 bg-gray-50 rounded-md">
+                    <p className="text-sm">Click the button above to start recording your consultation.</p>
+                    <p className="text-sm">Transcription will appear here once active.</p>
+                  </div>}
               </div>
             </Card>
           </div>
@@ -204,17 +170,10 @@ const TranscribePage = () => {
                   <FileTextIcon className="w-5 h-5 text-blue-800" />
                   <h2 className="text-lg font-medium">Clinical Notes</h2>
                 </div>
-                <Button variant="outline" className="bg-white" onClick={() => setClinicalNotes("")}>
-                  Clear
-                </Button>
+                
               </div>
               <div className="p-4 min-h-[250px]">
-                <Textarea 
-                  placeholder="Enter clinical notes here..." 
-                  value={clinicalNotes}
-                  onChange={(e) => setClinicalNotes(e.target.value)}
-                  className="min-h-[200px] resize-none border-0 focus-visible:ring-0"
-                />
+                <Textarea placeholder="Enter clinical notes here..." value={clinicalNotes} onChange={e => setClinicalNotes(e.target.value)} className="min-h-[200px] resize-none border-0 focus-visible:ring-0" />
                 <div className="text-xs text-gray-400 mt-2 text-right">
                   Changes are automatically saved
                 </div>
@@ -246,12 +205,7 @@ const TranscribePage = () => {
                   </div>
                   
                   <div className="flex items-center gap-2">
-                    <Input 
-                      id="file-upload" 
-                      type="file"
-                      onChange={handleFileUpload}
-                      className="flex-1" 
-                    />
+                    <Input id="file-upload" type="file" onChange={handleFileUpload} className="flex-1" />
                     <Button type="button" className="flex items-center gap-1">
                       <UploadIcon size={18} />
                       Upload
@@ -259,8 +213,7 @@ const TranscribePage = () => {
                   </div>
                 </div>
                 
-                {uploads.length > 0 && (
-                  <div className="mt-4 border rounded-md overflow-hidden">
+                {uploads.length > 0 && <div className="mt-4 border rounded-md overflow-hidden">
                     <table className="w-full">
                       <thead className="bg-slate-50 border-b">
                         <tr>
@@ -270,24 +223,19 @@ const TranscribePage = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {uploads.map(file => (
-                          <tr key={file.id} className="border-b last:border-0">
+                        {uploads.map(file => <tr key={file.id} className="border-b last:border-0">
                             <td className="px-3 py-2 text-xs">{file.name}</td>
                             <td className="px-3 py-2 text-xs capitalize">{file.type}</td>
                             <td className="px-3 py-2 text-xs">{formatDate(file.dateUploaded)}</td>
-                          </tr>
-                        ))}
+                          </tr>)}
                       </tbody>
                     </table>
-                  </div>
-                )}
+                  </div>}
               </div>
             </Card>
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default TranscribePage;
