@@ -219,7 +219,7 @@ Patient describes childhood household as "tense but functional" with parents who
         </div>
       </div>
       
-      <div className="py-3 px-6 bg-transparent">
+      <div className="py-4 px-6 bg-transparent">
         <div className="container max-w-5xl mx-auto">
           <div className="flex flex-col">
             <StepProgress currentStep={5} steps={workflowSteps} />
