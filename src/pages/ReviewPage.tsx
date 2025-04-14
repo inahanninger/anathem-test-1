@@ -1,5 +1,6 @@
+
 import { useState } from "react";
-import { CheckCircle2Icon, AlertCircleIcon, PlusIcon } from "lucide-react";
+import { CheckCircle2Icon, AlertCircleIcon, PlusIcon, ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import FormProgress from "@/components/FormProgress";
@@ -14,6 +15,14 @@ import SectionHeader from "@/components/SectionHeader";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { 
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 const ReviewPage = () => {
   const [completedSections, setCompletedSections] = useState(2);
@@ -195,21 +204,44 @@ Patient describes childhood household as "tense but functional" with parents who
   };
 
   return <div className="min-h-screen bg-white">
-      <div className="border-b border-gray-100 py-5 px-6">
+      <div className="border-b border-gray-100 py-3 px-6 bg-white">
         <div className="container max-w-5xl mx-auto">
-          <div className="flex flex-col space-y-1">
-            <span className="text-sm text-gray-500">{currentDate}</span>
-            <h1 className="text-xl font-semibold">Patient Documentation Review</h1>
-          </div>
+          <Breadcrumb className="py-2">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/" className="flex items-center gap-1 text-blue-600">
+                  <ArrowLeftIcon size={16} />
+                  <span>Transcribe</span>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/risk" className="text-blue-600">
+                  Risk Assessment
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage className="font-medium">Summary View</BreadcrumbPage>
+              </BreadcrumbItem>
+              <BreadcrumbItem className="ml-auto">
+                <Button variant="outline" className="mr-2 text-blue-600 border-blue-600">
+                  Back
+                </Button>
+                <Button className="bg-blue-800 hover:bg-blue-900">
+                  Save All
+                </Button>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
         </div>
       </div>
 
       <div className="border-b border-gray-100 bg-gray-50/80 py-3 px-6">
         <div className="container max-w-5xl mx-auto">
           <div className="flex items-center justify-between">
-            <FormProgress completedSections={completedSections} totalSections={6} />
             <div className="flex items-center gap-4">
-              <div className="flex flex-col items-end">
+              <div className="flex flex-col">
                 <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
                 <Input 
                   id="patientName"
@@ -218,7 +250,7 @@ Patient describes childhood household as "tense but functional" with parents who
                   className="h-8 w-[180px] text-sm"
                 />
               </div>
-              <div className="flex flex-col items-end">
+              <div className="flex flex-col">
                 <Label htmlFor="nhsNumber" className="text-xs text-muted-foreground mb-1">NHS Number</Label>
                 <Input 
                   id="nhsNumber"
@@ -228,6 +260,7 @@ Patient describes childhood household as "tense but functional" with parents who
                 />
               </div>
             </div>
+            <FormProgress completedSections={completedSections} totalSections={6} />
           </div>
         </div>
       </div>
