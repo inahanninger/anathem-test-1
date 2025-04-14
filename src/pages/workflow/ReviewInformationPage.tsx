@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -27,11 +28,14 @@ const workflowSteps = [{
 }];
 const ReviewInformationPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
+  const [dateOfBirth, setDateOfBirth] = useState("05/12/1980");
+  const [homeAddress, setHomeAddress] = useState("123 Main St, London, UK");
+  const [contactNumber, setContactNumber] = useState("+1 (555) 123-4567");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
-  const [dateOfBirth, setDateOfBirth] = useState("15/06/1985");
-  const [address, setAddress] = useState("123 Main Street, London, SW1A 1AA");
-  const [telephone, setTelephone] = useState("07700 900123");
-  const [email, setEmail] = useState("james.wilson@example.com");
+  const [referrer, setReferrer] = useState("Dr. Emily Thompson");
+  const [allergies, setAllergies] = useState("Penicillin, Shellfish");
+  const [careCoordinator, setCareCoordinator] = useState("Nurse Linda Martinez");
+  const [referralReason, setReferralReason] = useState("Assessment and management of chronic pain and hypertension");
   const [medicalSummary, setMedicalSummary] = useState("Patient reports experiencing moderate depressive symptoms for approximately 3 months, including low mood, decreased interest in activities, and poor sleep. Patient also mentions occasional anxiety in social situations.");
   const [assessmentNotes, setAssessmentNotes] = useState("Initial assessment indicates mild to moderate depression with comorbid social anxiety. Patient is responsive to cognitive behavioral approaches and shows good insight into their condition.");
   const handleSave = () => {
@@ -82,28 +86,45 @@ const ReviewInformationPage = () => {
           <h2 className="text-lg font-semibold mb-4">Patient Details</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div>
-              <Label htmlFor="patientName" className="mb-1 block">Full Name</Label>
+              <Label htmlFor="patientName" className="mb-1 block">Patient Name</Label>
               <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} />
-            </div>
-            <div>
-              <Label htmlFor="nhsNumber" className="mb-1 block">NHS Number</Label>
-              <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} />
             </div>
             <div>
               <Label htmlFor="dob" className="mb-1 block">Date of Birth</Label>
               <Input id="dob" value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)} />
             </div>
             <div>
-              <Label htmlFor="telephone" className="mb-1 block">Telephone</Label>
-              <Input id="telephone" value={telephone} onChange={e => setTelephone(e.target.value)} />
+              <Label htmlFor="homeAddress" className="mb-1 block">Home Address</Label>
+              <Input id="homeAddress" value={homeAddress} onChange={e => setHomeAddress(e.target.value)} />
             </div>
             <div>
-              <Label htmlFor="email" className="mb-1 block">Email</Label>
-              <Input id="email" value={email} onChange={e => setEmail(e.target.value)} type="email" />
+              <Label htmlFor="contactNumber" className="mb-1 block">Contact Number</Label>
+              <Input id="contactNumber" value={contactNumber} onChange={e => setContactNumber(e.target.value)} />
             </div>
             <div>
-              <Label htmlFor="address" className="mb-1 block">Address</Label>
-              <Input id="address" value={address} onChange={e => setAddress(e.target.value)} />
+              <Label htmlFor="nhsNumber" className="mb-1 block">NHS Number</Label>
+              <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} />
+            </div>
+            <div>
+              <Label htmlFor="referrer" className="mb-1 block">Referrer</Label>
+              <Input id="referrer" value={referrer} onChange={e => setReferrer(e.target.value)} />
+            </div>
+            <div>
+              <Label htmlFor="allergies" className="mb-1 block">Allergies</Label>
+              <Input id="allergies" value={allergies} onChange={e => setAllergies(e.target.value)} />
+            </div>
+            <div>
+              <Label htmlFor="careCoordinator" className="mb-1 block">Care Coordinator/Key-Worker</Label>
+              <Input id="careCoordinator" value={careCoordinator} onChange={e => setCareCoordinator(e.target.value)} />
+            </div>
+            <div className="md:col-span-2">
+              <Label htmlFor="referralReason" className="mb-1 block">Reason for Referral</Label>
+              <Textarea 
+                id="referralReason" 
+                value={referralReason} 
+                onChange={e => setReferralReason(e.target.value)}
+                className="min-h-[100px]" 
+              />
             </div>
           </div>
           
