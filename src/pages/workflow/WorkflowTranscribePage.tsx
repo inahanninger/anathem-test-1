@@ -1,8 +1,8 @@
-
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon, MicIcon, UploadIcon, SettingsIcon, FileTextIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -26,6 +27,7 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
+
 const WorkflowTranscribePage = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [transcription, setTranscription] = useState("");
@@ -146,4 +148,5 @@ const WorkflowTranscribePage = () => {
       </div>
     </div>;
 };
+
 export default WorkflowTranscribePage;
