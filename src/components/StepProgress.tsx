@@ -21,20 +21,20 @@ const StepProgress = ({ currentStep, steps }: StepProgressProps) => {
         return (
           <React.Fragment key={index}>
             {index > 0 && (
-              <div className={`h-[2px] flex-1 ${isCompleted ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
+              <div className={`h-[2px] flex-1 ${isCompleted ? 'bg-emerald-800' : 'bg-neutral-300'}`}></div>
             )}
             
-            <div className="flex flex-col items-center">
-              <Link to={step.path} className="pointer-events-none">
-                <div className={`w-8 h-8 flex items-center justify-center rounded-full mb-1 ${
-                  isActive ? 'bg-blue-600 text-white' : isCompleted ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-600'
+            <div className="flex items-center">
+              <Link to={step.path} className="pointer-events-none flex items-center">
+                <div className={`w-4 h-4 flex items-center justify-center rounded-full mr-2 ${
+                  isActive ? 'bg-emerald-800 text-white' : isCompleted ? 'bg-emerald-800 text-white' : 'bg-neutral-300 text-white'
                 }`}>
-                  {isCompleted ? <Check className="h-4 w-4" /> : index + 1}
+                  {isCompleted ? <Check className="h-3 w-3" /> : index + 1}
                 </div>
+                <span className={`text-xs ${isCompleted ? 'text-emerald-800' : 'text-neutral-300'}`}>
+                  {step.name}
+                </span>
               </Link>
-              <span className={`text-xs ${isActive ? 'text-blue-600 font-medium' : 'text-gray-600'}`}>
-                {step.name}
-              </span>
             </div>
           </React.Fragment>
         );
