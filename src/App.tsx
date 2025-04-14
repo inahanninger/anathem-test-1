@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import HomePage from "./pages/HomePage";
 import ReviewPage from "./pages/ReviewPage";
 import GeneratePage from "./pages/GeneratePage";
 import TranscribePage from "./pages/TranscribePage";
@@ -17,10 +18,11 @@ const App = () => (
       <Sonner position="top-center" />
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<HomePage />} />
           <Route path="/transcribe" element={<TranscribePage />} />
           <Route path="/report" element={<ReviewPage />} />
           <Route path="/generate" element={<GeneratePage />} />
-          <Route path="*" element={<Navigate to="/transcribe" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
