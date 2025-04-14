@@ -117,13 +117,13 @@ const TranscribePage = () => {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink as={Link} to="/generate" className="text-xs text-neutral-600">Generate</BreadcrumbLink>
+                <Link to="/generate" className="text-xs text-neutral-600">Generate</Link>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink as={Link} to="/report" className="text-xs text-neutral-600 flex items-center gap-1">
+                <Link to="/report" className="text-xs text-neutral-600 flex items-center gap-1">
                   <span>Review</span>
-                </BreadcrumbLink>
+                </Link>
               </BreadcrumbItem>
               <BreadcrumbItem className="ml-auto">
                 <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
@@ -158,7 +158,6 @@ const TranscribePage = () => {
       
       <div className="container max-w-5xl mx-auto px-6 py-6">
         <div className="grid grid-cols-2 md:grid-cols-2 gap-3">
-          {/* Left column: Transcription */}
           <div>
             <Card className="rounded-lg overflow-hidden">
               <div className="bg-gray-50 p-4 flex items-center justify-between border-b">
@@ -185,7 +184,6 @@ const TranscribePage = () => {
             </Card>
           </div>
 
-          {/* Right column: Tabs for Clinical Notes and File Upload */}
           <div>
             <Card className="rounded-lg overflow-hidden">
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full">
@@ -210,7 +208,6 @@ const TranscribePage = () => {
                 </TabsContent>
                 
                 <TabsContent value="file-upload" className="m-0 p-4 min-h-[400px] border-0">
-                  {/* Drag and drop area */}
                   <div className={`border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center mb-4 transition-colors h-48
                       ${isDragging ? 'bg-blue-50 border-blue-300' : 'border-gray-300 bg-gray-50'}`} onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop} onClick={handleClickUpload}>
                     <input type="file" ref={fileInputRef} onChange={e => handleFileUpload(e.target.files)} className="hidden" multiple />
@@ -219,7 +216,6 @@ const TranscribePage = () => {
                     <p className="text-gray-500 text-xs">PDF, DOC, DOCX, JPG, PNG up to 10MB</p>
                   </div>
                   
-                  {/* Uploaded files list */}
                   {uploads.length > 0 && <div>
                       <h3 className="font-medium text-lg mb-3">Uploaded Documents</h3>
                       <div className="space-y-3">

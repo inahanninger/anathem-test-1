@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -58,10 +59,10 @@ const GeneratePage = () => {
           <Breadcrumb className="py-2">
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink as={Link} to="/transcribe" className="flex items-center gap-1 text-blue-600">
+                <Link to="/transcribe" className="flex items-center gap-1 text-blue-600">
                   <ArrowLeftIcon size={16} />
                   <span className="text-xs text-neutral-600">Transcribe</span>
-                </BreadcrumbLink>
+                </Link>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
@@ -69,7 +70,7 @@ const GeneratePage = () => {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink as={Link} to="/report" className="text-xs text-neutral-600">Review</BreadcrumbLink>
+                <Link to="/report" className="text-xs text-neutral-600">Review</Link>
               </BreadcrumbItem>
               <BreadcrumbItem className="ml-auto">
                 <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
