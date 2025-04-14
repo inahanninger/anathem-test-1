@@ -186,12 +186,12 @@ Patient describes childhood household as "tense but functional" with parents who
               <BreadcrumbItem>
                 <BreadcrumbLink href="/" className="flex items-center gap-1 text-blue-600">
                   <ArrowLeftIcon size={16} />
-                  <span className="text-xs">Transcribe</span>
+                  <span className="text-xs text-neutral-600">Transcribe</span>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/risk" className="text-neutral-600">
+                <BreadcrumbLink href="/risk" className="text-xs text-neutral-600">
                   Risk Assessment
                 </BreadcrumbLink>
               </BreadcrumbItem>
