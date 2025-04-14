@@ -156,7 +156,7 @@ const UploadDocumentPage = () => {
                         <FileTextIcon className="h-6 w-6 text-blue-600" />
                       </div>
                       <div>
-                        <p className="font-medium">{file.name}</p>
+                        <p className="font-medium text-sm">{file.name}</p>
                         <p className="text-xs text-gray-500">{formatFileSize(file.size)}</p>
                       </div>
                     </div>
@@ -172,7 +172,7 @@ const UploadDocumentPage = () => {
                           <SelectItem value="letter">Letter</SelectItem>
                         </SelectContent>
                       </Select>
-                      <Button variant="ghost" size="icon" onClick={() => handleDeleteFile(file.id)}>
+                      <Button variant="ghost" size="icon" onClick={() => handleDeleteFile(file.id)} className="">
                         <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
                       </Button>
                     </div>
