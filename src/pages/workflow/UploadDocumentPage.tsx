@@ -1,3 +1,4 @@
+
 import { useState, useRef } from "react";
 import { ArrowRightIcon, UploadIcon, FileTextIcon, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -127,9 +128,12 @@ const UploadDocumentPage = () => {
                 <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="h-8 w-[140px] text-sm" />
               </div>
             </div>
-            <StepProgress currentStep={1} steps={workflowSteps} />
           </div>
         </div>
+      </div>
+      
+      <div className="container max-w-5xl mx-auto py-4">
+        <StepProgress currentStep={1} steps={workflowSteps} />
       </div>
       
       <div className="container max-w-5xl mx-auto px-6 py-8">

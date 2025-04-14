@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -71,8 +72,23 @@ const ReviewInformationPage = () => {
 
       <div className="border-b border-gray-100 bg-gray-50/80 py-6 px-6">
         <div className="container max-w-5xl mx-auto">
-          <StepProgress currentStep={2} steps={workflowSteps} />
+          <div className="flex flex-col">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="flex flex-col">
+                <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
+                <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} className="h-8 w-[180px] text-sm" />
+              </div>
+              <div className="flex flex-col">
+                <Label htmlFor="nhsNumber" className="text-xs text-muted-foreground mb-1">NHS Number</Label>
+                <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="h-8 w-[140px] text-sm" />
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+      
+      <div className="container max-w-5xl mx-auto py-4">
+        <StepProgress currentStep={2} steps={workflowSteps} />
       </div>
       
       <div className="container max-w-5xl mx-auto px-6 py-8">

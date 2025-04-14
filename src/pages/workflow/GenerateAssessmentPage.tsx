@@ -1,11 +1,12 @@
+
 import React, { useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
@@ -28,6 +29,9 @@ const workflowSteps = [{
 const GenerateAssessmentPage = () => {
   const [selectedAssessments, setSelectedAssessments] = useState<string[]>([]);
   const [summaryTypes, setSummaryTypes] = useState<string[]>([]);
+  const [patientName, setPatientName] = useState("James Wilson");
+  const [nhsNumber, setNhsNumber] = useState("NHS123456789");
+  
   const handleAssessmentChange = (assessment: string) => {
     if (selectedAssessments.includes(assessment)) {
       setSelectedAssessments(selectedAssessments.filter(item => item !== assessment));
@@ -80,8 +84,21 @@ const GenerateAssessmentPage = () => {
 
       <div className="border-b border-gray-100 bg-gray-50/80 py-6 px-6">
         <div className="container max-w-5xl mx-auto">
-          <StepProgress currentStep={4} steps={workflowSteps} />
+          <div className="flex items-center gap-4">
+            <div className="flex flex-col">
+              <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
+              <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} className="h-8 w-[180px] text-sm" />
+            </div>
+            <div className="flex flex-col">
+              <Label htmlFor="nhsNumber" className="text-xs text-muted-foreground mb-1">NHS Number</Label>
+              <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="h-8 w-[140px] text-sm" />
+            </div>
+          </div>
         </div>
+      </div>
+      
+      <div className="container max-w-5xl mx-auto py-4">
+        <StepProgress currentStep={4} steps={workflowSteps} />
       </div>
       
       <div className="container max-w-5xl mx-auto px-6 py-8">
