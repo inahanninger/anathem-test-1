@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { CheckCircle2Icon, AlertCircleIcon, PlusIcon } from "lucide-react";
+import { CheckCircle2Icon, AlertCircleIcon, PlusIcon, ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import FormProgress from "@/components/FormProgress";
 import TableOfContents from "@/components/TableOfContents";
 import { Medication } from "@/components/MedicationItem";
 import ClinicalTabsSection from "@/components/review/ClinicalTabsSection";
@@ -9,10 +10,12 @@ import PresentingIssuesSection from "@/components/review/PresentingIssuesSection
 import MedicationSection from "@/components/review/MedicationSection";
 import SocialHistorySection from "@/components/review/SocialHistorySection";
 import FamilyHistorySection from "@/components/review/FamilyHistorySection";
+import SectionHeader from "@/components/SectionHeader";
 import { Card } from "@/components/ui/card";
-import WorkflowHeader from "@/components/workflow/WorkflowHeader";
-import { workflowSteps } from "@/constants/workflowSteps";
-
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import StepProgress from "@/components/StepProgress";
 const ReviewPage = () => {
   const [completedSections, setCompletedSections] = useState(2);
   const [activeTab, setActiveTab] = useState("progress-notes");
@@ -107,6 +110,26 @@ Patient describes childhood household as "tense but functional" with parents who
   const [clinicalNotes, setClinicalNotes] = useState("Patient presents with symptoms consistent with Major Depressive Disorder and Social Anxiety Disorder. Current medication regimen appears to be providing moderate symptom relief, but patient may benefit from increased psychosocial interventions, particularly around social anxiety. Recommend weekly CBT sessions for 8 weeks, focusing on cognitive restructuring and graduated exposure exercises.");
   const [treatmentPlan, setTreatmentPlan] = useState("1. Continue current medication regimen with follow-up in 4 weeks\n2. Begin weekly CBT with focus on social anxiety symptoms\n3. Patient to complete daily mood tracking\n4. Provide referral to support group for young professionals with anxiety");
 
+  // Updated to match StepProgress component's expected props shape
+  const workflowSteps = [{
+    name: "Progress Notes",
+    path: "/workflow/progress-notes"
+  }, {
+    name: "Presenting Issues",
+    path: "/workflow/presenting-issues"
+  }, {
+    name: "Medication",
+    path: "/workflow/medication"
+  }, {
+    name: "Social History",
+    path: "/workflow/social-history"
+  }, {
+    name: "Family History",
+    path: "/workflow/family-history"
+  }, {
+    name: "Clinical Notes",
+    path: "/workflow/clinical-notes"
+  }];
   const handleMedicationUpdate = (id: string, updatedMed: Partial<Medication>) => {
     setMedications(medications.map(med => med.id === id ? {
       ...med,
@@ -178,28 +201,36 @@ Patient describes childhood household as "tense but functional" with parents who
     }
   };
   return <div className="min-h-screen bg-white">
-      <WorkflowHeader 
-        patientName={patientName}
-        setPatientName={setPatientName}
-        nhsNumber={nhsNumber}
-        setNhsNumber={setNhsNumber}
-        completedSections={completedSections}
-        totalSections={6}
-        currentStep={5}
-        steps={workflowSteps}
-      />
+      <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
+        <div className="container max-w-5xl mx-auto">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="flex flex-col">
+                <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
+                <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} className="h-8 w-[180px] text-sm" />
+              </div>
+              <div className="flex flex-col">
+                <Label htmlFor="nhsNumber" className="text-xs text-muted-foreground mb-1">NHS Number</Label>
+                <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="h-8 w-[140px] text-sm" />
+              </div>
+            </div>
+            <FormProgress completedSections={completedSections} totalSections={6} />
+          </div>
+        </div>
+      </div>
+      
+      <div className="py-4 px-6 bg-transparent">
+        <div className="container max-w-5xl mx-auto">
+          <div className="flex flex-col">
+            <StepProgress currentStep={5} steps={workflowSteps} />
+          </div>
+        </div>
+      </div>
       
       <div className="container max-w-5xl mx-auto px-6 py-[12px]">
         <div className="flex">
           <div className="flex-1 min-w-0 space-y-6">
-            <ClinicalTabsSection 
-              progressNotes={progressNotes} 
-              setProgressNotes={setProgressNotes} 
-              clinicalDetails={clinicalDetails} 
-              setClinicalDetails={setClinicalDetails} 
-              developmentalHistory={developmentalHistory} 
-              setDevelopmentalHistory={setDevelopmentalHistory} 
-            />
+            <ClinicalTabsSection progressNotes={progressNotes} setProgressNotes={setProgressNotes} clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} />
           </div>
         </div>
       </div>
@@ -209,5 +240,4 @@ Patient describes childhood household as "tense but functional" with parents who
       </div>
     </div>;
 };
-
 export default ReviewPage;
