@@ -133,7 +133,7 @@ const UploadDocumentPage = () => {
       </div>
       
       <div className="container max-w-5xl mx-auto px-6 py-8">
-        <h1 className="font-bold mb-6 text-lg">Upload Documents</h1>
+        <h1 className="font-bold mb-1 text-lg">Upload Documents</h1>
         <p className="text-gray-600 mb-8 text-sm">
           Upload the required documents for assessment. You can drag and drop files or click to upload.
         </p>
