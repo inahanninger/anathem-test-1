@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -9,6 +9,8 @@ import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import FormProgress from "@/components/FormProgress";
+import { Link } from "react-router-dom";
+
 const GeneratePage = () => {
   const [appointmentType, setAppointmentType] = useState<string>("");
   const [summaryTypes, setSummaryTypes] = useState<string[]>([]);
@@ -17,6 +19,7 @@ const GeneratePage = () => {
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
   const completedSections = 2; // This could be dynamically calculated based on user's progress
   const totalSections = 6;
+
   const handleSummaryTypeChange = (type: string) => {
     if (summaryTypes.includes(type)) {
       setSummaryTypes(summaryTypes.filter(item => item !== type));
@@ -24,6 +27,7 @@ const GeneratePage = () => {
       setSummaryTypes([...summaryTypes, type]);
     }
   };
+
   const handleDocumentChange = (doc: string) => {
     if (selectedDocuments.includes(doc)) {
       setSelectedDocuments(selectedDocuments.filter(item => item !== doc));
@@ -31,6 +35,7 @@ const GeneratePage = () => {
       setSelectedDocuments([...selectedDocuments, doc]);
     }
   };
+
   const handleGenerate = () => {
     if (!appointmentType) {
       toast.error("Please select an appointment type");
@@ -46,24 +51,25 @@ const GeneratePage = () => {
     }
     toast.success("Starting report generation");
   };
+
   return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 px-6 bg-white py-0">
         <div className="container max-w-5xl mx-auto">
           <Breadcrumb className="py-2">
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/transcribe" className="flex items-center gap-1 text-blue-600">
+                <BreadcrumbLink as={Link} to="/transcribe" className="flex items-center gap-1 text-blue-600">
                   <ArrowLeftIcon size={16} />
                   <span className="text-xs text-neutral-600">Transcribe</span>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/risk" className="text-xs text-neutral-600">Generate</BreadcrumbLink>
+                <BreadcrumbPage className="text-xs">Generate</BreadcrumbPage>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage className="font-medium text-xs">Review</BreadcrumbPage>
+                <BreadcrumbLink as={Link} to="/report" className="text-xs text-neutral-600">Review</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbItem className="ml-auto">
                 <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
@@ -161,4 +167,5 @@ const GeneratePage = () => {
       </div>
     </div>;
 };
+
 export default GeneratePage;

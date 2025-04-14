@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { ArrowRightIcon, MicIcon, UploadIcon, SettingsIcon, FileTextIcon, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +10,8 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import FormProgress from "@/components/FormProgress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Link } from "react-router-dom";
+
 type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
 interface FileUpload {
   id: string;
@@ -115,11 +117,11 @@ const TranscribePage = () => {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/risk" className="text-xs text-neutral-600">Generate</BreadcrumbLink>
+                <BreadcrumbLink as={Link} to="/generate" className="text-xs text-neutral-600">Generate</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/generate" className="text-xs text-neutral-600 flex items-center gap-1">
+                <BreadcrumbLink as={Link} to="/report" className="text-xs text-neutral-600 flex items-center gap-1">
                   <span>Review</span>
                 </BreadcrumbLink>
               </BreadcrumbItem>
