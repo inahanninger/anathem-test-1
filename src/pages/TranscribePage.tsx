@@ -157,7 +157,7 @@ const TranscribePage = () => {
       </div>
       
       <div className="container max-w-5xl mx-auto px-6 py-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-3">
           {/* Left column: Transcription */}
           <div>
             <Card className="rounded-lg overflow-hidden">
