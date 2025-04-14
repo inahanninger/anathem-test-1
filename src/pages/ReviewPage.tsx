@@ -15,6 +15,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import StepProgress from "@/components/StepProgress";
 
 const ReviewPage = () => {
   const [completedSections, setCompletedSections] = useState(2);
