@@ -1,6 +1,8 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { Check } from "lucide-react";
+
 interface StepProgressProps {
   currentStep: number;
   steps: {
@@ -8,6 +10,7 @@ interface StepProgressProps {
     path: string;
   }[];
 }
+
 const StepProgress = ({
   currentStep,
   steps
@@ -24,7 +27,7 @@ const StepProgress = ({
                 <div className={`w-4 h-4 flex items-center justify-center rounded-full mr-2 ${isActive ? 'bg-emerald-800 text-white' : isCompleted ? 'bg-emerald-800 text-white' : 'bg-neutral-300 text-white'}`}>
                   {isCompleted ? <Check className="h-3 w-3" /> : index + 1}
                 </div>
-                <span className={`text-xs ${isCompleted ? 'text-emerald-800' : 'text-neutral-300'}`}>
+                <span className={`text-xs ${isCompleted ? 'text-emerald-800' : 'text-neutral-900'}`}>
                   {step.name}
                 </span>
               </Link>
@@ -33,4 +36,5 @@ const StepProgress = ({
     })}
     </div>;
 };
+
 export default StepProgress;
