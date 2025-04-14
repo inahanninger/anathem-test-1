@@ -1,11 +1,12 @@
 
 import { useState } from "react";
-import { ArrowRightIcon, UploadIcon } from "lucide-react";
+import { ArrowRightIcon, MicIcon, UploadIcon, SettingsIcon, FileTextIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Card } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import FormProgress from "@/components/FormProgress";
@@ -25,6 +26,9 @@ const TranscribePage = () => {
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
   const [uploadType, setUploadType] = useState<UploadType | "">("");
   const [uploads, setUploads] = useState<FileUpload[]>([]);
+  const [isRecording, setIsRecording] = useState(false);
+  const [transcription, setTranscription] = useState("");
+  const [clinicalNotes, setClinicalNotes] = useState("");
   const completedSections = 1;
   const totalSections = 6;
 
@@ -68,9 +72,22 @@ const TranscribePage = () => {
     });
   };
 
+  const toggleRecording = () => {
+    if (isRecording) {
+      setIsRecording(false);
+      toast.success("Recording stopped");
+      // Simulating a transcription result
+      setTranscription("This is a sample transcription that would be generated from the recording.");
+    } else {
+      setIsRecording(true);
+      toast.success("Recording started");
+      setTranscription("");
+    }
+  };
+
   const handleContinue = () => {
-    if (uploads.length === 0) {
-      toast.error("Please upload at least one file");
+    if (uploads.length === 0 && !transcription) {
+      toast.error("Please upload a file or create a transcription");
       return;
     }
     
@@ -144,77 +161,130 @@ const TranscribePage = () => {
       </div>
       
       <div className="container max-w-5xl mx-auto px-6 py-6">
-        <h1 className="text-2xl font-semibold mb-8">Upload Files</h1>
-        
-        <Card className="p-6 mb-8">
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="upload-type" className="text-base font-medium mb-2 block">Upload Type</Label>
-                <Select value={uploadType} onValueChange={value => setUploadType(value as UploadType)}>
-                  <SelectTrigger id="upload-type" className="w-full">
-                    <SelectValue placeholder="Select type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="transcript">Transcript</SelectItem>
-                    <SelectItem value="dictation">Dictation</SelectItem>
-                    <SelectItem value="letter">Letter</SelectItem>
-                    <SelectItem value="patient notes">Patient Notes</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div>
-                <Label htmlFor="file-upload" className="text-base font-medium mb-2 block">Choose File</Label>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Left column: Transcription */}
+          <div>
+            <Card className="rounded-lg overflow-hidden">
+              <div className="bg-gray-50 p-4 flex items-center justify-between border-b">
                 <div className="flex items-center gap-2">
-                  <Input 
-                    id="file-upload" 
-                    type="file"
-                    onChange={handleFileUpload}
-                    className="flex-1" 
-                  />
+                  <MicIcon className="w-5 h-5 text-blue-800" />
+                  <h2 className="text-lg font-medium">Transcription</h2>
+                </div>
+                <div className="flex gap-2">
                   <Button 
-                    type="button"
-                    onClick={() => document.getElementById('file-upload')?.click()}
-                    className="flex items-center gap-1"
+                    className={`px-4 ${isRecording ? 'bg-red-600 hover:bg-red-700' : 'bg-red-700 hover:bg-red-800'}`}
+                    onClick={toggleRecording}
                   >
-                    <UploadIcon size={18} />
-                    Upload
+                    <MicIcon className="w-4 h-4 mr-2" />
+                    {isRecording ? 'Stop Recording' : 'Start Recording'}
+                  </Button>
+                  <Button variant="outline" size="icon" className="bg-white">
+                    <SettingsIcon className="w-4 h-4" />
                   </Button>
                 </div>
-                <p className="text-xs text-muted-foreground mt-1">Select upload type before uploading a file</p>
               </div>
-            </div>
-            
-            {uploads.length > 0 && (
-              <div>
-                <h2 className="text-lg font-medium mb-3">Uploaded Files</h2>
-                <div className="border rounded-md overflow-hidden">
-                  <table className="w-full">
-                    <thead className="bg-slate-50 border-b">
-                      <tr>
-                        <th className="text-left px-4 py-3 text-sm">File Name</th>
-                        <th className="text-left px-4 py-3 text-sm">Type</th>
-                        <th className="text-left px-4 py-3 text-sm">Date</th>
-                        <th className="text-left px-4 py-3 text-sm">Size</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {uploads.map(file => (
-                        <tr key={file.id} className="border-b last:border-0">
-                          <td className="px-4 py-3 text-sm">{file.name}</td>
-                          <td className="px-4 py-3 text-sm capitalize">{file.type}</td>
-                          <td className="px-4 py-3 text-sm">{formatDate(file.dateUploaded)}</td>
-                          <td className="px-4 py-3 text-sm">{formatFileSize(file.size)}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+              <div className="p-4 min-h-[400px] bg-white">
+                {transcription ? (
+                  <div className="p-4">{transcription}</div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center h-full text-center p-8 text-gray-500 bg-gray-50 rounded-md">
+                    <p>Click the button above to start recording your consultation.</p>
+                    <p>Transcription will appear here once active.</p>
+                  </div>
+                )}
+              </div>
+            </Card>
+          </div>
+
+          {/* Right column: Clinical Notes + Upload */}
+          <div className="space-y-6">
+            <Card className="rounded-lg overflow-hidden">
+              <div className="bg-gray-50 p-4 flex justify-between items-center border-b">
+                <div className="flex items-center gap-2">
+                  <FileTextIcon className="w-5 h-5 text-blue-800" />
+                  <h2 className="text-lg font-medium">Clinical Notes</h2>
+                </div>
+                <Button variant="outline" className="bg-white" onClick={() => setClinicalNotes("")}>
+                  Clear
+                </Button>
+              </div>
+              <div className="p-4 min-h-[250px]">
+                <Textarea 
+                  placeholder="Enter clinical notes here..." 
+                  value={clinicalNotes}
+                  onChange={(e) => setClinicalNotes(e.target.value)}
+                  className="min-h-[200px] resize-none border-0 focus-visible:ring-0"
+                />
+                <div className="text-xs text-gray-400 mt-2 text-right">
+                  Changes are automatically saved
                 </div>
               </div>
-            )}
+            </Card>
+
+            <Card className="rounded-lg overflow-hidden">
+              <div className="bg-gray-50 p-4 flex justify-between items-center border-b">
+                <div className="flex items-center gap-2">
+                  <UploadIcon className="w-5 h-5 text-blue-800" />
+                  <h2 className="text-lg font-medium">Upload Files</h2>
+                </div>
+              </div>
+              <div className="p-4">
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="upload-type" className="text-sm font-medium mb-2 block">Upload Type</Label>
+                    <Select value={uploadType} onValueChange={value => setUploadType(value as UploadType)}>
+                      <SelectTrigger id="upload-type" className="w-full">
+                        <SelectValue placeholder="Select type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="transcript">Transcript</SelectItem>
+                        <SelectItem value="dictation">Dictation</SelectItem>
+                        <SelectItem value="letter">Letter</SelectItem>
+                        <SelectItem value="patient notes">Patient Notes</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <Input 
+                      id="file-upload" 
+                      type="file"
+                      onChange={handleFileUpload}
+                      className="flex-1" 
+                    />
+                    <Button type="button" className="flex items-center gap-1">
+                      <UploadIcon size={18} />
+                      Upload
+                    </Button>
+                  </div>
+                </div>
+                
+                {uploads.length > 0 && (
+                  <div className="mt-4 border rounded-md overflow-hidden">
+                    <table className="w-full">
+                      <thead className="bg-slate-50 border-b">
+                        <tr>
+                          <th className="text-left px-3 py-2 text-xs">File</th>
+                          <th className="text-left px-3 py-2 text-xs">Type</th>
+                          <th className="text-left px-3 py-2 text-xs">Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {uploads.map(file => (
+                          <tr key={file.id} className="border-b last:border-0">
+                            <td className="px-3 py-2 text-xs">{file.name}</td>
+                            <td className="px-3 py-2 text-xs capitalize">{file.type}</td>
+                            <td className="px-3 py-2 text-xs">{formatDate(file.dateUploaded)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            </Card>
           </div>
-        </Card>
+        </div>
       </div>
     </div>
   );
