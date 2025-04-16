@@ -1,14 +1,15 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Mic, FileText, Plus, Search, CalendarIcon, ChevronFirst, ChevronLast, ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { ClinicalLayout } from "@/components/ClinicalLayout";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Mic, FileText, Plus, Search, CalendarIcon, ChevronFirst, ChevronLast, ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
+import { ClinicalLayout } from '@/components/ClinicalLayout';
+
 const consultations = [{
   id: 1,
   patientName: "John Doe",
@@ -42,12 +43,14 @@ const consultations = [{
   statusType: "scheduled",
   date: "18/11/23, 9:34 am"
 }];
+
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState("Consultations");
   const today = new Date();
   const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const formattedDate = `Today, ${dayNames[today.getDay()]}, ${today.getDate()} ${monthNames[today.getMonth()]}`;
+
   return <ClinicalLayout>
       <div className="p-6">
         <div className="max-w-6xl mx-auto">
@@ -79,7 +82,7 @@ const HomePage = () => {
                 </div>
                 <p className="text-sm text-gray-600 mb-6">Generate reports with multiple file uploads and consultation recordings.</p>
                 
-                <Button asChild className="w-full bg-blue-600 hover:bg-blue-700">
+                <Button asChild className="w-full bg-blue-800 hover:bg-blue-900">
                   <Link to="/workflow/upload" className="flex items-center justify-center gap-2">
                     Create Report
                   </Link>
@@ -232,4 +235,5 @@ const HomePage = () => {
       </div>
     </ClinicalLayout>;
 };
+
 export default HomePage;
