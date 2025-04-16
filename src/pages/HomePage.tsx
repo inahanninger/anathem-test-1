@@ -53,14 +53,14 @@ const HomePage = () => {
         <div className="max-w-6xl mx-auto">
           <h1 className="text-2xl font-bold mb-6 text-blue-800">{formattedDate}</h1>
           
-          <div className="grid grid-cols-3 md:grid-cols-2 gap-6 mb-8">
+          <div className="grid grid-cols-3 md:grid-cols-2 gap-4 mb-8">
             <Card className="bg-white border border-gray-200 shadow-sm">
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-2">
                   <Mic className="h-5 w-5 text-gray-600" />
-                  <h2 className="text-lg font-semibold">Transcribe a Consultation</h2>
+                  <h2 className="font-semibold text-base">Transcribe a Consultation</h2>
                 </div>
-                <p className="text-sm text-gray-600 mb-6">Generate paperwork through transcribing a patient consultation.</p>
+                <p className="text-gray-600 mb-6 text-sm">Generate paperwork through transcribing a patient consultation.</p>
                 
                 <Button asChild className="w-full bg-red-800 hover:bg-red-900">
                   <Link to="/transcribe" className="flex items-center justify-center gap-2">
@@ -75,7 +75,7 @@ const HomePage = () => {
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-2">
                   <FileText className="h-5 w-5 text-gray-600" />
-                  <h2 className="text-lg font-semibold">Create Assessment Report</h2>
+                  <h2 className="font-semibold text-base">Create Assessment Report</h2>
                 </div>
                 <p className="text-sm text-gray-600 mb-6">Generate reports with multiple file uploads and consultation recordings.</p>
                 
