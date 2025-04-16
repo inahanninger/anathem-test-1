@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon, MicIcon, SettingsIcon, FileTextIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,22 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
-import StepProgress from "@/components/StepProgress";
 import RecordingButton from "@/components/RecordingButton";
-
-const workflowSteps = [{
-  name: "Upload",
-  path: "/workflow/upload"
-}, {
-  name: "Review",
-  path: "/workflow/review"
-}, {
-  name: "Transcribe",
-  path: "/workflow/transcribe"
-}, {
-  name: "Report",
-  path: "/workflow/report"
-}];
 
 const WorkflowTranscribePage = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -81,16 +67,7 @@ const WorkflowTranscribePage = () => {
         </div>
       </div>
       
-      <div className="container mx-auto py-4 w-6xl">
-        <StepProgress currentStep={3} steps={workflowSteps} />
-      </div>
-      
       <div className="container mx-auto px-6 py-[8px] w-6xl">
-        <h1 className="font-bold mb-1 text-lg">Transcribe Consultation</h1>
-        <p className="text-gray-600 mb-8 text-sm">
-          Record and transcribe your consultation or add clinical notes manually.
-        </p>
-        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <Card className="rounded-lg overflow-hidden">
             <div className="bg-gray-50 p-4 flex items-center justify-between border-b">

@@ -7,7 +7,6 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import FormProgress from "@/components/FormProgress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Link, useNavigate } from "react-router-dom";
 import RecordingButton from "@/components/RecordingButton";
@@ -112,36 +111,6 @@ const TranscribePage = () => {
   };
 
   return <div className="min-h-screen bg-white">
-      <div className="border-b border-gray-100 px-6 bg-white py-0">
-        <div className="container mx-auto w-6xl">
-          <Breadcrumb className="py-2">
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbPage className="font-medium text-xs">Transcribe</BreadcrumbPage>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <Link to="/generate" className="text-xs text-neutral-600">Generate</Link>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <Link to="/report" className="text-xs text-neutral-600 flex items-center gap-1">
-                  <span>Review</span>
-                </Link>
-              </BreadcrumbItem>
-              <BreadcrumbItem className="ml-auto">
-                <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
-                  Back
-                </Button>
-                <Button className="bg-blue-800 hover:bg-blue-900 text-sm ml-2 flex items-center gap-1" onClick={handleContinue}>
-                  Continue <ArrowRightIcon size={16} />
-                </Button>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </div>
-
       <div className="border-b border-gray-100 bg-gray-50/80 py-3 px-6">
         <div className="container mx-auto w-6xl">
           <div className="flex items-center justify-between">
@@ -155,7 +124,14 @@ const TranscribePage = () => {
                 <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="h-8 w-[140px] text-sm" />
               </div>
             </div>
-            <FormProgress completedSections={completedSections} totalSections={totalSections} />
+            <div className="flex items-center gap-2">
+              <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
+                Back
+              </Button>
+              <Button className="bg-blue-800 hover:bg-blue-900 text-sm flex items-center gap-1" onClick={handleContinue}>
+                Continue <ArrowRightIcon size={16} />
+              </Button>
+            </div>
           </div>
         </div>
       </div>
