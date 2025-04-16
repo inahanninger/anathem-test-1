@@ -7,16 +7,6 @@ interface FileUploadSectionProps {
   title: string;
 
   /**
-   * Description text for the file upload section
-   */
-  description?: string;
-
-  /**
-   * Section identifier
-   */
-  section?: string;
-
-  /**
    * Whether the file upload is required
    * @default false
    */
@@ -39,19 +29,14 @@ interface FileUploadSectionProps {
  */
 const FileUploadSection: React.FC<FileUploadSectionProps> = ({
   title,
-  description,
-  section,
   required = false,
   children,
   className
 }) => {
-  return <div className={`mb-8 ${className || ""}`} id={section}>
+  return <div className={`mb-8 ${className || ""}`}>
       <h2 className="text-lg font-semibold mb-4">
         {title} {required && <span className="text-red-500">*</span>}
       </h2>
-      {description && (
-        <p className="text-gray-600 mb-4 text-sm">{description}</p>
-      )}
       <div className="space-y-6">
         {children}
       </div>
