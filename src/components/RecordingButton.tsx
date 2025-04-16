@@ -1,6 +1,6 @@
 
 import React from "react";
-import { StopIcon, MicIcon } from "lucide-react";
+import { Square, MicIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -19,7 +19,7 @@ const RecordingButton = ({ isRecording, onClick, className }: RecordingButtonPro
       )}
       onClick={onClick}
     >
-      {isRecording ? <StopIcon className="w-4 h-4 mr-2" /> : <MicIcon className="w-4 h-4 mr-2" />}
+      {isRecording ? <Square className="w-4 h-4 mr-2" /> : <MicIcon className="w-4 h-4 mr-2" />}
       
       {isRecording && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
