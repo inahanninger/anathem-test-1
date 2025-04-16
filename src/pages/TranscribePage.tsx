@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import FormProgress from "@/components/FormProgress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RecordingButton from "@/components/RecordingButton";
 
 type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
@@ -32,6 +32,7 @@ const TranscribePage = () => {
   const [activeTab, setActiveTab] = useState<string>("clinical-notes");
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
   const completedSections = 1;
   const totalSections = 6;
 
@@ -86,8 +87,8 @@ const TranscribePage = () => {
       toast.error("Please upload a file or create a transcription");
       return;
     }
-    toast.success("Continuing to Generate Report");
-    window.location.href = "/generate";
+    toast.success("Generating report");
+    navigate("/report");
   };
 
   const handleClickUpload = () => {

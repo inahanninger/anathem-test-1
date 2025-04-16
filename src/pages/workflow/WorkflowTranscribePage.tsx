@@ -1,14 +1,14 @@
+
 import React, { useState } from "react";
-import { ArrowRightIcon, ArrowLeftIcon, MicIcon, UploadIcon, SettingsIcon, FileTextIcon } from "lucide-react";
+import { ArrowRightIcon, ArrowLeftIcon, MicIcon, SettingsIcon, FileTextIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
 import RecordingButton from "@/components/RecordingButton";
 
@@ -22,9 +22,6 @@ const workflowSteps = [{
   name: "Transcribe",
   path: "/workflow/transcribe"
 }, {
-  name: "Generate",
-  path: "/workflow/generate"
-}, {
   name: "Report",
   path: "/workflow/report"
 }];
@@ -36,6 +33,7 @@ const WorkflowTranscribePage = () => {
   const [activeTab, setActiveTab] = useState<string>("clinical-notes");
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
+  const navigate = useNavigate();
 
   const toggleRecording = () => {
     if (isRecording) {
@@ -47,6 +45,11 @@ const WorkflowTranscribePage = () => {
       setIsRecording(true);
       toast.success("Recording started");
     }
+  };
+  
+  const handleContinue = () => {
+    toast.success("Generating report");
+    navigate("/workflow/report");
   };
 
   return <div className="min-h-screen bg-white">
@@ -69,10 +72,10 @@ const WorkflowTranscribePage = () => {
                   <ArrowLeftIcon size={16} /> Back
                 </Link>
               </Button>
-              <Button className="bg-blue-800 hover:bg-blue-900 text-sm">
-                <Link to="/workflow/generate" className="flex items-center gap-1">
+              <Button className="bg-blue-800 hover:bg-blue-900 text-sm" onClick={handleContinue}>
+                <span className="flex items-center gap-1">
                   Continue <ArrowRightIcon size={16} />
-                </Link>
+                </span>
               </Button>
             </div>
           </div>

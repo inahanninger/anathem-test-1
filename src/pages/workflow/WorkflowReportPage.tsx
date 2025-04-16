@@ -1,4 +1,5 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,6 +8,7 @@ import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
 import ReviewPage from "../ReviewPage";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const workflowSteps = [{
   name: "Upload",
@@ -18,9 +20,6 @@ const workflowSteps = [{
   name: "Transcribe",
   path: "/workflow/transcribe"
 }, {
-  name: "Generate",
-  path: "/workflow/generate"
-}, {
   name: "Report",
   path: "/workflow/report"
 }];
@@ -28,6 +27,16 @@ const workflowSteps = [{
 const WorkflowReportPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   return <ClinicalLayout>
       <div className="min-h-screen bg-white">
@@ -46,7 +55,7 @@ const WorkflowReportPage = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
-                  <Link to="/workflow/generate" className="flex items-center gap-1">
+                  <Link to="/workflow/transcribe" className="flex items-center gap-1">
                     <ArrowLeftIcon size={16} /> Back
                   </Link>
                 </Button>
@@ -59,12 +68,26 @@ const WorkflowReportPage = () => {
         </div>
         
         <div className="container mx-auto py-4" style={{ maxWidth: "1243px" }}>
-          <StepProgress currentStep={5} steps={workflowSteps} />
+          <StepProgress currentStep={4} steps={workflowSteps} />
         </div>
         
-        <div className="mt-0">
-          <ReviewPage />
-        </div>
+        {isLoading ? (
+          <div className="container mx-auto px-6 py-8" style={{ maxWidth: "1243px" }}>
+            <Skeleton className="h-8 w-48 mb-4" />
+            <Skeleton className="h-4 w-96 mb-8" />
+            
+            <div className="space-y-6">
+              <Skeleton className="h-64 w-full mb-6" />
+              <Skeleton className="h-24 w-full" />
+              <Skeleton className="h-36 w-full" />
+              <Skeleton className="h-48 w-full" />
+            </div>
+          </div>
+        ) : (
+          <div className="mt-0">
+            <ReviewPage />
+          </div>
+        )}
       </div>
     </ClinicalLayout>;
 };
