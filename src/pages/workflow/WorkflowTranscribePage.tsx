@@ -4,9 +4,9 @@ import { ArrowRightIcon, ArrowLeftIcon, MicIcon, SettingsIcon, FileTextIcon } fr
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
@@ -92,49 +92,58 @@ const WorkflowTranscribePage = () => {
           Record and transcribe your consultation or add clinical notes manually.
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <Card className="rounded-lg overflow-hidden">
-            <div className="bg-gray-50 p-4 flex items-center justify-between border-b">
-              <div className="flex items-center gap-2">
-                <MicIcon className="w-5 h-5 text-blue-800" />
-                <h2 className="text-base font-semibold">Transcription</h2>
-              </div>
-              <div className="flex gap-2">
-                <RecordingButton 
-                  isRecording={isRecording} 
-                  onClick={toggleRecording} 
-                />
-                <Button variant="outline" size="icon" className="bg-white">
-                  <SettingsIcon className="w-4 h-4" />
-                </Button>
-              </div>
+        <div className="mb-8">
+          <div className="bg-gray-50 p-4 flex items-center justify-between border-b">
+            <div className="flex items-center gap-2">
+              <MicIcon className="w-5 h-5 text-blue-800" />
+              <h2 className="text-base font-semibold">Transcription</h2>
             </div>
-            <div className="p-4 min-h-[400px] bg-white">
-              {transcription ? <div className="p-4 text-sm px-[8px] py-[8px]">{transcription}</div> : <div className="flex flex-col items-center justify-center h-full text-center p-8 text-gray-500 bg-gray-50 rounded-md">
-                  <p className="text-sm">Click the button above to start recording your consultation. Transcription will appear here once active.</p>
-                </div>}
+            <div className="flex gap-2">
+              <RecordingButton 
+                isRecording={isRecording} 
+                onClick={toggleRecording} 
+              />
+              <Button variant="outline" size="icon" className="bg-white">
+                <SettingsIcon className="w-4 h-4" />
+              </Button>
             </div>
-          </Card>
+          </div>
+          <div className="p-4 min-h-[300px] bg-white border border-t-0 rounded-b-lg">
+            {transcription ? 
+              <div className="p-4 text-sm px-[8px] py-[8px]">{transcription}</div> 
+              : 
+              <div className="flex flex-col items-center justify-center h-full text-center p-8 text-gray-500 bg-gray-50 rounded-md">
+                <p className="text-sm">Click the button above to start recording your consultation. Transcription will appear here once active.</p>
+              </div>
+            }
+          </div>
+        </div>
+        
+        <Separator className="my-8" />
 
-          <Card className="rounded-lg overflow-hidden">
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full">
-              <div className="bg-gray-50 p-4 border-b">
-                <TabsList className="w-full bg-gray-100">
-                  <TabsTrigger value="clinical-notes" className="flex-1">
-                    <FileTextIcon className="w-4 h-4 mr-2" />
-                    Clinical Notes
-                  </TabsTrigger>
-                </TabsList>
+        <div className="mb-8">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <div className="bg-gray-50 p-4 border-b">
+              <TabsList className="w-full bg-gray-100">
+                <TabsTrigger value="clinical-notes" className="flex-1">
+                  <FileTextIcon className="w-4 h-4 mr-2" />
+                  Clinical Notes
+                </TabsTrigger>
+              </TabsList>
+            </div>
+            
+            <TabsContent value="clinical-notes" className="p-4 min-h-[300px] m-0 border border-t-0 rounded-b-lg">
+              <Textarea 
+                placeholder="Enter clinical notes here..." 
+                value={clinicalNotes} 
+                onChange={e => setClinicalNotes(e.target.value)} 
+                className="min-h-[270px] resize-none border-0 focus-visible:ring-0" 
+              />
+              <div className="text-xs text-gray-400 mt-2 text-right">
+                Changes are automatically saved
               </div>
-              
-              <TabsContent value="clinical-notes" className="p-4 min-h-[400px] m-0 border-0">
-                <Textarea placeholder="Enter clinical notes here..." value={clinicalNotes} onChange={e => setClinicalNotes(e.target.value)} className="min-h-[370px] resize-none border-0 focus-visible:ring-0" />
-                <div className="text-xs text-gray-400 mt-2 text-right">
-                  Changes are automatically saved
-                </div>
-              </TabsContent>
-            </Tabs>
-          </Card>
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </div>;
