@@ -49,8 +49,8 @@ const HomePage = () => {
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const formattedDate = `Today, ${dayNames[today.getDay()]}, ${today.getDate()} ${monthNames[today.getMonth()]}`;
   return <ClinicalLayout>
-      <div className="p-6">
-        <div className="max-w-6xl mx-auto">
+      <div className="p-6 ">
+        <div className="max-w-6xl mx-auto h-full">
           <h1 className="text-2xl font-bold mb-6 text-blue-800">{formattedDate}</h1>
           
           <div className="grid grid-cols-3 md:grid-cols-2 gap-4 mb-8">
