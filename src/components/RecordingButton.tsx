@@ -1,6 +1,6 @@
 
 import React from "react";
-import { MicIcon } from "lucide-react";
+import { StopIcon, MicIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -14,12 +14,13 @@ const RecordingButton = ({ isRecording, onClick, className }: RecordingButtonPro
   return (
     <Button
       className={cn(
-        `px-4 relative ${isRecording ? 'bg-red-600 hover:bg-red-700' : 'bg-red-700 hover:bg-red-800'}`,
+        `px-3 relative ${isRecording ? 'bg-red-600 hover:bg-red-700' : 'bg-red-700 hover:bg-red-800'}`,
         className
       )}
       onClick={onClick}
     >
-      <MicIcon className="w-4 h-4 mr-2" />
+      {isRecording ? <StopIcon className="w-4 h-4 mr-2" /> : <MicIcon className="w-4 h-4 mr-2" />}
+      
       {isRecording && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <span className="flex space-x-1">
@@ -37,7 +38,10 @@ const RecordingButton = ({ isRecording, onClick, className }: RecordingButtonPro
           </span>
         </div>
       )}
-      <span className="z-10">{isRecording ? 'Stop Recording' : 'Start Recording'}</span>
+      
+      <span className="z-10">
+        {isRecording ? 'Transcribing' : 'Start Recording'}
+      </span>
     </Button>
   );
 };
