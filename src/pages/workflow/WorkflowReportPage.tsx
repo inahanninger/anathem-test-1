@@ -49,9 +49,7 @@ const WorkflowReportPage = () => {
                 </Link>
               </Button>
               <Button className="bg-blue-800 hover:bg-blue-900 text-sm">
-                <Link to="/" className="flex items-center gap-1">
-                  Finish
-                </Link>
+                <Link to="/" className="flex items-center gap-1">Download Documents</Link>
               </Button>
             </div>
           </div>
