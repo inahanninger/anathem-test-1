@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -42,21 +41,7 @@ const ReviewInformationPage = () => {
     toast.success("Patient information saved");
   };
   return <div className="min-h-screen bg-white">
-      <div className="border-b border-gray-100 px-6 bg-white py-[8px]">
-        <div className="container max-w-5xl mx-auto">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <Link to="/" className="text-xs text-blue-600">Home</Link>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage className="text-xs">Document Assessment</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </div>
+      
 
       <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
         <div className="container max-w-5xl mx-auto">
