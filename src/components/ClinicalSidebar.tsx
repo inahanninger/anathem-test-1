@@ -104,15 +104,7 @@ export const ClinicalSidebar: React.FC = () => {
 
   // Desktop sidebar
   const DesktopSidebar = <motion.div initial="collapsed" animate={isExpanded ? 'expanded' : 'collapsed'} variants={sidebarVariants} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="hidden md:flex flex-col h-screen border-r border-gray-200 overflow-hidden bg-neutral-50">
-      <div className="flex items-center justify-left h-16 px-4">
-        <motion.div className="w-full" variants={logoVariants} initial="collapsed" animate={isExpanded ? 'expanded' : 'collapsed'}>
-          
-        </motion.div>
-        
-        <motion.div className="absolute" variants={iconVariants} initial="expanded" animate={isExpanded ? 'collapsed' : 'expanded'}>
-          <span className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-800 text-white font-bold">A</span>
-        </motion.div>
-      </div>
+      
 
       <div className="flex flex-col flex-1 py-6">
         <nav className="flex-1 space-y-2 px-3">
@@ -122,7 +114,7 @@ export const ClinicalSidebar: React.FC = () => {
           return <Link key={item.name} to={item.path} className={`flex items-center px-3 py-2 rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'text-gray-700 hover:bg-gray-200'} transition-colors duration-200`}>
                 <Icon size={20} className={isActive ? 'text-blue-800' : 'text-gray-600'} />
                 <AnimatePresence initial={false}>
-                  <motion.span className="ml-3 whitespace-nowrap" variants={textVariants} initial="hidden" animate={isExpanded ? 'visible' : 'hidden'}>
+                  <motion.span variants={textVariants} initial="hidden" animate={isExpanded ? 'visible' : 'hidden'} className="ml-3 whitespace-nowrap text-sm font-normal">
                     {item.name}
                   </motion.span>
                 </AnimatePresence>

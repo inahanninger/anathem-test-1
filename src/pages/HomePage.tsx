@@ -51,7 +51,7 @@ const HomePage = () => {
   return <ClinicalLayout>
       <div className="p-6">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-2xl font-bold text-blue-600 mb-6">{formattedDate}</h1>
+          <h1 className="text-2xl font-bold mb-6 text-blue-800">{formattedDate}</h1>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <Card className="bg-white border border-gray-200 shadow-sm">
