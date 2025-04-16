@@ -126,7 +126,7 @@ const TranscribePage = () => {
       <div className="container mx-auto px-6 py-6 w-6xl">
         <div className="grid grid-cols-2 md:grid-cols-2 gap-3">
           <div>
-            <Card className="rounded-lg overflow-hidden">
+            <Card className="rounded-lg overflow-hidden w-full h-full">
               <div className="p-4 flex items-center justify-between border-b bg-transparent">
                 <div className="flex items-center gap-2">
                   <MicIcon className="w-5 h-5 text-blue-800" />
