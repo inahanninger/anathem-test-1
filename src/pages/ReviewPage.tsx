@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import StepProgress from "@/components/StepProgress";
+
 const ReviewPage = () => {
   const [completedSections, setCompletedSections] = useState(2);
   const [activeTab, setActiveTab] = useState("progress-notes");
@@ -110,7 +111,6 @@ Patient describes childhood household as "tense but functional" with parents who
   const [clinicalNotes, setClinicalNotes] = useState("Patient presents with symptoms consistent with Major Depressive Disorder and Social Anxiety Disorder. Current medication regimen appears to be providing moderate symptom relief, but patient may benefit from increased psychosocial interventions, particularly around social anxiety. Recommend weekly CBT sessions for 8 weeks, focusing on cognitive restructuring and graduated exposure exercises.");
   const [treatmentPlan, setTreatmentPlan] = useState("1. Continue current medication regimen with follow-up in 4 weeks\n2. Begin weekly CBT with focus on social anxiety symptoms\n3. Patient to complete daily mood tracking\n4. Provide referral to support group for young professionals with anxiety");
 
-  // Updated to match StepProgress component's expected props shape
   const workflowSteps = [{
     name: "Progress Notes",
     path: "/workflow/progress-notes"
@@ -201,14 +201,17 @@ Patient describes childhood household as "tense but functional" with parents who
     }
   };
   return <div className="min-h-screen bg-white px-[16px]">
-      
-      
-      
-      
-      <div className="w-full">
+      <div className="w-6xl mx-auto">
         <div className="flex">
           <div className="flex-1 min-w-0 space-y-6">
-            <ClinicalTabsSection progressNotes={progressNotes} setProgressNotes={setProgressNotes} clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} />
+            <ClinicalTabsSection 
+              progressNotes={progressNotes} 
+              setProgressNotes={setProgressNotes} 
+              clinicalDetails={clinicalDetails} 
+              setClinicalDetails={setClinicalDetails} 
+              developmentalHistory={developmentalHistory} 
+              setDevelopmentalHistory={setDevelopmentalHistory}
+            />
           </div>
         </div>
       </div>
@@ -218,4 +221,5 @@ Patient describes childhood household as "tense but functional" with parents who
       </div>
     </div>;
 };
+
 export default ReviewPage;
