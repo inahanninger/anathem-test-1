@@ -102,7 +102,7 @@ const HomePage = () => {
           <div className="bg-white border border-gray-200 rounded-md shadow-sm mb-6">
             <div className="flex justify-between items-center p-4 border-b border-gray-200">
               <div className="flex space-x-2">
-                <Button variant={activeTab === "Consultations" ? "default" : "ghost"} onClick={() => setActiveTab("Consultations")} size="sm" className="text-neutral-900 bg-neutral-200 hover:bg-neutral-100 font-medium text-sm mx-0 px-[12px] py-[8px] rounded-md">
+                <Button variant={activeTab === "Consultations" ? "default" : "ghost"} onClick={() => setActiveTab("Consultations")} size="sm" className="text-neutral-900 font-medium text-sm mx-0 px-[12px] py-[8px] rounded-md bg-transparent">
                   Consultations
                 </Button>
                 <Button variant={activeTab === "To Do" ? "default" : "ghost"} onClick={() => setActiveTab("To Do")} size="sm" className="text-sm bg-neutral-200 hover:bg-neutral-100 text-neutral-900">
