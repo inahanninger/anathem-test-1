@@ -57,11 +57,11 @@ const GenerateAssessmentPage = () => {
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
-                <Link to="/" className="text-xs text-blue-600">Home</Link>
+                
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage className="text-xs">Document Assessment</BreadcrumbPage>
+                
               </BreadcrumbItem>
               <BreadcrumbItem className="ml-auto">
                 <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
