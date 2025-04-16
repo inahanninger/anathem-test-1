@@ -53,7 +53,7 @@ const HomePage = () => {
         <div className="max-w-6xl mx-auto">
           <h1 className="text-2xl font-bold mb-6 text-blue-800">{formattedDate}</h1>
           
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-3 md:grid-cols-2 gap-6 mb-8">
             <Card className="bg-white border border-gray-200 shadow-sm">
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-2">
