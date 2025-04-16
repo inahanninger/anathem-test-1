@@ -1,4 +1,3 @@
-
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 import { Tabs } from "@/components/ui/tabs";
 import SourcesPanel from "../SourcesPanel";
@@ -28,7 +27,7 @@ const SplitView = ({
 }: SplitViewProps) => {
   return <ResizablePanelGroup direction="horizontal" className="min-h-[600px] border rounded-md overflow-hidden">
       <ResizablePanel defaultSize={50} minSize={30}>
-        <div className="h-full">
+        <div className="">
           <Tabs defaultValue="progress-notes" value={activeTab} onValueChange={setActiveTab} className="w-full h-full flex flex-col py-[8px] px-[4px]">
             <TabsHeader activeTab={activeTab} />
             
@@ -37,10 +36,10 @@ const SplitView = ({
         </div>
       </ResizablePanel>
       
-      <ResizableHandle withHandle className="bg-gray-200 mx-[8px]" />
+      <ResizableHandle withHandle className="bg-gray-200 w-[3px] mx-[5px]" />
       
       <ResizablePanel defaultSize={50} minSize={30}>
-        <div className="h-full bg-neutral-100">
+        <div className="h-full">
           <SourcesPanel isVisible={showSources} />
         </div>
       </ResizablePanel>
