@@ -9,7 +9,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { ClinicalLayout } from '@/components/ClinicalLayout';
-
 const consultations = [{
   id: 1,
   patientName: "John Doe",
@@ -43,14 +42,12 @@ const consultations = [{
   statusType: "scheduled",
   date: "18/11/23, 9:34 am"
 }];
-
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState("Consultations");
   const today = new Date();
   const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const formattedDate = `Today, ${dayNames[today.getDay()]}, ${today.getDate()} ${monthNames[today.getMonth()]}`;
-
   return <ClinicalLayout>
       <div className="p-6">
         <div className="max-w-6xl mx-auto">
@@ -105,10 +102,10 @@ const HomePage = () => {
           <div className="bg-white border border-gray-200 rounded-md shadow-sm mb-6">
             <div className="flex justify-between items-center p-4 border-b border-gray-200">
               <div className="flex space-x-2">
-                <Button variant={activeTab === "Consultations" ? "default" : "ghost"} onClick={() => setActiveTab("Consultations")} className={activeTab === "Consultations" ? "bg-blue-600" : ""} size="sm">
+                <Button variant={activeTab === "Consultations" ? "default" : "ghost"} onClick={() => setActiveTab("Consultations")} size="sm" className="text-neutral-900 bg-neutral-200 hover:bg-neutral-100 font-medium text-sm mx-0 px-[12px] py-[8px] rounded-md">
                   Consultations
                 </Button>
-                <Button variant={activeTab === "To Do" ? "default" : "ghost"} onClick={() => setActiveTab("To Do")} className={activeTab === "To Do" ? "bg-blue-600" : ""} size="sm">
+                <Button variant={activeTab === "To Do" ? "default" : "ghost"} onClick={() => setActiveTab("To Do")} size="sm" className="text-sm">
                   To Do
                 </Button>
               </div>
@@ -235,5 +232,4 @@ const HomePage = () => {
       </div>
     </ClinicalLayout>;
 };
-
 export default HomePage;
