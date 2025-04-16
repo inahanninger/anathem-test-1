@@ -68,9 +68,10 @@ const UploadDocumentPage = () => {
           Upload patient documents to start the assessment process.
         </p>
         
-        <div className="mb-8">
+        <div>
           <h2 className="text-lg font-semibold mb-4">Medical Records</h2>
           <FileUploadSection
+            title="Medical Records"
             description="Upload patient medical records, including clinical notes, past assessments, and any relevant medical history."
             section="medical-records"
           />
@@ -78,9 +79,10 @@ const UploadDocumentPage = () => {
         
         <Separator className="my-8" />
         
-        <div className="mb-8">
+        <div>
           <h2 className="text-lg font-semibold mb-4">Questionnaires</h2>
           <FileUploadSection
+            title="Questionnaires"
             description="Upload completed questionnaires, including ADHD assessments, anxiety scales, or other psychological evaluations."
             section="questionnaires"
           />
@@ -88,9 +90,10 @@ const UploadDocumentPage = () => {
         
         <Separator className="my-8" />
         
-        <div className="mb-8">
+        <div>
           <h2 className="text-lg font-semibold mb-4">School Reports</h2>
           <FileUploadSection
+            title="School Reports"
             description="Upload school reports, teacher assessments, and any educational evaluations relevant to the patient's care."
             section="school-reports"
           />
