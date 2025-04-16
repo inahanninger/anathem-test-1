@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CheckCircle2Icon, AlertCircleIcon, PlusIcon, ArrowLeftIcon } from "lucide-react";
+import { CheckCircle2Icon, AlertCircleIcon, PlusIcon, ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import FormProgress from "@/components/FormProgress";
@@ -16,11 +16,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import StepProgress from "@/components/StepProgress";
+import { Link, useNavigate } from "react-router-dom";
+
 const ReviewPage = () => {
   const [completedSections, setCompletedSections] = useState(2);
   const [activeTab, setActiveTab] = useState("progress-notes");
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
+  const navigate = useNavigate();
+  
   const [presentingIssues, setPresentingIssues] = useState("Patient reports experiencing moderate depressive symptoms for approximately 3 months, including low mood, decreased interest in activities, and poor sleep. Patient also mentions occasional anxiety in social situations that has increased in frequency over the past month.");
   const [medications, setMedications] = useState<Medication[]>([{
     id: "1",
@@ -128,15 +132,18 @@ Patient describes childhood household as "tense but functional" with parents who
     name: "Clinical Notes",
     path: "/workflow/clinical-notes"
   }];
+
   const handleMedicationUpdate = (id: string, updatedMed: Partial<Medication>) => {
     setMedications(medications.map(med => med.id === id ? {
       ...med,
       ...updatedMed
     } : med));
   };
+
   const handleMedicationDelete = (id: string) => {
     setMedications(medications.filter(med => med.id !== id));
   };
+
   const handleAddMedication = () => {
     const newId = (Math.max(0, ...medications.map(m => parseInt(m.id))) + 1).toString();
     setMedications([...medications, {
@@ -146,20 +153,24 @@ Patient describes childhood household as "tense but functional" with parents who
       frequency: ""
     }]);
   };
+
   const handleSaveAll = () => {
     toast.success("All changes saved to patient record");
   };
+
   const toggleSectionCompletion = (sectionName: string, isComplete: boolean) => {
     setCompletedSections(prev => isComplete ? prev + 1 : Math.max(0, prev - 1));
     toast(`${sectionName} ${isComplete ? "marked as reviewed" : "marked as pending"}`, {
       icon: isComplete ? <CheckCircle2Icon className="h-4 w-4 text-green-500" /> : <AlertCircleIcon className="h-4 w-4 text-amber-500" />
     });
   };
+
   const currentDate = new Date().toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'long',
     year: 'numeric'
   });
+
   const progressNotesToc = [{
     id: "section-1",
     title: "Session Summary",
@@ -185,6 +196,7 @@ Patient describes childhood household as "tense but functional" with parents who
     title: "Homework Assigned",
     level: 1
   }];
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -198,18 +210,53 @@ Patient describes childhood household as "tense but functional" with parents who
       }, 2000);
     }
   };
-  return <div className="container mx-auto py-4 w-6xl">
-      <div className="w-6xl mx-auto">
-        <div className="flex">
-          <div className="flex-1 min-w-0 space-y-6">
-            <ClinicalTabsSection progressNotes={progressNotes} setProgressNotes={setProgressNotes} clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} />
+
+  return (
+    <div className="min-h-screen bg-white">
+      <div className="border-b border-gray-100 bg-gray-50/80 py-3 px-6">
+        <div className="container mx-auto w-6xl">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="flex flex-col">
+                <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
+                <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} className="h-8 w-[180px] text-sm" />
+              </div>
+              <div className="flex flex-col">
+                <Label htmlFor="nhsNumber" className="text-xs text-muted-foreground mb-1">NHS Number</Label>
+                <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="h-8 w-[140px] text-sm" />
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
+                <Link to="/transcribe" className="flex items-center gap-1">
+                  <ArrowLeftIcon size={16} /> Back
+                </Link>
+              </Button>
+              <Button className="bg-blue-800 hover:bg-blue-900 text-sm" onClick={() => toast.success("Report saved successfully")}>
+                <span className="flex items-center gap-1">
+                  Save Report
+                </span>
+              </Button>
+            </div>
           </div>
         </div>
       </div>
       
-      <div className="fixed bottom-6 right-6 z-10">
+      <div className="container mx-auto py-4 w-6xl">
+        <div className="w-6xl mx-auto">
+          <div className="flex">
+            <div className="flex-1 min-w-0 space-y-6">
+              <ClinicalTabsSection progressNotes={progressNotes} setProgressNotes={setProgressNotes} clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} />
+            </div>
+          </div>
+        </div>
         
+        <div className="fixed bottom-6 right-6 z-10">
+          
+        </div>
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default ReviewPage;
