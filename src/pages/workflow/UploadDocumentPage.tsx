@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
+import FileUploadSection from "@/components/FileUploadSection";
 type UploadType = "dictation" | "transcription" | "patient notes" | "letter";
 interface FileUpload {
   id: string;
@@ -128,46 +129,52 @@ const UploadDocumentPage = () => {
         </p>
         
         <Card className="p-8 mb-8">
-          <div className={`border-2 border-dashed rounded-lg p-10 flex flex-col items-center justify-center transition-colors
+          <FileUploadSection title="Upload Documents" required={true}>
+            <div className={`border-2 border-dashed rounded-lg p-10 flex flex-col items-center justify-center transition-colors
                 ${isDragging ? 'bg-blue-50 border-blue-300' : 'border-gray-300 bg-gray-50'}`} onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop} onClick={handleClickUpload}>
-            <input type="file" ref={fileInputRef} onChange={e => handleFileUpload(e.target.files)} className="hidden" multiple />
-            <UploadIcon className="h-16 w-16 text-gray-400 mb-4" />
-            <p className="text-blue-600 mb-2 text-base font-semibold">Click to upload or drag and drop</p>
-            <p className="text-gray-500 text-xs">PDF, DOC, DOCX, JPG, PNG up to 10MB</p>
-          </div>
-          
-          {uploads.length > 0 && <div className="mt-8">
-              <h3 className="font-medium text-lg mb-4">Uploaded Documents</h3>
-              <div className="space-y-3">
-                {uploads.map(file => <div key={file.id} className="border rounded-lg p-4 flex items-center justify-between bg-white">
-                    <div className="flex items-center space-x-3">
-                      <div className="bg-blue-50 p-3 rounded-lg">
-                        <FileTextIcon className="h-6 w-6 text-blue-600" />
+              <input type="file" ref={fileInputRef} onChange={e => handleFileUpload(e.target.files)} className="hidden" multiple />
+              <UploadIcon className="h-16 w-16 text-gray-400 mb-4" />
+              <p className="text-blue-600 mb-2 text-base font-semibold">Click to upload or drag and drop</p>
+              <p className="text-gray-500 text-xs">PDF, DOC, DOCX, JPG, PNG up to 10MB</p>
+            </div>
+            
+            {uploads.length > 0 && (
+              <div className="mt-8">
+                <h3 className="font-medium text-lg mb-4">Uploaded Documents</h3>
+                <div className="space-y-3">
+                  {uploads.map(file => (
+                    <div key={file.id} className="border rounded-lg p-4 flex items-center justify-between bg-white">
+                      <div className="flex items-center space-x-3">
+                        <div className="bg-blue-50 p-3 rounded-lg">
+                          <FileTextIcon className="h-6 w-6 text-blue-600" />
+                        </div>
+                        <div>
+                          <p className="font-medium text-sm">{file.name}</p>
+                          <p className="text-xs text-gray-500">{formatFileSize(file.size)}</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-medium text-sm">{file.name}</p>
-                        <p className="text-xs text-gray-500">{formatFileSize(file.size)}</p>
+                      <div className="flex items-center space-x-2">
+                        <Select value={file.type} onValueChange={value => handleFileTypeChange(file.id, value)}>
+                          <SelectTrigger className="w-44">
+                            <SelectValue placeholder="Select document type" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="dictation">Dictation</SelectItem>
+                            <SelectItem value="transcription">Transcription</SelectItem>
+                            <SelectItem value="patient notes">Patient Notes</SelectItem>
+                            <SelectItem value="letter">Letter</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <Button variant="ghost" size="icon" onClick={() => handleDeleteFile(file.id)} className="">
+                          <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
+                        </Button>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <Select value={file.type} onValueChange={value => handleFileTypeChange(file.id, value)}>
-                        <SelectTrigger className="w-44">
-                          <SelectValue placeholder="Select document type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="dictation">Dictation</SelectItem>
-                          <SelectItem value="transcription">Transcription</SelectItem>
-                          <SelectItem value="patient notes">Patient Notes</SelectItem>
-                          <SelectItem value="letter">Letter</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <Button variant="ghost" size="icon" onClick={() => handleDeleteFile(file.id)} className="">
-                        <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
-                      </Button>
-                    </div>
-                  </div>)}
+                  ))}
+                </div>
               </div>
-            </div>}
+            )}
+          </FileUploadSection>
         </Card>
       </div>
     </div>;
