@@ -10,7 +10,6 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
-
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -27,7 +26,6 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
-
 const WorkflowTranscribePage = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [transcription, setTranscription] = useState("");
@@ -35,7 +33,6 @@ const WorkflowTranscribePage = () => {
   const [activeTab, setActiveTab] = useState<string>("clinical-notes");
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
-
   const toggleRecording = () => {
     if (isRecording) {
       setIsRecording(false);
@@ -47,23 +44,8 @@ const WorkflowTranscribePage = () => {
       toast.success("Recording started");
     }
   };
-
   return <div className="min-h-screen bg-white">
-      <div className="border-b border-gray-100 px-6 bg-white py-[8px]">
-        <div className="container max-w-5xl mx-auto">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <Link to="/" className="text-xs text-blue-600">Home</Link>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage className="text-xs">Document Assessment</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </div>
+      
 
       <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
         <div className="container max-w-5xl mx-auto">
@@ -151,5 +133,4 @@ const WorkflowTranscribePage = () => {
       </div>
     </div>;
 };
-
 export default WorkflowTranscribePage;
