@@ -91,7 +91,7 @@ const HomePage = () => {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-2">
               <h2 className="text-xl font-bold">Consultations</h2>
-              <p className="text-sm text-gray-500">Find past appointments and prepare patient consultations.</p>
+              
             </div>
             
             <Button asChild className="bg-black hover:bg-gray-800">
