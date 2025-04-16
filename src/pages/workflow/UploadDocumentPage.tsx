@@ -132,8 +132,8 @@ const UploadDocumentPage = () => {
                 ${isDragging ? 'bg-blue-50 border-blue-300' : 'border-gray-300 bg-gray-50'}`} onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop} onClick={handleClickUpload}>
             <input type="file" ref={fileInputRef} onChange={e => handleFileUpload(e.target.files)} className="hidden" multiple />
             <UploadIcon className="h-16 w-16 text-gray-400 mb-4" />
-            <p className="text-blue-600 font-medium mb-2">Click to upload or drag and drop</p>
-            <p className="text-gray-500 text-sm">PDF, DOC, DOCX, JPG, PNG up to 10MB</p>
+            <p className="text-blue-600 mb-2 text-base font-semibold">Click to upload or drag and drop</p>
+            <p className="text-gray-500 text-xs">PDF, DOC, DOCX, JPG, PNG up to 10MB</p>
           </div>
           
           {uploads.length > 0 && <div className="mt-8">
