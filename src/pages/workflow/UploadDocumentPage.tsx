@@ -1,3 +1,4 @@
+
 import { useState, useRef } from "react";
 import { ArrowRightIcon, UploadIcon, FileTextIcon, TrashIcon, MicIcon, SettingsIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,9 @@ import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
 import FileUploadSection from "@/components/FileUploadSection";
+import { Skeleton } from "@/components/ui/skeleton";
 
+type AssessmentType = "adhd" | "autism" | "combined" | "";
 type UploadType = "dictation" | "transcription" | "patient notes" | "letter";
 
 interface FileUpload {
@@ -49,6 +52,7 @@ const UploadDocumentPage = () => {
   const [transcription, setTranscription] = useState("");
   const [uploads, setUploads] = useState<FileUpload[]>([]);
   const [isDragging, setIsDragging] = useState(false);
+  const [assessmentType, setAssessmentType] = useState<AssessmentType>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = (files: FileList | null, fileType?: string) => {
@@ -121,6 +125,10 @@ const UploadDocumentPage = () => {
     // Navigate to the next step
   };
 
+  const handleAssessmentChange = (value: string) => {
+    setAssessmentType(value as AssessmentType);
+  };
+
   return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
         <div className="container max-w-5xl mx-auto">
@@ -154,19 +162,29 @@ const UploadDocumentPage = () => {
       </div>
       
       <div className="container max-w-5xl mx-auto px-6 py-8">
+        <div className="mb-6">
+          <Label htmlFor="assessmentType" className="text-sm font-medium mb-2 block">Select Assessment Type</Label>
+          <Select value={assessmentType} onValueChange={handleAssessmentChange}>
+            <SelectTrigger className="w-full md:w-80">
+              <SelectValue placeholder="Select assessment type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="adhd">ADHD Assessment</SelectItem>
+              <SelectItem value="autism">Autism Assessment</SelectItem>
+              <SelectItem value="combined">ADHD/Autism Combined Assessment</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
         <h1 className="font-bold mb-1 text-lg">Upload Documents</h1>
         <p className="text-gray-600 mb-8 text-sm">
           Upload the required documents for assessment. You can drag and drop files or click to upload.
         </p>
         
-        <Card className="p-8 mb-8">
-          {/* Documents Section */}
-          <div className="mb-8">
-            <h2 className="text-lg font-semibold mb-6">
-              Documents <span className="text-red-500">*</span>
-            </h2>
-            
-            <div className="space-y-6">
+        {assessmentType ? (
+          <Card className="p-8 mb-8">
+            {/* Documents Section */}
+            <FileUploadSection title="Documents" required>
               {/* Conners Questionnaire */}
               <div>
                 <div className="flex justify-between items-center mb-2">
@@ -279,16 +297,10 @@ const UploadDocumentPage = () => {
                   <p className="text-gray-500 text-sm text-center">Click or drag file to this area to upload</p>
                 </div>
               </div>
-            </div>
-          </div>
+            </FileUploadSection>
 
-          {/* Inputs Section */}
-          <div className="mb-8">
-            <h2 className="text-lg font-semibold mb-6">
-              Inputs <span className="text-red-500">*</span>
-            </h2>
-            
-            <div className="space-y-6">
+            {/* Inputs Section */}
+            <FileUploadSection title="Inputs" required>
               {/* Patient Care Name */}
               <div>
                 <Label htmlFor="patientCareName" className="font-medium block mb-2">Patient Care Name</Label>
@@ -329,51 +341,46 @@ const UploadDocumentPage = () => {
                   <p className="text-gray-500 text-sm text-center">Click or drag file to this area to upload</p>
                 </div>
               </div>
-            </div>
-          </div>
+            </FileUploadSection>
 
-          {/* Consultation Transcript Section */}
-          <div className="mb-8">
-            <h2 className="text-lg font-semibold mb-2">
-              Consultation Transcript <span className="text-gray-500 font-normal text-sm">(optional)</span>
-            </h2>
-            
-            <div className="space-y-4">
-              <Label htmlFor="transcript" className="font-medium block">Transcript</Label>
-              <Textarea 
-                id="transcript"
-                value={transcription}
-                onChange={(e) => setTranscription(e.target.value)}
-                placeholder="Active transcription appears here..."
-                className="min-h-[150px] resize-none bg-gray-50"
-                readOnly={true}
-              />
-              <div className="flex gap-2">
-                <Button 
-                  className="bg-red-500 hover:bg-red-600 text-white"
-                  onClick={handleTranscribe}
-                >
-                  <MicIcon size={16} className="mr-2" />
-                  Transcribe
-                </Button>
-                <Button variant="outline" size="icon">
-                  <SettingsIcon size={16} />
-                </Button>
+            {/* Consultation Transcript Section */}
+            <FileUploadSection title="Consultation Transcript" className="mb-0">
+              <div className="space-y-4">
+                <Label htmlFor="transcript" className="font-medium block">Transcript</Label>
+                <Textarea 
+                  id="transcript"
+                  value={transcription}
+                  onChange={(e) => setTranscription(e.target.value)}
+                  placeholder="Active transcription appears here..."
+                  className="min-h-[150px] resize-none bg-gray-50"
+                  readOnly={true}
+                />
+                <div className="flex gap-2">
+                  <Button 
+                    className="bg-red-500 hover:bg-red-600 text-white"
+                    onClick={handleTranscribe}
+                  >
+                    <MicIcon size={16} className="mr-2" />
+                    Transcribe
+                  </Button>
+                  <Button variant="outline" size="icon">
+                    <SettingsIcon size={16} />
+                  </Button>
+                </div>
               </div>
-            </div>
-          </div>
+            </FileUploadSection>
 
-          {/* Submit Button */}
-          <div className="flex justify-end mt-8">
-            <Button 
-              className="bg-blue-900 hover:bg-blue-950"
-              onClick={handleSubmitFiles}
-            >
-              <UploadIcon size={16} className="mr-2" />
-              Submit Files
-            </Button>
-          </div>
-            
+            {/* Submit Button */}
+            <div className="flex justify-end mt-8">
+              <Button 
+                className="bg-blue-900 hover:bg-blue-950"
+                onClick={handleSubmitFiles}
+              >
+                <UploadIcon size={16} className="mr-2" />
+                Submit Files
+              </Button>
+            </div>
+              
             {uploads.length > 0 && (
               <div className="mt-8">
                 <h3 className="font-medium text-lg mb-4">Uploaded Documents</h3>
@@ -410,7 +417,71 @@ const UploadDocumentPage = () => {
                 </div>
               </div>
             )}
-        </Card>
+          </Card>
+        ) : (
+          // Skeleton Loader when no assessment type is selected
+          <Card className="p-8 mb-8">
+            <div className="mb-8">
+              <Skeleton className="h-7 w-32 mb-4" />
+              <div className="space-y-6">
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <Skeleton className="h-5 w-48" />
+                    <Skeleton className="h-9 w-32" />
+                  </div>
+                  <Skeleton className="h-40 w-full rounded-lg" />
+                </div>
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <Skeleton className="h-5 w-36" />
+                    <Skeleton className="h-9 w-32" />
+                  </div>
+                  <Skeleton className="h-40 w-full rounded-lg" />
+                </div>
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <Skeleton className="h-5 w-40" />
+                    <Skeleton className="h-9 w-32" />
+                  </div>
+                  <Skeleton className="h-40 w-full rounded-lg" />
+                </div>
+              </div>
+            </div>
+            
+            <div className="mb-8">
+              <Skeleton className="h-7 w-24 mb-4" />
+              <div className="space-y-6">
+                <div>
+                  <Skeleton className="h-5 w-40 mb-2" />
+                  <Skeleton className="h-10 w-full rounded-md" />
+                </div>
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <Skeleton className="h-5 w-32" />
+                    <Skeleton className="h-9 w-32" />
+                  </div>
+                  <Skeleton className="h-40 w-full rounded-lg" />
+                </div>
+              </div>
+            </div>
+            
+            <div className="mb-8">
+              <Skeleton className="h-7 w-48 mb-4" />
+              <div className="space-y-4">
+                <Skeleton className="h-5 w-28" />
+                <Skeleton className="h-36 w-full rounded-md" />
+                <div className="flex gap-2">
+                  <Skeleton className="h-10 w-32 rounded-md" />
+                  <Skeleton className="h-10 w-10 rounded-md" />
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex justify-end mt-8">
+              <Skeleton className="h-10 w-36 rounded-md" />
+            </div>
+          </Card>
+        )}
       </div>
     </div>;
 };
