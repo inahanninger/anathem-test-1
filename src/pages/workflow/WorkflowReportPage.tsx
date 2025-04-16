@@ -8,6 +8,7 @@ import StepProgress from "@/components/StepProgress";
 import ReviewPage from "../ReviewPage";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Skeleton } from "@/components/ui/skeleton";
+
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -21,19 +22,22 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
+
 const WorkflowReportPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
   const [isLoading, setIsLoading] = useState(true);
+  
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
+
   return <ClinicalLayout>
       <div className="min-h-screen bg-white">
-        <div className="border-b border-gray-100 px-6 py-[12px] bg-neutral-50">
+        <div className="border-b border-gray-100 px-6 py-[12px] bg-neutral-50 sticky top-0 z-10 shadow-sm">
           <div className="container mx-auto w-6xl">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
@@ -80,4 +84,5 @@ const WorkflowReportPage = () => {
       </div>
     </ClinicalLayout>;
 };
+
 export default WorkflowReportPage;

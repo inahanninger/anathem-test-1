@@ -1,3 +1,4 @@
+
 import { useState, useRef } from "react";
 import { ArrowRightIcon, UploadIcon, FileTextIcon, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -133,7 +134,7 @@ const UploadDocumentPage = () => {
   };
 
   return <div className="min-h-screen bg-white">
-      <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
+      <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px] sticky top-0 z-10 shadow-sm">
         <div className="container mx-auto" style={{ maxWidth: "1243px" }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">

@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { CheckCircle2Icon, AlertCircleIcon, PlusIcon, ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -213,7 +214,7 @@ Patient describes childhood household as "tense but functional" with parents who
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="border-b border-gray-100 bg-gray-50/80 py-3 px-6">
+      <div className="border-b border-gray-100 bg-gray-50/80 py-3 px-6 sticky top-0 z-10 shadow-sm">
         <div className="container mx-auto w-6xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">

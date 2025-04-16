@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Link, useNavigate } from "react-router-dom";
 import RecordingButton from "@/components/RecordingButton";
+
 type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
 interface FileUpload {
   id: string;
@@ -18,6 +19,7 @@ interface FileUpload {
   dateUploaded: Date;
   size: number;
 }
+
 const TranscribePage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
@@ -31,6 +33,7 @@ const TranscribePage = () => {
   const navigate = useNavigate();
   const completedSections = 1;
   const totalSections = 6;
+
   const handleFileUpload = (files: FileList | null) => {
     if (!files || files.length === 0) return;
     Array.from(files).forEach(file => {
@@ -45,15 +48,18 @@ const TranscribePage = () => {
       toast.success(`${file.name} uploaded successfully`);
     });
   };
+
   const handleDeleteFile = (fileId: string) => {
     setUploads(uploads.filter(upload => upload.id !== fileId));
     toast.success("File deleted successfully");
   };
+
   const formatFileSize = (bytes: number) => {
     if (bytes < 1024) return `${bytes} bytes`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
+
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("en-GB", {
       day: "numeric",
@@ -61,6 +67,7 @@ const TranscribePage = () => {
       year: "numeric"
     });
   };
+
   const toggleRecording = () => {
     if (isRecording) {
       setIsRecording(false);
@@ -72,6 +79,7 @@ const TranscribePage = () => {
       setTranscription("");
     }
   };
+
   const handleContinue = () => {
     if (uploads.length === 0 && !transcription) {
       toast.error("Please upload a file or create a transcription");
@@ -80,25 +88,30 @@ const TranscribePage = () => {
     toast.success("Generating report");
     navigate("/report");
   };
+
   const handleClickUpload = () => {
     fileInputRef.current?.click();
   };
+
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(true);
   };
+
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
   };
+
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
     const files = e.dataTransfer.files;
     handleFileUpload(files);
   };
+
   return <div className="min-h-screen bg-white">
-      <div className="border-b border-gray-100 bg-gray-50/80 py-3 px-6">
+      <div className="border-b border-gray-100 bg-gray-50/80 py-3 px-6 sticky top-0 z-10 shadow-sm">
         <div className="container mx-auto w-6xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -207,4 +220,5 @@ const TranscribePage = () => {
       </div>
     </div>;
 };
+
 export default TranscribePage;

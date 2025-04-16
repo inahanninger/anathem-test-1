@@ -1,10 +1,13 @@
+
 import React from 'react';
 import { ClinicalSidebar } from './ClinicalSidebar';
 import { MobileSidebarTrigger } from './MobileSidebarTrigger';
 import { SidebarProvider } from '@/context/SidebarContext';
+
 interface ClinicalLayoutProps {
   children: React.ReactNode;
 }
+
 export const ClinicalLayout: React.FC<ClinicalLayoutProps> = ({
   children
 }) => {
@@ -16,6 +19,7 @@ export const ClinicalLayout: React.FC<ClinicalLayoutProps> = ({
             <MobileSidebarTrigger />
           </div>
           <main className="flex-1 overflow-auto bg-white">
+            {/* The patient name strip will be part of each page but sticky */}
             {children}
           </main>
         </div>
