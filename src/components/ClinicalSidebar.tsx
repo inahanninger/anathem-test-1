@@ -110,7 +110,7 @@ export const ClinicalSidebar: React.FC = () => {
         </motion.div>
         
         <motion.div className="absolute" variants={iconVariants} initial="expanded" animate={isExpanded ? 'collapsed' : 'expanded'}>
-          <span className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-800 text-white font-bold">M</span>
+          <span className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-800 text-white font-bold">A</span>
         </motion.div>
       </div>
 
