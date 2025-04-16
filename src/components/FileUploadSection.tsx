@@ -1,4 +1,3 @@
-
 import React from "react";
 interface FileUploadSectionProps {
   /**
@@ -34,9 +33,7 @@ const FileUploadSection: React.FC<FileUploadSectionProps> = ({
   className
 }) => {
   return <div className={`mb-8 ${className || ""}`}>
-      <h2 className="text-lg font-semibold mb-4">
-        {title} {required && <span className="text-red-500">*</span>}
-      </h2>
+      
       <div className="space-y-6">
         {children}
       </div>
