@@ -11,10 +11,7 @@ const TabsHeader = ({
         <FileTextIcon className="h-3.5 w-3.5 mr-1.5" />
         Progress Notes
       </TabsTrigger>
-      <TabsTrigger value="clinical-details" className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm">
-        <ClipboardIcon className="h-3.5 w-3.5 mr-1.5" />
-        Patient Details
-      </TabsTrigger>
+      
       <TabsTrigger value="developmental-history" className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm">
         <BookIcon className="h-3.5 w-3.5 mr-1.5" />
         Developmental History
