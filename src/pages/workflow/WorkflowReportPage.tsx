@@ -4,6 +4,7 @@ import { ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
 import ReviewPage from "../ReviewPage";
@@ -78,8 +79,11 @@ const WorkflowReportPage = () => {
             
             <div className="space-y-6">
               <Skeleton className="h-64 w-full mb-6" />
+              <Separator className="my-8" />
               <Skeleton className="h-24 w-full" />
+              <Separator className="my-8" />
               <Skeleton className="h-36 w-full" />
+              <Separator className="my-8" />
               <Skeleton className="h-48 w-full" />
             </div>
           </div>
