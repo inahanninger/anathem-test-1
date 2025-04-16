@@ -103,7 +103,7 @@ export const ClinicalSidebar: React.FC = () => {
   };
 
   // Desktop sidebar
-  const DesktopSidebar = <motion.div className="hidden md:flex flex-col h-screen bg-neutral-100 border-r border-gray-200 overflow-hidden" initial="collapsed" animate={isExpanded ? 'expanded' : 'collapsed'} variants={sidebarVariants} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+  const DesktopSidebar = <motion.div initial="collapsed" animate={isExpanded ? 'expanded' : 'collapsed'} variants={sidebarVariants} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="hidden md:flex flex-col h-screen border-r border-gray-200 overflow-hidden bg-neutral-50">
       <div className="flex items-center justify-left h-16 px-4">
         <motion.div className="w-full" variants={logoVariants} initial="collapsed" animate={isExpanded ? 'expanded' : 'collapsed'}>
           
