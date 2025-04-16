@@ -10,7 +10,6 @@ import { toast } from "sonner";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Link, useNavigate } from "react-router-dom";
 import RecordingButton from "@/components/RecordingButton";
-
 type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
 interface FileUpload {
   id: string;
@@ -19,7 +18,6 @@ interface FileUpload {
   dateUploaded: Date;
   size: number;
 }
-
 const TranscribePage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
@@ -33,7 +31,6 @@ const TranscribePage = () => {
   const navigate = useNavigate();
   const completedSections = 1;
   const totalSections = 6;
-
   const handleFileUpload = (files: FileList | null) => {
     if (!files || files.length === 0) return;
     Array.from(files).forEach(file => {
@@ -48,18 +45,15 @@ const TranscribePage = () => {
       toast.success(`${file.name} uploaded successfully`);
     });
   };
-
   const handleDeleteFile = (fileId: string) => {
     setUploads(uploads.filter(upload => upload.id !== fileId));
     toast.success("File deleted successfully");
   };
-
   const formatFileSize = (bytes: number) => {
     if (bytes < 1024) return `${bytes} bytes`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
-
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("en-GB", {
       day: "numeric",
@@ -67,7 +61,6 @@ const TranscribePage = () => {
       year: "numeric"
     });
   };
-
   const toggleRecording = () => {
     if (isRecording) {
       setIsRecording(false);
@@ -79,7 +72,6 @@ const TranscribePage = () => {
       setTranscription("");
     }
   };
-
   const handleContinue = () => {
     if (uploads.length === 0 && !transcription) {
       toast.error("Please upload a file or create a transcription");
@@ -88,28 +80,23 @@ const TranscribePage = () => {
     toast.success("Generating report");
     navigate("/report");
   };
-
   const handleClickUpload = () => {
     fileInputRef.current?.click();
   };
-
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(true);
   };
-
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
   };
-
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
     const files = e.dataTransfer.files;
     handleFileUpload(files);
   };
-
   return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 bg-gray-50/80 py-3 px-6">
         <div className="container mx-auto w-6xl">
@@ -140,16 +127,13 @@ const TranscribePage = () => {
         <div className="grid grid-cols-2 md:grid-cols-2 gap-3">
           <div>
             <Card className="rounded-lg overflow-hidden">
-              <div className="bg-gray-50 p-4 flex items-center justify-between border-b">
+              <div className="p-4 flex items-center justify-between border-b bg-transparent">
                 <div className="flex items-center gap-2">
                   <MicIcon className="w-5 h-5 text-blue-800" />
                   <h2 className="text-base font-semibold">Transcription</h2>
                 </div>
                 <div className="flex gap-2">
-                  <RecordingButton 
-                    isRecording={isRecording} 
-                    onClick={toggleRecording} 
-                  />
+                  <RecordingButton isRecording={isRecording} onClick={toggleRecording} />
                   <Button variant="outline" size="icon" className="bg-white">
                     <SettingsIcon className="w-4 h-4" />
                   </Button>
@@ -167,7 +151,7 @@ const TranscribePage = () => {
           <div>
             <Card className="rounded-lg overflow-hidden">
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full">
-                <div className="bg-gray-50 p-4 border-b">
+                <div className="p-4 border-b bg-transparent">
                   <TabsList className="w-full bg-gray-100">
                     <TabsTrigger value="clinical-notes" className="flex-1">
                       <FileTextIcon className="w-4 h-4 mr-2" />
@@ -223,5 +207,4 @@ const TranscribePage = () => {
       </div>
     </div>;
 };
-
 export default TranscribePage;
