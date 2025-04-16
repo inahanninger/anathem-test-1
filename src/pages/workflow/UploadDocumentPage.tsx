@@ -54,7 +54,6 @@ const UploadDocumentPage = () => {
     if (!files || files.length === 0) return;
     
     Array.from(files).forEach(file => {
-      // Create new file upload
       const newUpload: FileUpload = {
         id: crypto.randomUUID(),
         name: file.name,
@@ -117,7 +116,7 @@ const UploadDocumentPage = () => {
 
   return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
-        <div className="container mx-auto" style={{ maxWidth: "1243px" }}>
+        <div className="container mx-auto" style={{ maxWidth: "1080px" }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex flex-col">
@@ -143,11 +142,11 @@ const UploadDocumentPage = () => {
         </div>
       </div>
       
-      <div className="container mx-auto py-4" style={{ maxWidth: "1243px" }}>
+      <div className="container mx-auto py-4" style={{ maxWidth: "1080px" }}>
         <StepProgress currentStep={1} steps={workflowSteps} />
       </div>
       
-      <div className="container mx-auto px-6 py-8" style={{ maxWidth: "1243px" }}>
+      <div className="container mx-auto px-6 py-8" style={{ maxWidth: "1080px" }}>
         <div className="mb-6">
           <Label htmlFor="assessmentType" className="text-sm font-medium mb-2 block">Select Assessment Type</Label>
           <Select value={assessmentType} onValueChange={handleAssessmentChange}>
@@ -162,212 +161,218 @@ const UploadDocumentPage = () => {
           </Select>
         </div>
 
-        <h1 className="font-bold mb-1 text-lg">Upload Documents</h1>
-        <p className="text-gray-600 mb-8 text-sm">
-          Upload the required documents for assessment. You can drag and drop files or click to upload.
-        </p>
-        
         {assessmentType ? (
-          <div className="mb-8">
-            {/* Documents Section */}
-            <FileUploadSection title="Documents" required>
-              {/* Conners Questionnaire */}
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <Label className="font-medium">
-                    Conners Questionnaire <span className="text-red-500">*</span>
-                  </Label>
-                  <Button variant="outline" size="sm" className="flex items-center gap-1">
-                    <UploadIcon size={16} />
-                    Browse Files
-                  </Button>
+          <>
+            <h1 className="font-bold mb-1 text-lg">Upload Documents</h1>
+            <p className="text-gray-600 mb-8 text-sm">
+              Upload the required documents for assessment. You can drag and drop files or click to upload.
+            </p>
+            
+            <div className="mb-8">
+              {/* Documents Section */}
+              <FileUploadSection title="Documents" required>
+                {/* Conners Questionnaire */}
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <Label className="font-medium">
+                      Conners Questionnaire <span className="text-red-500">*</span>
+                    </Label>
+                    <Button variant="outline" size="sm" className="flex items-center gap-1">
+                      <UploadIcon size={16} />
+                      Browse Files
+                    </Button>
+                  </div>
+                  <div
+                    className={`rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer transition-colors
+                      ${isDragging ? 'bg-blue-50' : 'bg-gray-50'}`}
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={(e) => handleDrop(e, "dictation")}
+                    onClick={() => {
+                      const input = document.createElement('input');
+                      input.type = 'file';
+                      input.multiple = true;
+                      input.onchange = (e) => handleFileUpload((e.target as HTMLInputElement).files, "dictation");
+                      input.click();
+                    }}
+                  >
+                    <UploadIcon className="h-10 w-10 text-gray-400 mb-3" />
+                    <p className="text-gray-500 text-sm text-center">Click or drag file to this area to upload</p>
+                  </div>
                 </div>
-                <div
-                  className={`rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer transition-colors
-                    ${isDragging ? 'bg-blue-50' : 'bg-gray-50'}`}
-                  onDragOver={handleDragOver}
-                  onDragLeave={handleDragLeave}
-                  onDrop={(e) => handleDrop(e, "dictation")}
-                  onClick={() => {
-                    const input = document.createElement('input');
-                    input.type = 'file';
-                    input.multiple = true;
-                    input.onchange = (e) => handleFileUpload((e.target as HTMLInputElement).files, "dictation");
-                    input.click();
-                  }}
-                >
-                  <UploadIcon className="h-10 w-10 text-gray-400 mb-3" />
-                  <p className="text-gray-500 text-sm text-center">Click or drag file to this area to upload</p>
+                
+                {/* SNAP4 */}
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <Label className="font-medium">SNAP4</Label>
+                    <Button variant="outline" size="sm" className="flex items-center gap-1">
+                      <UploadIcon size={16} />
+                      Browse Files
+                    </Button>
+                  </div>
+                  <div
+                    className="rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer bg-gray-50"
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={(e) => handleDrop(e, "transcription")}
+                    onClick={() => {
+                      const input = document.createElement('input');
+                      input.type = 'file';
+                      input.multiple = true;
+                      input.onchange = (e) => handleFileUpload((e.target as HTMLInputElement).files, "transcription");
+                      input.click();
+                    }}
+                  >
+                    <UploadIcon className="h-10 w-10 text-gray-400 mb-3" />
+                    <p className="text-gray-500 text-sm text-center">Click or drag file to this area to upload</p>
+                  </div>
                 </div>
-              </div>
-              
-              {/* SNAP4 */}
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <Label className="font-medium">SNAP4</Label>
-                  <Button variant="outline" size="sm" className="flex items-center gap-1">
-                    <UploadIcon size={16} />
-                    Browse Files
-                  </Button>
-                </div>
-                <div
-                  className="rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer bg-gray-50"
-                  onDragOver={handleDragOver}
-                  onDragLeave={handleDragLeave}
-                  onDrop={(e) => handleDrop(e, "transcription")}
-                  onClick={() => {
-                    const input = document.createElement('input');
-                    input.type = 'file';
-                    input.multiple = true;
-                    input.onchange = (e) => handleFileUpload((e.target as HTMLInputElement).files, "transcription");
-                    input.click();
-                  }}
-                >
-                  <UploadIcon className="h-10 w-10 text-gray-400 mb-3" />
-                  <p className="text-gray-500 text-sm text-center">Click or drag file to this area to upload</p>
-                </div>
-              </div>
 
-              {/* QB Test Results */}
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <Label className="font-medium">
-                    QB Test Results <span className="text-red-500">*</span>
-                  </Label>
-                  <Button variant="outline" size="sm" className="flex items-center gap-1">
-                    <UploadIcon size={16} />
-                    Browse Files
-                  </Button>
+                {/* QB Test Results */}
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <Label className="font-medium">
+                      QB Test Results <span className="text-red-500">*</span>
+                    </Label>
+                    <Button variant="outline" size="sm" className="flex items-center gap-1">
+                      <UploadIcon size={16} />
+                      Browse Files
+                    </Button>
+                  </div>
+                  <div
+                    className="rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer bg-gray-50"
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={(e) => handleDrop(e, "patient notes")}
+                    onClick={() => {
+                      const input = document.createElement('input');
+                      input.type = 'file';
+                      input.multiple = true;
+                      input.onchange = (e) => handleFileUpload((e.target as HTMLInputElement).files, "patient notes");
+                      input.click();
+                    }}
+                  >
+                    <UploadIcon className="h-10 w-10 text-gray-400 mb-3" />
+                    <p className="text-gray-500 text-sm text-center">Click or drag file to this area to upload</p>
+                  </div>
                 </div>
-                <div
-                  className="rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer bg-gray-50"
-                  onDragOver={handleDragOver}
-                  onDragLeave={handleDragLeave}
-                  onDrop={(e) => handleDrop(e, "patient notes")}
-                  onClick={() => {
-                    const input = document.createElement('input');
-                    input.type = 'file';
-                    input.multiple = true;
-                    input.onchange = (e) => handleFileUpload((e.target as HTMLInputElement).files, "patient notes");
-                    input.click();
-                  }}
-                >
-                  <UploadIcon className="h-10 w-10 text-gray-400 mb-3" />
-                  <p className="text-gray-500 text-sm text-center">Click or drag file to this area to upload</p>
-                </div>
-              </div>
 
-              {/* Other Pre-assessment Info */}
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <Label className="font-medium">Other Pre-assessment Info</Label>
-                  <Button variant="outline" size="sm" className="flex items-center gap-1">
-                    <UploadIcon size={16} />
-                    Browse Files
-                  </Button>
+                {/* Other Pre-assessment Info */}
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <Label className="font-medium">Other Pre-assessment Info</Label>
+                    <Button variant="outline" size="sm" className="flex items-center gap-1">
+                      <UploadIcon size={16} />
+                      Browse Files
+                    </Button>
+                  </div>
+                  <div
+                    className="rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer bg-gray-50"
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={(e) => handleDrop(e, "letter")}
+                    onClick={() => {
+                      const input = document.createElement('input');
+                      input.type = 'file';
+                      input.multiple = true;
+                      input.onchange = (e) => handleFileUpload((e.target as HTMLInputElement).files, "letter");
+                      input.click();
+                    }}
+                  >
+                    <UploadIcon className="h-10 w-10 text-gray-400 mb-3" />
+                    <p className="text-gray-500 text-sm text-center">Click or drag file to this area to upload</p>
+                  </div>
                 </div>
-                <div
-                  className="rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer bg-gray-50"
-                  onDragOver={handleDragOver}
-                  onDragLeave={handleDragLeave}
-                  onDrop={(e) => handleDrop(e, "letter")}
-                  onClick={() => {
-                    const input = document.createElement('input');
-                    input.type = 'file';
-                    input.multiple = true;
-                    input.onchange = (e) => handleFileUpload((e.target as HTMLInputElement).files, "letter");
-                    input.click();
-                  }}
-                >
-                  <UploadIcon className="h-10 w-10 text-gray-400 mb-3" />
-                  <p className="text-gray-500 text-sm text-center">Click or drag file to this area to upload</p>
-                </div>
-              </div>
-            </FileUploadSection>
+              </FileUploadSection>
 
-            {/* Inputs Section */}
-            <FileUploadSection title="Inputs" required>
-              {/* QB Score */}
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <Label className="font-medium">
-                    QB Score <span className="text-red-500">*</span>
-                  </Label>
-                  <Button variant="outline" size="sm" className="flex items-center gap-1">
-                    <UploadIcon size={16} />
-                    Browse Files
-                  </Button>
+              {/* Inputs Section */}
+              <FileUploadSection title="Inputs" required>
+                {/* QB Score */}
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <Label className="font-medium">
+                      QB Score <span className="text-red-500">*</span>
+                    </Label>
+                    <Button variant="outline" size="sm" className="flex items-center gap-1">
+                      <UploadIcon size={16} />
+                      Browse Files
+                    </Button>
+                  </div>
+                  <div
+                    className="rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer bg-gray-50"
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    onClick={() => {
+                      const input = document.createElement('input');
+                      input.type = 'file';
+                      input.multiple = true;
+                      input.onchange = (e) => handleFileUpload((e.target as HTMLInputElement).files);
+                      input.click();
+                    }}
+                  >
+                    <UploadIcon className="h-10 w-10 text-gray-400 mb-3" />
+                    <p className="text-gray-500 text-sm text-center">Click or drag file to this area to upload</p>
+                  </div>
                 </div>
-                <div
-                  className="rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer bg-gray-50"
-                  onDragOver={handleDragOver}
-                  onDragLeave={handleDragLeave}
-                  onDrop={handleDrop}
-                  onClick={() => {
-                    const input = document.createElement('input');
-                    input.type = 'file';
-                    input.multiple = true;
-                    input.onchange = (e) => handleFileUpload((e.target as HTMLInputElement).files);
-                    input.click();
-                  }}
-                >
-                  <UploadIcon className="h-10 w-10 text-gray-400 mb-3" />
-                  <p className="text-gray-500 text-sm text-center">Click or drag file to this area to upload</p>
-                </div>
-              </div>
-            </FileUploadSection>
+              </FileUploadSection>
 
-            {/* Submit Button */}
-            <div className="flex justify-end mt-8">
-              <Button 
-                className="bg-blue-900 hover:bg-blue-950"
-                onClick={handleSubmitFiles}
-              >
-                <UploadIcon size={16} className="mr-2" />
-                Submit Files
-              </Button>
+              {/* Submit Button */}
+              <div className="flex justify-end mt-8">
+                <Button 
+                  className="bg-blue-900 hover:bg-blue-950"
+                  onClick={handleSubmitFiles}
+                >
+                  <UploadIcon size={16} className="mr-2" />
+                  Submit Files
+                </Button>
+              </div>
+                
+              {uploads.length > 0 && (
+                <div className="mt-8">
+                  <h3 className="font-medium text-lg mb-4">Uploaded Documents</h3>
+                  <div className="space-y-3">
+                    {uploads.map(file => (
+                      <div key={file.id} className="border rounded-lg p-4 flex items-center justify-between bg-white">
+                        <div className="flex items-center space-x-3">
+                          <div className="bg-blue-50 p-3 rounded-lg">
+                            <FileTextIcon className="h-6 w-6 text-blue-600" />
+                          </div>
+                          <div>
+                            <p className="font-medium text-sm">{file.name}</p>
+                            <p className="text-xs text-gray-500">{formatFileSize(file.size)}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Select value={file.type} onValueChange={value => handleFileTypeChange(file.id, value)}>
+                            <SelectTrigger className="w-44">
+                              <SelectValue placeholder="Select document type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="dictation">Dictation</SelectItem>
+                              <SelectItem value="transcription">Transcription</SelectItem>
+                              <SelectItem value="patient notes">Patient Notes</SelectItem>
+                              <SelectItem value="letter">Letter</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <Button variant="ghost" size="icon" onClick={() => handleDeleteFile(file.id)} className="">
+                            <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-              
-            {uploads.length > 0 && (
-              <div className="mt-8">
-                <h3 className="font-medium text-lg mb-4">Uploaded Documents</h3>
-                <div className="space-y-3">
-                  {uploads.map(file => (
-                    <div key={file.id} className="border rounded-lg p-4 flex items-center justify-between bg-white">
-                      <div className="flex items-center space-x-3">
-                        <div className="bg-blue-50 p-3 rounded-lg">
-                          <FileTextIcon className="h-6 w-6 text-blue-600" />
-                        </div>
-                        <div>
-                          <p className="font-medium text-sm">{file.name}</p>
-                          <p className="text-xs text-gray-500">{formatFileSize(file.size)}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Select value={file.type} onValueChange={value => handleFileTypeChange(file.id, value)}>
-                          <SelectTrigger className="w-44">
-                            <SelectValue placeholder="Select document type" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="dictation">Dictation</SelectItem>
-                            <SelectItem value="transcription">Transcription</SelectItem>
-                            <SelectItem value="patient notes">Patient Notes</SelectItem>
-                            <SelectItem value="letter">Letter</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <Button variant="ghost" size="icon" onClick={() => handleDeleteFile(file.id)} className="">
-                          <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+          </>
         ) : (
           // Skeleton Loader when no assessment type is selected
           <div className="mb-8">
+            {/* Skeleton for title and subtitle */}
+            <Skeleton className="h-7 w-48 mb-1" />
+            <Skeleton className="h-5 w-96 mb-8" />
+
             <Skeleton className="h-7 w-32 mb-4" />
             <div className="space-y-6">
               <div>
