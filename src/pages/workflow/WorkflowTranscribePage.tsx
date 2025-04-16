@@ -6,10 +6,11 @@ import { Label } from "@/components/ui/label";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -26,6 +27,7 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
+
 const WorkflowTranscribePage = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [transcription, setTranscription] = useState("");
@@ -33,6 +35,7 @@ const WorkflowTranscribePage = () => {
   const [activeTab, setActiveTab] = useState<string>("clinical-notes");
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
+
   const toggleRecording = () => {
     if (isRecording) {
       setIsRecording(false);
@@ -44,6 +47,7 @@ const WorkflowTranscribePage = () => {
       toast.success("Recording started");
     }
   };
+
   return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 px-6 bg-white py-[8px]">
         <div className="container max-w-5xl mx-auto">
@@ -56,18 +60,6 @@ const WorkflowTranscribePage = () => {
               <BreadcrumbItem>
                 <BreadcrumbPage className="text-xs">Document Assessment</BreadcrumbPage>
               </BreadcrumbItem>
-              <BreadcrumbItem className="ml-auto">
-                <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
-                  <Link to="/workflow/review" className="flex items-center gap-1">
-                    <ArrowLeftIcon size={16} /> Back
-                  </Link>
-                </Button>
-                <Button className="bg-blue-800 hover:bg-blue-900 text-sm ml-2">
-                  <Link to="/workflow/generate" className="flex items-center gap-1">
-                    Continue <ArrowRightIcon size={16} />
-                  </Link>
-                </Button>
-              </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
         </div>
@@ -75,14 +67,28 @@ const WorkflowTranscribePage = () => {
 
       <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
         <div className="container max-w-5xl mx-auto">
-          <div className="flex items-center gap-4">
-            <div className="flex flex-col">
-              <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
-              <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} className="h-8 w-[180px] text-sm" />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="flex flex-col">
+                <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
+                <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} className="h-8 w-[180px] text-sm" />
+              </div>
+              <div className="flex flex-col">
+                <Label htmlFor="nhsNumber" className="text-xs text-muted-foreground mb-1">NHS Number</Label>
+                <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="h-8 w-[140px] text-sm" />
+              </div>
             </div>
-            <div className="flex flex-col">
-              <Label htmlFor="nhsNumber" className="text-xs text-muted-foreground mb-1">NHS Number</Label>
-              <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="h-8 w-[140px] text-sm" />
+            <div className="flex items-center gap-2">
+              <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
+                <Link to="/workflow/review" className="flex items-center gap-1">
+                  <ArrowLeftIcon size={16} /> Back
+                </Link>
+              </Button>
+              <Button className="bg-blue-800 hover:bg-blue-900 text-sm">
+                <Link to="/workflow/generate" className="flex items-center gap-1">
+                  Continue <ArrowRightIcon size={16} />
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -145,4 +151,5 @@ const WorkflowTranscribePage = () => {
       </div>
     </div>;
 };
+
 export default WorkflowTranscribePage;
