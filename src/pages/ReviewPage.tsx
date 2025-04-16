@@ -2,7 +2,6 @@ import { useState } from "react";
 import { CheckCircle2Icon, AlertCircleIcon, PlusIcon, ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Separator } from "@/components/ui/separator";
 import FormProgress from "@/components/FormProgress";
 import TableOfContents from "@/components/TableOfContents";
 import { Medication } from "@/components/MedicationItem";
@@ -12,11 +11,11 @@ import MedicationSection from "@/components/review/MedicationSection";
 import SocialHistorySection from "@/components/review/SocialHistorySection";
 import FamilyHistorySection from "@/components/review/FamilyHistorySection";
 import SectionHeader from "@/components/SectionHeader";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import StepProgress from "@/components/StepProgress";
-
 const ReviewPage = () => {
   const [completedSections, setCompletedSections] = useState(2);
   const [activeTab, setActiveTab] = useState("progress-notes");
@@ -131,18 +130,15 @@ Patient describes childhood household as "tense but functional" with parents who
     name: "Clinical Notes",
     path: "/workflow/clinical-notes"
   }];
-  
   const handleMedicationUpdate = (id: string, updatedMed: Partial<Medication>) => {
     setMedications(medications.map(med => med.id === id ? {
       ...med,
       ...updatedMed
     } : med));
   };
-  
   const handleMedicationDelete = (id: string) => {
     setMedications(medications.filter(med => med.id !== id));
   };
-  
   const handleAddMedication = () => {
     const newId = (Math.max(0, ...medications.map(m => parseInt(m.id))) + 1).toString();
     setMedications([...medications, {
@@ -152,24 +148,20 @@ Patient describes childhood household as "tense but functional" with parents who
       frequency: ""
     }]);
   };
-  
   const handleSaveAll = () => {
     toast.success("All changes saved to patient record");
   };
-  
   const toggleSectionCompletion = (sectionName: string, isComplete: boolean) => {
     setCompletedSections(prev => isComplete ? prev + 1 : Math.max(0, prev - 1));
     toast(`${sectionName} ${isComplete ? "marked as reviewed" : "marked as pending"}`, {
       icon: isComplete ? <CheckCircle2Icon className="h-4 w-4 text-green-500" /> : <AlertCircleIcon className="h-4 w-4 text-amber-500" />
     });
   };
-  
   const currentDate = new Date().toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'long',
     year: 'numeric'
   });
-  
   const progressNotesToc = [{
     id: "section-1",
     title: "Session Summary",
@@ -195,7 +187,6 @@ Patient describes childhood household as "tense but functional" with parents who
     title: "Homework Assigned",
     level: 1
   }];
-  
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -209,32 +200,22 @@ Patient describes childhood household as "tense but functional" with parents who
       }, 2000);
     }
   };
-
   return <div className="min-h-screen bg-white">
+      
+      
+      
+      
       <div className="container max-w-5xl mx-auto px-6 py-[12px]">
         <div className="flex">
           <div className="flex-1 min-w-0 space-y-6">
             <ClinicalTabsSection progressNotes={progressNotes} setProgressNotes={setProgressNotes} clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} />
-            
-            <Separator className="my-8" />
-            
-            <PresentingIssuesSection presentingIssues={presentingIssues} setPresentingIssues={setPresentingIssues} />
-            
-            <Separator className="my-8" />
-            
-            <MedicationSection medications={medications} onUpdate={handleMedicationUpdate} onDelete={handleMedicationDelete} onAdd={handleAddMedication} />
-            
-            <Separator className="my-8" />
-            
-            <SocialHistorySection socialHistory={socialHistory} setSocialHistory={setSocialHistory} />
-            
-            <Separator className="my-8" />
-            
-            <FamilyHistorySection familyHistory={familyHistory} setFamilyHistory={setFamilyHistory} />
           </div>
         </div>
       </div>
+      
+      <div className="fixed bottom-6 right-6 z-10">
+        
+      </div>
     </div>;
 };
-
 export default ReviewPage;
