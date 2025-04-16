@@ -1,44 +1,32 @@
+
 import { useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
-const workflowSteps = [{
-  name: "Upload",
-  path: "/workflow/upload"
-}, {
-  name: "Review",
-  path: "/workflow/review"
-}, {
-  name: "Transcribe",
-  path: "/workflow/transcribe"
-}, {
-  name: "Report",
-  path: "/workflow/report"
-}];
+
+const workflowSteps = [
+  { name: "Upload", path: "/workflow/upload" },
+  { name: "Review", path: "/workflow/review" },
+  { name: "Transcribe", path: "/workflow/transcribe" },
+  { name: "Report", path: "/workflow/report" }
+];
+
 const ReviewInformationPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
-  const [dateOfBirth, setDateOfBirth] = useState("05/12/1980");
-  const [homeAddress, setHomeAddress] = useState("123 Main St, London, UK");
-  const [contactNumber, setContactNumber] = useState("+1 (555) 123-4567");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
-  const [referrer, setReferrer] = useState("Dr. Emily Thompson");
-  const [allergies, setAllergies] = useState("Penicillin, Shellfish");
-  const [careCoordinator, setCareCoordinator] = useState("Nurse Linda Martinez");
-  const [referralReason, setReferralReason] = useState("Assessment and management of chronic pain and hypertension");
-  const [medicalSummary, setMedicalSummary] = useState("Patient reports experiencing moderate depressive symptoms for approximately 3 months, including low mood, decreased interest in activities, and poor sleep. Patient also mentions occasional anxiety in social situations.");
-  const [assessmentNotes, setAssessmentNotes] = useState("Initial assessment indicates mild to moderate depression with comorbid social anxiety. Patient is responsive to cognitive behavioral approaches and shows good insight into their condition.");
+  
   const handleSave = () => {
     toast.success("Patient information saved");
   };
+
   return <div className="min-h-screen bg-white">
-      <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
+      <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px] sticky top-0 z-10 shadow-sm">
         <div className="container mx-auto" style={{
         maxWidth: "1243px"
       }}>
@@ -83,63 +71,15 @@ const ReviewInformationPage = () => {
           Please review and update the patient information below.
         </p>
         
-        <Card className="p-6 mb-8">
-          <h2 className="text-lg font-semibold mb-4">Patient Details</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div className="my-0 py-0">
-              <Label htmlFor="patientName" className="mb-1 block pb-px\n">Patient Name</Label>
-              <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} />
-            </div>
-            <div>
-              <Label htmlFor="dob" className="mb-1 block pb-px\n">Date of Birth</Label>
-              <Input id="dob" value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)} />
-            </div>
-            <div>
-              <Label htmlFor="homeAddress" className="mb-1 block pb-px\n">Home Address</Label>
-              <Input id="homeAddress" value={homeAddress} onChange={e => setHomeAddress(e.target.value)} />
-            </div>
-            <div>
-              <Label htmlFor="contactNumber" className="mb-1 block pb-px\n">Contact Number</Label>
-              <Input id="contactNumber" value={contactNumber} onChange={e => setContactNumber(e.target.value)} />
-            </div>
-            <div>
-              <Label htmlFor="nhsNumber" className="mb-1 block pb-px\n">NHS Number</Label>
-              <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} />
-            </div>
-            <div>
-              <Label htmlFor="referrer" className="mb-1 block pb-px\n">Referrer</Label>
-              <Input id="referrer" value={referrer} onChange={e => setReferrer(e.target.value)} />
-            </div>
-            <div>
-              <Label htmlFor="allergies" className="mb-1 block pb-px\n">Allergies</Label>
-              <Input id="allergies" value={allergies} onChange={e => setAllergies(e.target.value)} />
-            </div>
-            <div>
-              <Label htmlFor="careCoordinator" className="mb-1 block pb-px\n">Care Coordinator/Key-Worker</Label>
-              <Input id="careCoordinator" value={careCoordinator} onChange={e => setCareCoordinator(e.target.value)} />
-            </div>
-            <div className="md:col-span-2">
-              <Label htmlFor="referralReason" className="mb-1 block pb-px\n">Reason for Referral</Label>
-              <Textarea id="referralReason" value={referralReason} onChange={e => setReferralReason(e.target.value)} className="min-h-[100px]" />
-            </div>
-          </div>
-          
+        <Card className="p-6 w-full">
+          <h2 className="text-lg font-semibold mb-4">Patient Information</h2>
+          <p className="text-gray-600">
+            This section has been simplified to focus on the most essential information.
+            More detailed patient information will be available in the next steps of the workflow.
+          </p>
         </Card>
-        
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-8">
-          <Card className="p-6">
-            <h2 className="text-lg font-semibold mb-4">QB Summary</h2>
-            <Textarea value={medicalSummary} onChange={e => setMedicalSummary(e.target.value)} className="min-h-[200px] mb-4" placeholder="Enter medical summary here..." />
-            
-          </Card>
-          
-          <Card className="p-6">
-            <h2 className="text-lg font-semibold mb-4">Connor's Questionnaire Summary</h2>
-            <Textarea value={assessmentNotes} onChange={e => setAssessmentNotes(e.target.value)} className="min-h-[200px] mb-4" placeholder="Enter assessment notes here..." />
-            
-          </Card>
-        </div>
       </div>
     </div>;
 };
+
 export default ReviewInformationPage;
