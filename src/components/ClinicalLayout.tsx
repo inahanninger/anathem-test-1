@@ -14,7 +14,7 @@ export const ClinicalLayout: React.FC<ClinicalLayoutProps> = ({
         <div className="flex-1 flex flex-col overflow-hidden">
           
           <main className="flex-1 overflow-auto bg-gray-50">
-            <div className="container mx-auto py-6 px-4 md:px-6">
+            <div className="container mx-auto md:px-6 px-0 py-0">
               {children}
             </div>
           </main>
