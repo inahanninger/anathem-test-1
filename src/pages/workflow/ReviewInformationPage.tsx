@@ -9,6 +9,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbS
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
+
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -25,6 +26,7 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
+
 const ReviewInformationPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [dateOfBirth, setDateOfBirth] = useState("05/12/1980");
@@ -37,14 +39,14 @@ const ReviewInformationPage = () => {
   const [referralReason, setReferralReason] = useState("Assessment and management of chronic pain and hypertension");
   const [medicalSummary, setMedicalSummary] = useState("Patient reports experiencing moderate depressive symptoms for approximately 3 months, including low mood, decreased interest in activities, and poor sleep. Patient also mentions occasional anxiety in social situations.");
   const [assessmentNotes, setAssessmentNotes] = useState("Initial assessment indicates mild to moderate depression with comorbid social anxiety. Patient is responsive to cognitive behavioral approaches and shows good insight into their condition.");
+
   const handleSave = () => {
     toast.success("Patient information saved");
   };
-  return <div className="min-h-screen bg-white">
-      
 
+  return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
-        <div className="container max-w-5xl mx-auto">
+        <div className="container mx-auto" style={{ maxWidth: "1243px" }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex flex-col">
@@ -72,11 +74,11 @@ const ReviewInformationPage = () => {
         </div>
       </div>
       
-      <div className="container max-w-5xl mx-auto py-4">
+      <div className="container mx-auto py-4" style={{ maxWidth: "1243px" }}>
         <StepProgress currentStep={2} steps={workflowSteps} />
       </div>
       
-      <div className="container max-w-5xl mx-auto px-6 py-8">
+      <div className="container mx-auto px-6 py-8" style={{ maxWidth: "1243px" }}>
         <h1 className="font-bold mb-1 text-lg">Review Patient Information</h1>
         <p className="text-gray-600 mb-8 text-sm">
           Please review and update the patient information below.
@@ -141,4 +143,5 @@ const ReviewInformationPage = () => {
       </div>
     </div>;
 };
+
 export default ReviewInformationPage;

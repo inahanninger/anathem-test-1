@@ -51,7 +51,7 @@ const WorkflowTranscribePage = () => {
 
   return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
-        <div className="container max-w-5xl mx-auto">
+        <div className="container mx-auto" style={{ maxWidth: "1243px" }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex flex-col">
@@ -79,11 +79,11 @@ const WorkflowTranscribePage = () => {
         </div>
       </div>
       
-      <div className="container max-w-5xl mx-auto py-4">
+      <div className="container mx-auto py-4" style={{ maxWidth: "1243px" }}>
         <StepProgress currentStep={3} steps={workflowSteps} />
       </div>
       
-      <div className="container max-w-5xl mx-auto px-6 py-8">
+      <div className="container mx-auto px-6 py-8" style={{ maxWidth: "1243px" }}>
         <h1 className="font-bold mb-1 text-lg">Transcribe Consultation</h1>
         <p className="text-gray-600 mb-8 text-sm">
           Record and transcribe your consultation or add clinical notes manually.

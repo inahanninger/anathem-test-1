@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
+
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -25,11 +26,13 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
+
 const GenerateAssessmentPage = () => {
   const [selectedAssessments, setSelectedAssessments] = useState<string[]>([]);
   const [summaryTypes, setSummaryTypes] = useState<string[]>([]);
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
+
   const handleAssessmentChange = (assessment: string) => {
     if (selectedAssessments.includes(assessment)) {
       setSelectedAssessments(selectedAssessments.filter(item => item !== assessment));
@@ -37,6 +40,7 @@ const GenerateAssessmentPage = () => {
       setSelectedAssessments([...selectedAssessments, assessment]);
     }
   };
+
   const handleSummaryTypeChange = (type: string) => {
     if (summaryTypes.includes(type)) {
       setSummaryTypes(summaryTypes.filter(item => item !== type));
@@ -44,6 +48,7 @@ const GenerateAssessmentPage = () => {
       setSummaryTypes([...summaryTypes, type]);
     }
   };
+
   const handleGenerate = () => {
     if (selectedAssessments.length === 0) {
       toast.error("Please select at least one assessment type");
@@ -51,11 +56,10 @@ const GenerateAssessmentPage = () => {
     }
     toast.success("Starting report generation");
   };
-  return <div className="min-h-screen bg-white">
-      
 
+  return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
-        <div className="container max-w-5xl mx-auto">
+        <div className="container mx-auto" style={{ maxWidth: "1243px" }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex flex-col">
@@ -83,11 +87,11 @@ const GenerateAssessmentPage = () => {
         </div>
       </div>
       
-      <div className="container max-w-5xl mx-auto py-4">
+      <div className="container mx-auto py-4" style={{ maxWidth: "1243px" }}>
         <StepProgress currentStep={4} steps={workflowSteps} />
       </div>
       
-      <div className="container max-w-5xl mx-auto px-6 py-8">
+      <div className="container mx-auto px-6 py-8" style={{ maxWidth: "1243px" }}>
         <h1 className="font-bold mb-1 text-lg">Generate Assessment</h1>
         <p className="text-gray-600 mb-8 text-sm">
           Select the assessment types you need to generate.
@@ -117,7 +121,6 @@ const GenerateAssessmentPage = () => {
               </div>
             </div>
             
-            
           </div>
           
           <div className="mt-8">
@@ -129,4 +132,5 @@ const GenerateAssessmentPage = () => {
       </div>
     </div>;
 };
+
 export default GenerateAssessmentPage;

@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
 import ReviewPage from "../ReviewPage";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
+
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -23,13 +24,15 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
+
 const WorkflowReportPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
+
   return <ClinicalLayout>
       <div className="min-h-screen bg-white">
         <div className="border-b border-gray-100 px-6 py-[12px] bg-neutral-50">
-          <div className="container max-w-5xl mx-auto">
+          <div className="container mx-auto" style={{ maxWidth: "1243px" }}>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="flex flex-col">
@@ -55,7 +58,7 @@ const WorkflowReportPage = () => {
           </div>
         </div>
         
-        <div className="container max-w-5xl mx-auto py-4">
+        <div className="container mx-auto py-4" style={{ maxWidth: "1243px" }}>
           <StepProgress currentStep={5} steps={workflowSteps} />
         </div>
         
@@ -65,4 +68,5 @@ const WorkflowReportPage = () => {
       </div>
     </ClinicalLayout>;
 };
+
 export default WorkflowReportPage;

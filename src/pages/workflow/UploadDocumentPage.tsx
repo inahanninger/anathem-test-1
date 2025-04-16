@@ -116,7 +116,7 @@ const UploadDocumentPage = () => {
 
   return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
-        <div className="container mx-auto" style={{ maxWidth: "1080px" }}>
+        <div className="container mx-auto" style={{ maxWidth: "1243px" }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex flex-col">
@@ -142,11 +142,11 @@ const UploadDocumentPage = () => {
         </div>
       </div>
       
-      <div className="container mx-auto py-4" style={{ maxWidth: "1080px" }}>
+      <div className="container mx-auto py-4" style={{ maxWidth: "1243px" }}>
         <StepProgress currentStep={1} steps={workflowSteps} />
       </div>
       
-      <div className="container mx-auto px-6 py-8" style={{ maxWidth: "1080px" }}>
+      <div className="container mx-auto px-6 py-8" style={{ maxWidth: "1243px" }}>
         <div className="mb-6">
           <Label htmlFor="assessmentType" className="text-sm font-medium mb-2 block">Select Assessment Type</Label>
           <Select value={assessmentType} onValueChange={handleAssessmentChange}>
