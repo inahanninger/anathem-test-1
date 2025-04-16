@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
 import RecordingButton from "@/components/RecordingButton";
+
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -23,6 +24,7 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
+
 const WorkflowTranscribePage = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [transcription, setTranscription] = useState("");
@@ -31,6 +33,7 @@ const WorkflowTranscribePage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
   const navigate = useNavigate();
+
   const toggleRecording = () => {
     if (isRecording) {
       setIsRecording(false);
@@ -42,15 +45,15 @@ const WorkflowTranscribePage = () => {
       toast.success("Recording started");
     }
   };
+
   const handleContinue = () => {
     toast.success("Generating report");
     navigate("/workflow/report");
   };
+
   return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
-        <div className="container mx-auto" style={{
-        maxWidth: "1243px"
-      }}>
+        <div className="container mx-auto w-6xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex flex-col">
@@ -78,15 +81,11 @@ const WorkflowTranscribePage = () => {
         </div>
       </div>
       
-      <div className="container mx-auto py-4" style={{
-      maxWidth: "1243px"
-    }}>
+      <div className="container mx-auto py-4 w-6xl">
         <StepProgress currentStep={3} steps={workflowSteps} />
       </div>
       
-      <div style={{
-      maxWidth: "1243px"
-    }} className="container mx-auto px-6 py-[8px]">
+      <div className="container mx-auto px-6 py-[8px] w-6xl">
         <h1 className="font-bold mb-1 text-lg">Transcribe Consultation</h1>
         <p className="text-gray-600 mb-8 text-sm">
           Record and transcribe your consultation or add clinical notes manually.
@@ -136,4 +135,5 @@ const WorkflowTranscribePage = () => {
       </div>
     </div>;
 };
+
 export default WorkflowTranscribePage;

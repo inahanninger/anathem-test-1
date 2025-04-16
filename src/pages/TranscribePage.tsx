@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from "react";
 import { ArrowRightIcon, UploadIcon, SettingsIcon, FileTextIcon, TrashIcon, Mic as MicIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -114,7 +113,7 @@ const TranscribePage = () => {
 
   return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 px-6 bg-white py-0">
-        <div className="container mx-auto" style={{ maxWidth: "1243px" }}>
+        <div className="container mx-auto w-6xl">
           <Breadcrumb className="py-2">
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -144,7 +143,7 @@ const TranscribePage = () => {
       </div>
 
       <div className="border-b border-gray-100 bg-gray-50/80 py-3 px-6">
-        <div className="container mx-auto" style={{ maxWidth: "1243px" }}>
+        <div className="container mx-auto w-6xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex flex-col">
@@ -161,7 +160,7 @@ const TranscribePage = () => {
         </div>
       </div>
       
-      <div className="container mx-auto px-6 py-6" style={{ maxWidth: "1243px" }}>
+      <div className="container mx-auto px-6 py-6 w-6xl">
         <div className="grid grid-cols-2 md:grid-cols-2 gap-3">
           <div>
             <Card className="rounded-lg overflow-hidden">

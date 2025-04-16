@@ -8,6 +8,7 @@ import StepProgress from "@/components/StepProgress";
 import ReviewPage from "../ReviewPage";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Skeleton } from "@/components/ui/skeleton";
+
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -21,22 +22,23 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
+
 const WorkflowReportPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
+
   return <ClinicalLayout>
       <div className="min-h-screen bg-white">
         <div className="border-b border-gray-100 px-6 py-[12px] bg-neutral-50">
-          <div style={{
-          maxWidth: "1243px"
-        }} className="w-full">
+          <div className="container mx-auto w-6xl">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="flex flex-col">
@@ -62,15 +64,11 @@ const WorkflowReportPage = () => {
           </div>
         </div>
         
-        <div className="container mx-auto py-4" style={{
-        maxWidth: "1243px"
-      }}>
+        <div className="container mx-auto py-4 w-6xl">
           <StepProgress currentStep={4} steps={workflowSteps} />
         </div>
         
-        {isLoading ? <div className="container mx-auto px-6 py-8" style={{
-        maxWidth: "1243px"
-      }}>
+        {isLoading ? <div className="container mx-auto px-6 py-8 w-6xl">
             <Skeleton className="h-8 w-48 mb-4" />
             <Skeleton className="h-4 w-96 mb-8" />
             
@@ -80,10 +78,11 @@ const WorkflowReportPage = () => {
               <Skeleton className="h-36 w-full" />
               <Skeleton className="h-48 w-full" />
             </div>
-          </div> : <div className="mt-0">
+          </div> : <div className="mt-0 w-6xl mx-auto">
             <ReviewPage />
           </div>}
       </div>
     </ClinicalLayout>;
 };
+
 export default WorkflowReportPage;
