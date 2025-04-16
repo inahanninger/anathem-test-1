@@ -99,7 +99,7 @@ const HomePage = () => {
             </Button>
           </div>
           
-          <div className="bg-white border border-gray-200 rounded-md shadow-sm mb-6">
+          <div className="bg-white border border-gray-200 rounded-md shadow-sm mb-6 h-full">
             <div className="flex justify-between items-center p-4 border-b border-gray-200">
               <div className="flex space-x-2">
                 <Button variant={activeTab === "Consultations" ? "default" : "ghost"} onClick={() => setActiveTab("Consultations")} size="sm" className="text-neutral-900 font-medium text-sm mx-0 px-[12px] py-[8px] rounded-md bg-transparent">
