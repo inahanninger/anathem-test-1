@@ -10,6 +10,8 @@ import UploadDocumentPage from "./pages/workflow/UploadDocumentPage";
 import ReviewInformationPage from "./pages/workflow/ReviewInformationPage";
 import WorkflowTranscribePage from "./pages/workflow/WorkflowTranscribePage";
 import WorkflowReportPage from "./pages/workflow/WorkflowReportPage";
+import ProfilePage from "./pages/settings/ProfilePage";
+import PreferencesPage from "./pages/settings/PreferencesPage";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +30,10 @@ const App = () => (
           <Route path="/workflow/review" element={<ReviewInformationPage />} />
           <Route path="/workflow/transcribe" element={<WorkflowTranscribePage />} />
           <Route path="/workflow/report" element={<WorkflowReportPage />} />
+          
+          {/* Settings Routes */}
+          <Route path="/settings" element={<ProfilePage />} />
+          <Route path="/settings/preferences" element={<PreferencesPage />} />
           
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
