@@ -1,23 +1,21 @@
-
 import React from "react";
-
 interface FileUploadSectionProps {
   /**
    * The title of the file upload section
    */
   title: string;
-  
+
   /**
    * Whether the file upload is required
    * @default false
    */
   required?: boolean;
-  
+
   /**
    * Children elements to render inside the file upload section
    */
   children: React.ReactNode;
-  
+
   /**
    * Optional CSS class name to apply to the component
    */
@@ -32,19 +30,13 @@ const FileUploadSection: React.FC<FileUploadSectionProps> = ({
   title,
   required = false,
   children,
-  className,
+  className
 }) => {
-  return (
-    <div className={`mb-8 ${className || ""}`}>
-      <h3 className="text-xl font-semibold mb-4">
-        {title}
-        {required && <span className="text-red-500 ml-1">*</span>}
-      </h3>
+  return <div className={`mb-8 ${className || ""}`}>
+      
       <div className="space-y-6">
         {children}
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default FileUploadSection;
