@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { FileTextIcon } from "lucide-react";
@@ -10,10 +9,12 @@ const SourcesPanel = ({
 }: SourcesPanelProps) => {
   const [activeTab, setActiveTab] = useState("transcript");
   if (!isVisible) return null;
-  return <div className="h-full flex flex-col" style={{ maxWidth: "1243px" }}>
+  return <div className="h-full flex flex-col" style={{
+    maxWidth: "1243px"
+  }}>
       
       
-      <Tabs defaultValue="transcript" value={activeTab} onValueChange={setActiveTab} className="w-full flex-1 py-[8px] px-[8px]">
+      <Tabs defaultValue="transcript" value={activeTab} onValueChange={setActiveTab} className="w-full flex-1 py-[8px] px-[8px] bg-neutral-100">
         <TabsList className="w-full flex bg-gray-100/70 p-0.5 py-0">
           <TabsTrigger value="transcript" className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm">
             <FileTextIcon className="h-3.5 w-3.5 mr-1.5" />
