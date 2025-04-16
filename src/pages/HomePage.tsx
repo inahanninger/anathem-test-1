@@ -105,7 +105,7 @@ const HomePage = () => {
                 <Button variant={activeTab === "Consultations" ? "default" : "ghost"} onClick={() => setActiveTab("Consultations")} size="sm" className="text-neutral-900 bg-neutral-200 hover:bg-neutral-100 font-medium text-sm mx-0 px-[12px] py-[8px] rounded-md">
                   Consultations
                 </Button>
-                <Button variant={activeTab === "To Do" ? "default" : "ghost"} onClick={() => setActiveTab("To Do")} size="sm" className="text-sm">
+                <Button variant={activeTab === "To Do" ? "default" : "ghost"} onClick={() => setActiveTab("To Do")} size="sm" className="text-sm bg-neutral-200 hover:bg-neutral-100 text-neutral-900">
                   To Do
                 </Button>
               </div>
