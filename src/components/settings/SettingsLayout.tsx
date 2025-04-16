@@ -21,14 +21,14 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ title, children }) => {
     <ClinicalLayout>
       <div className="max-w-6xl mx-auto p-6">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-blue-800">{title}</h1>
+          <h1 className="text-2xl font-bold text-clinical-blue">{title}</h1>
           <p className="text-gray-600">Manage your settings and preferences</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {/* Sidebar */}
           <div className="md:col-span-1">
-            <nav className="space-y-1 bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+            <nav className="space-y-1 bg-clinical-neutral rounded-lg shadow-sm border border-clinical-border">
               {settingsNavItems.map((item) => {
                 const isActive = location.pathname === item.path;
                 const Icon = item.icon;
@@ -39,8 +39,8 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ title, children }) => {
                     to={item.path}
                     className={`flex items-center px-3 py-2 rounded-md text-sm ${
                       isActive 
-                        ? 'bg-blue-100 text-blue-800 font-medium' 
-                        : 'text-gray-700 hover:bg-gray-100'
+                        ? 'bg-clinical-blue-light text-clinical-blue font-medium' 
+                        : 'text-clinical-neutral-dark hover:bg-gray-100'
                     } transition-colors duration-200`}
                   >
                     <Icon size={18} className="mr-2" />
@@ -53,7 +53,7 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ title, children }) => {
           
           {/* Main content */}
           <div className="md:col-span-3">
-            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+            <div className="bg-clinical-neutral p-6 rounded-lg border border-clinical-border shadow-sm">
               {children}
             </div>
           </div>

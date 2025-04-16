@@ -62,14 +62,14 @@ const ProfilePage = () => {
 
   return (
     <SettingsLayout title="Profile Settings">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="animate-fade-in">
         <div className="space-y-6">
           <div className="space-y-4">
-            <h2 className="text-lg font-medium">Clinician Information</h2>
+            <h2 className="section-header">Clinician Information</h2>
             
             <div className="space-y-3">
               <div>
-                <Label htmlFor="clinicianName">Full Name</Label>
+                <Label htmlFor="clinicianName" className="input-label">Full Name</Label>
                 <Input 
                   id="clinicianName"
                   name="clinicianName"
@@ -81,7 +81,7 @@ const ProfilePage = () => {
               </div>
               
               <div>
-                <Label htmlFor="role">Professional Role</Label>
+                <Label htmlFor="role" className="input-label">Professional Role</Label>
                 <Input 
                   id="role"
                   name="role"
@@ -95,11 +95,11 @@ const ProfilePage = () => {
           </div>
 
           <div className="space-y-4">
-            <h2 className="text-lg font-medium">Signature</h2>
-            <p className="text-sm text-gray-600">Upload your signature for use in reports and documents</p>
+            <h2 className="section-header">Signature</h2>
+            <p className="text-sm text-muted-foreground">Upload your signature for use in reports and documents</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Card className="overflow-hidden">
+              <Card className="overflow-hidden clinical-card">
                 <CardContent className="p-0">
                   {signaturePreview ? (
                     <div className="relative group">
@@ -129,7 +129,7 @@ const ProfilePage = () => {
 
               <div className="flex items-center">
                 <div className="space-y-3 w-full">
-                  <Label htmlFor="signature">Upload Signature</Label>
+                  <Label htmlFor="signature" className="input-label">Upload Signature</Label>
                   <div className="flex items-center">
                     <Button 
                       type="button"
@@ -158,8 +158,8 @@ const ProfilePage = () => {
           </div>
 
           <div className="space-y-4">
-            <h2 className="text-lg font-medium">Clinic Address</h2>
-            <p className="text-sm text-gray-600">This will appear on your letterheads and reports</p>
+            <h2 className="section-header">Clinic Address</h2>
+            <p className="text-sm text-muted-foreground">This will appear on your letterheads and reports</p>
             
             <Textarea 
               id="clinicAddress"
@@ -173,7 +173,7 @@ const ProfilePage = () => {
 
           <div className="flex justify-end gap-3">
             <Button type="button" variant="outline">Cancel</Button>
-            <Button type="submit" className="bg-blue-800 hover:bg-blue-900">
+            <Button type="submit" className="bg-clinical-blue hover:bg-clinical-blue/90">
               <Save className="h-4 w-4 mr-2" />
               Save Changes
             </Button>

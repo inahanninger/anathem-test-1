@@ -34,37 +34,37 @@ const PreferencesPage = () => {
 
   return (
     <SettingsLayout title="Default Preferences">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="animate-fade-in">
         <div className="space-y-6">
-          <div className="space-y-4">
-            <h2 className="text-lg font-medium">Language Style</h2>
-            <p className="text-sm text-gray-600">Select your preferred language tone for reports and documents</p>
+          <div className="space-y-4 section-container">
+            <h2 className="section-header">Language Style</h2>
+            <p className="text-sm text-muted-foreground">Select your preferred language tone for reports and documents</p>
             
             <RadioGroup 
               defaultValue={preferences.languageStyle}
               onValueChange={(value) => handleChange('languageStyle', value)}
               className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2"
             >
-              <div className="flex items-center space-x-2 bg-white border border-gray-200 rounded-md p-4 cursor-pointer hover:bg-gray-50">
+              <div className="flex items-center space-x-2 bg-clinical-neutral border border-clinical-border rounded-md p-4 cursor-pointer hover:bg-clinical-blue-light/50">
                 <RadioGroupItem value="professional" id="professional" />
                 <Label htmlFor="professional" className="cursor-pointer">Professional</Label>
               </div>
-              <div className="flex items-center space-x-2 bg-white border border-gray-200 rounded-md p-4 cursor-pointer hover:bg-gray-50">
+              <div className="flex items-center space-x-2 bg-clinical-neutral border border-clinical-border rounded-md p-4 cursor-pointer hover:bg-clinical-blue-light/50">
                 <RadioGroupItem value="academic" id="academic" />
                 <Label htmlFor="academic" className="cursor-pointer">Academic</Label>
               </div>
-              <div className="flex items-center space-x-2 bg-white border border-gray-200 rounded-md p-4 cursor-pointer hover:bg-gray-50">
+              <div className="flex items-center space-x-2 bg-clinical-neutral border border-clinical-border rounded-md p-4 cursor-pointer hover:bg-clinical-blue-light/50">
                 <RadioGroupItem value="simplified" id="simplified" />
                 <Label htmlFor="simplified" className="cursor-pointer">Simplified</Label>
               </div>
             </RadioGroup>
           </div>
 
-          <Separator />
+          <Separator className="bg-clinical-border" />
 
-          <div className="space-y-4">
-            <h2 className="text-lg font-medium">Default Summary Structure</h2>
-            <p className="text-sm text-gray-600">Choose how you want your clinical summaries structured</p>
+          <div className="space-y-4 section-container">
+            <h2 className="section-header">Default Summary Structure</h2>
+            <p className="text-sm text-muted-foreground">Choose how you want your clinical summaries structured</p>
             
             <Select 
               defaultValue={preferences.summaryStructure}
@@ -82,40 +82,40 @@ const PreferencesPage = () => {
             </Select>
           </div>
 
-          <Separator />
+          <Separator className="bg-clinical-border" />
 
-          <div className="space-y-4">
-            <h2 className="text-lg font-medium">Default Voice</h2>
-            <p className="text-sm text-gray-600">Select the default voice for text-to-speech features</p>
+          <div className="space-y-4 section-container">
+            <h2 className="section-header">Default Voice</h2>
+            <p className="text-sm text-muted-foreground">Select the default voice for text-to-speech features</p>
             
             <RadioGroup 
               defaultValue={preferences.defaultVoice}
               onValueChange={(value) => handleChange('defaultVoice', value)}
               className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2"
             >
-              <div className="flex items-center space-x-2 bg-white border border-gray-200 rounded-md p-4 cursor-pointer hover:bg-gray-50">
+              <div className="flex items-center space-x-2 bg-clinical-neutral border border-clinical-border rounded-md p-4 cursor-pointer hover:bg-clinical-blue-light/50">
                 <RadioGroupItem value="male" id="male" />
                 <Label htmlFor="male" className="cursor-pointer">Male Voice</Label>
               </div>
-              <div className="flex items-center space-x-2 bg-white border border-gray-200 rounded-md p-4 cursor-pointer hover:bg-gray-50">
+              <div className="flex items-center space-x-2 bg-clinical-neutral border border-clinical-border rounded-md p-4 cursor-pointer hover:bg-clinical-blue-light/50">
                 <RadioGroupItem value="female" id="female" />
                 <Label htmlFor="female" className="cursor-pointer">Female Voice</Label>
               </div>
-              <div className="flex items-center space-x-2 bg-white border border-gray-200 rounded-md p-4 cursor-pointer hover:bg-gray-50">
+              <div className="flex items-center space-x-2 bg-clinical-neutral border border-clinical-border rounded-md p-4 cursor-pointer hover:bg-clinical-blue-light/50">
                 <RadioGroupItem value="neutral" id="neutral" />
                 <Label htmlFor="neutral" className="cursor-pointer">Neutral Voice</Label>
               </div>
             </RadioGroup>
           </div>
 
-          <Separator />
+          <Separator className="bg-clinical-border" />
 
-          <div className="space-y-4">
-            <h2 className="text-lg font-medium">Default Subject</h2>
-            <p className="text-sm text-gray-600">Choose your preferred term for referring to patients in reports</p>
+          <div className="space-y-4 section-container">
+            <h2 className="section-header">Default Subject</h2>
+            <p className="text-sm text-muted-foreground">Choose your preferred term for referring to patients in reports</p>
             
             <div>
-              <Label htmlFor="subject">Subject Term</Label>
+              <Label htmlFor="subject" className="input-label">Subject Term</Label>
               <Input 
                 id="subject"
                 value={preferences.subject}
@@ -129,7 +129,7 @@ const PreferencesPage = () => {
 
           <div className="flex justify-end gap-3">
             <Button type="button" variant="outline">Reset to Defaults</Button>
-            <Button type="submit" className="bg-blue-800 hover:bg-blue-900">
+            <Button type="submit" className="bg-clinical-blue hover:bg-clinical-blue/90">
               <Save className="h-4 w-4 mr-2" />
               Save Preferences
             </Button>
