@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { ArrowRightIcon, MicIcon, UploadIcon, SettingsIcon, FileTextIcon, TrashIcon } from "lucide-react";
+import { ArrowRightIcon, UploadIcon, SettingsIcon, FileTextIcon, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import FormProgress from "@/components/FormProgress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Link } from "react-router-dom";
+import RecordingButton from "@/components/RecordingButton";
 
 type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
 interface FileUpload {
@@ -20,6 +21,7 @@ interface FileUpload {
   dateUploaded: Date;
   size: number;
 }
+
 const TranscribePage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
@@ -32,15 +34,14 @@ const TranscribePage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const completedSections = 1;
   const totalSections = 6;
+
   const handleFileUpload = (files: FileList | null) => {
     if (!files || files.length === 0) return;
     Array.from(files).forEach(file => {
-      // Create new file upload
       const newUpload: FileUpload = {
         id: crypto.randomUUID(),
         name: file.name,
         type: "",
-        // Empty by default, user will select from dropdown
         dateUploaded: new Date(),
         size: file.size
       };
@@ -48,21 +49,25 @@ const TranscribePage = () => {
       toast.success(`${file.name} uploaded successfully`);
     });
   };
+
   const handleFileTypeChange = (fileId: string, type: string) => {
     setUploads(uploads.map(upload => upload.id === fileId ? {
       ...upload,
       type: type as UploadType
     } : upload));
   };
+
   const handleDeleteFile = (fileId: string) => {
     setUploads(uploads.filter(upload => upload.id !== fileId));
     toast.success("File deleted successfully");
   };
+
   const formatFileSize = (bytes: number) => {
     if (bytes < 1024) return `${bytes} bytes`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
+
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("en-GB", {
       day: "numeric",
@@ -70,11 +75,11 @@ const TranscribePage = () => {
       year: "numeric"
     });
   };
+
   const toggleRecording = () => {
     if (isRecording) {
       setIsRecording(false);
       toast.success("Recording stopped");
-      // Simulating a transcription result
       setTranscription("This is a sample transcription that would be generated from the recording.");
     } else {
       setIsRecording(true);
@@ -82,6 +87,7 @@ const TranscribePage = () => {
       setTranscription("");
     }
   };
+
   const handleContinue = () => {
     if (uploads.length === 0 && !transcription) {
       toast.error("Please upload a file or create a transcription");
@@ -90,23 +96,28 @@ const TranscribePage = () => {
     toast.success("Continuing to Generate Report");
     window.location.href = "/generate";
   };
+
   const handleClickUpload = () => {
     fileInputRef.current?.click();
   };
+
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(true);
   };
+
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
   };
+
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
     const files = e.dataTransfer.files;
     handleFileUpload(files);
   };
+
   return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 px-6 bg-white py-0">
         <div className="container max-w-5xl mx-auto">
@@ -166,10 +177,10 @@ const TranscribePage = () => {
                   <h2 className="text-base font-semibold">Transcription</h2>
                 </div>
                 <div className="flex gap-2">
-                  <Button className={`px-4 ${isRecording ? 'bg-red-600 hover:bg-red-700' : 'bg-red-700 hover:bg-red-800'}`} onClick={toggleRecording}>
-                    <MicIcon className="w-4 h-4 mr-2" />
-                    {isRecording ? 'Stop Recording' : 'Start Recording'}
-                  </Button>
+                  <RecordingButton 
+                    isRecording={isRecording} 
+                    onClick={toggleRecording} 
+                  />
                   <Button variant="outline" size="icon" className="bg-white">
                     <SettingsIcon className="w-4 h-4" />
                   </Button>
@@ -256,4 +267,5 @@ const TranscribePage = () => {
       </div>
     </div>;
 };
+
 export default TranscribePage;

@@ -10,6 +10,8 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
+import RecordingButton from "@/components/RecordingButton";
+
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -26,6 +28,7 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
+
 const WorkflowTranscribePage = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [transcription, setTranscription] = useState("");
@@ -33,6 +36,7 @@ const WorkflowTranscribePage = () => {
   const [activeTab, setActiveTab] = useState<string>("clinical-notes");
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
+
   const toggleRecording = () => {
     if (isRecording) {
       setIsRecording(false);
@@ -44,9 +48,8 @@ const WorkflowTranscribePage = () => {
       toast.success("Recording started");
     }
   };
-  return <div className="min-h-screen bg-white">
-      
 
+  return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
         <div className="container max-w-5xl mx-auto">
           <div className="flex items-center justify-between">
@@ -94,10 +97,10 @@ const WorkflowTranscribePage = () => {
                 <h2 className="text-base font-semibold">Transcription</h2>
               </div>
               <div className="flex gap-2">
-                <Button className={`px-4 ${isRecording ? 'bg-red-600 hover:bg-red-700' : 'bg-red-700 hover:bg-red-800'}`} onClick={toggleRecording}>
-                  <MicIcon className="w-4 h-4 mr-2" />
-                  {isRecording ? 'Stop Recording' : 'Start Recording'}
-                </Button>
+                <RecordingButton 
+                  isRecording={isRecording} 
+                  onClick={toggleRecording} 
+                />
                 <Button variant="outline" size="icon" className="bg-white">
                   <SettingsIcon className="w-4 h-4" />
                 </Button>
@@ -133,4 +136,5 @@ const WorkflowTranscribePage = () => {
       </div>
     </div>;
 };
+
 export default WorkflowTranscribePage;
