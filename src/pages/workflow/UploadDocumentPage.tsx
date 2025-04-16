@@ -84,13 +84,6 @@ const UploadDocumentPage = () => {
     toast.success(`${file.name} uploaded successfully`);
   };
 
-  const handleFileTypeChange = (fileId: string, type: string) => {
-    setUploads(uploads.map(upload => upload.id === fileId ? {
-      ...upload,
-      type: type as UploadType
-    } : upload));
-  };
-
   const handleDeleteFile = (fileId: string) => {
     const fileToDelete = uploads.find(upload => upload.id === fileId);
     if (fileToDelete) {
@@ -226,36 +219,17 @@ const UploadDocumentPage = () => {
                             <p className="text-xs text-gray-500">{formatFileSize(getFileForSection(section.id)?.size || 0)}</p>
                           </div>
                         </div>
-                        <div className="flex items-center space-x-2">
-                          <Select 
-                            value={getFileForSection(section.id)?.type || ""} 
-                            onValueChange={(value) => {
-                              const fileId = getFileForSection(section.id)?.id;
-                              if (fileId) handleFileTypeChange(fileId, value);
-                            }}
-                          >
-                            <SelectTrigger className="w-44">
-                              <SelectValue placeholder="Select document type" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="dictation">Dictation</SelectItem>
-                              <SelectItem value="transcription">Transcription</SelectItem>
-                              <SelectItem value="patient notes">Patient Notes</SelectItem>
-                              <SelectItem value="letter">Letter</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <Button 
-                            variant="ghost" 
-                            size="icon" 
-                            onClick={() => {
-                              const fileId = getFileForSection(section.id)?.id;
-                              if (fileId) handleDeleteFile(fileId);
-                            }} 
-                            className=""
-                          >
-                            <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
-                          </Button>
-                        </div>
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          onClick={() => {
+                            const fileId = getFileForSection(section.id)?.id;
+                            if (fileId) handleDeleteFile(fileId);
+                          }} 
+                          className=""
+                        >
+                          <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
+                        </Button>
                       </div>
                     ) : (
                       // Show the upload area if no file has been uploaded
@@ -296,35 +270,16 @@ const UploadDocumentPage = () => {
                           <p className="text-xs text-gray-500">{formatFileSize(getFileForSection('qbscore')?.size || 0)}</p>
                         </div>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <Select 
-                          value={getFileForSection('qbscore')?.type || ""} 
-                          onValueChange={(value) => {
-                            const fileId = getFileForSection('qbscore')?.id;
-                            if (fileId) handleFileTypeChange(fileId, value);
-                          }}
-                        >
-                          <SelectTrigger className="w-44">
-                            <SelectValue placeholder="Select document type" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="dictation">Dictation</SelectItem>
-                            <SelectItem value="transcription">Transcription</SelectItem>
-                            <SelectItem value="patient notes">Patient Notes</SelectItem>
-                            <SelectItem value="letter">Letter</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <Button 
-                          variant="ghost" 
-                          size="icon" 
-                          onClick={() => {
-                            const fileId = getFileForSection('qbscore')?.id;
-                            if (fileId) handleDeleteFile(fileId);
-                          }}
-                        >
-                          <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
-                        </Button>
-                      </div>
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        onClick={() => {
+                          const fileId = getFileForSection('qbscore')?.id;
+                          if (fileId) handleDeleteFile(fileId);
+                        }}
+                      >
+                        <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
+                      </Button>
                     </div>
                   ) : (
                     // Show the upload area if no file has been uploaded

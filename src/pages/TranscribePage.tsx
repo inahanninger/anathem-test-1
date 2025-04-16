@@ -3,11 +3,10 @@ import React, { useState, useRef } from "react";
 import { ArrowRightIcon, UploadIcon, SettingsIcon, FileTextIcon, TrashIcon, Mic as MicIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import FormProgress from "@/components/FormProgress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -49,13 +48,6 @@ const TranscribePage = () => {
       setUploads(prev => [...prev, newUpload]);
       toast.success(`${file.name} uploaded successfully`);
     });
-  };
-
-  const handleFileTypeChange = (fileId: string, type: string) => {
-    setUploads(uploads.map(upload => upload.id === fileId ? {
-      ...upload,
-      type: type as UploadType
-    } : upload));
   };
 
   const handleDeleteFile = (fileId: string) => {
@@ -241,22 +233,9 @@ const TranscribePage = () => {
                                 <p className="text-xs text-gray-500">{formatFileSize(file.size)}</p>
                               </div>
                             </div>
-                            <div className="flex items-center space-x-2">
-                              <Select value={file.type} onValueChange={value => handleFileTypeChange(file.id, value)}>
-                                <SelectTrigger className="w-44">
-                                  <SelectValue placeholder="Select category" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="transcript">Transcript</SelectItem>
-                                  <SelectItem value="dictation">Dictation</SelectItem>
-                                  <SelectItem value="letter">Letter</SelectItem>
-                                  <SelectItem value="patient notes">Patient Notes</SelectItem>
-                                </SelectContent>
-                              </Select>
-                              <Button variant="ghost" size="icon" onClick={() => handleDeleteFile(file.id)}>
-                                <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
-                              </Button>
-                            </div>
+                            <Button variant="ghost" size="icon" onClick={() => handleDeleteFile(file.id)}>
+                              <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
+                            </Button>
                           </div>)}
                       </div>
                     </div>}
