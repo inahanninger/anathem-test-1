@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Mic, FileText, Plus, Search, CalendarIcon, ChevronFirst, ChevronLast, ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
@@ -6,81 +5,50 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
-} from "@/components/ui/table";
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
-} from "@/components/ui/select";
-import { 
-  Pagination, 
-  PaginationContent, 
-  PaginationEllipsis, 
-  PaginationItem, 
-  PaginationLink, 
-  PaginationNext, 
-  PaginationPrevious 
-} from "@/components/ui/pagination";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
-
-const consultations = [
-  {
-    id: 1,
-    patientName: "John Doe",
-    appointmentType: "ADHD/Autism Combined",
-    files: 5,
-    status: "Review drafts",
-    statusType: "review",
-    date: "18/11/23, 9:34 am"
-  },
-  {
-    id: 2,
-    patientName: "John Doe",
-    appointmentType: "ADHD/Autism Combined",
-    files: 1,
-    status: "Generate Drafts",
-    statusType: "generate",
-    date: "18/11/23, 9:34 am"
-  },
-  {
-    id: 3,
-    patientName: "Cody Fisher",
-    appointmentType: "ADHD/Autism Combined",
-    files: 0,
-    status: "Generate Drafts",
-    statusType: "generate",
-    date: "18/11/23, 9:34 am"
-  },
-  {
-    id: 4,
-    patientName: "Floyd Miles",
-    appointmentType: "ADHD/Autism Combined",
-    files: 3,
-    status: "Scheduled",
-    statusType: "scheduled",
-    date: "18/11/23, 9:34 am"
-  }
-];
-
+const consultations = [{
+  id: 1,
+  patientName: "John Doe",
+  appointmentType: "ADHD/Autism Combined",
+  files: 5,
+  status: "Review drafts",
+  statusType: "review",
+  date: "18/11/23, 9:34 am"
+}, {
+  id: 2,
+  patientName: "John Doe",
+  appointmentType: "ADHD/Autism Combined",
+  files: 1,
+  status: "Generate Drafts",
+  statusType: "generate",
+  date: "18/11/23, 9:34 am"
+}, {
+  id: 3,
+  patientName: "Cody Fisher",
+  appointmentType: "ADHD/Autism Combined",
+  files: 0,
+  status: "Generate Drafts",
+  statusType: "generate",
+  date: "18/11/23, 9:34 am"
+}, {
+  id: 4,
+  patientName: "Floyd Miles",
+  appointmentType: "ADHD/Autism Combined",
+  files: 3,
+  status: "Scheduled",
+  statusType: "scheduled",
+  date: "18/11/23, 9:34 am"
+}];
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState("Consultations");
-
   const today = new Date();
   const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const formattedDate = `Today, ${dayNames[today.getDay()]}, ${today.getDate()} ${monthNames[today.getMonth()]}`;
-
-  return (
-    <ClinicalLayout>
+  return <ClinicalLayout>
       <div className="p-6">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-2xl font-bold text-blue-600 mb-6">{formattedDate}</h1>
@@ -127,30 +95,17 @@ const HomePage = () => {
             </div>
             
             <Button asChild className="bg-black hover:bg-gray-800">
-              <Link to="/workflow/upload" className="flex items-center gap-2">
-                <Plus className="h-4 w-4" />
-                New Consultation
-              </Link>
+              
             </Button>
           </div>
           
           <div className="bg-white border border-gray-200 rounded-md shadow-sm mb-6">
             <div className="flex justify-between items-center p-4 border-b border-gray-200">
               <div className="flex space-x-2">
-                <Button 
-                  variant={activeTab === "Consultations" ? "default" : "ghost"} 
-                  onClick={() => setActiveTab("Consultations")} 
-                  className={activeTab === "Consultations" ? "bg-blue-600" : ""} 
-                  size="sm"
-                >
+                <Button variant={activeTab === "Consultations" ? "default" : "ghost"} onClick={() => setActiveTab("Consultations")} className={activeTab === "Consultations" ? "bg-blue-600" : ""} size="sm">
                   Consultations
                 </Button>
-                <Button 
-                  variant={activeTab === "To Do" ? "default" : "ghost"} 
-                  onClick={() => setActiveTab("To Do")} 
-                  className={activeTab === "To Do" ? "bg-blue-600" : ""} 
-                  size="sm"
-                >
+                <Button variant={activeTab === "To Do" ? "default" : "ghost"} onClick={() => setActiveTab("To Do")} className={activeTab === "To Do" ? "bg-blue-600" : ""} size="sm">
                   To Do
                 </Button>
               </div>
@@ -201,20 +156,14 @@ const HomePage = () => {
               </div>
             </div>
             
-            {activeTab === "Consultations" && (
-              <div>
+            {activeTab === "Consultations" && <div>
                 <div className="p-10 text-center text-gray-500">
                   <p className="mb-3">Your appointments will appear here.</p>
-                  <Button className="bg-blue-600 hover:bg-blue-700 flex items-center gap-2">
-                    <Plus className="h-4 w-4" />
-                    Prepare consultation
-                  </Button>
+                  
                 </div>
-              </div>
-            )}
+              </div>}
             
-            {activeTab === "To Do" && (
-              <>
+            {activeTab === "To Do" && <>
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -226,8 +175,7 @@ const HomePage = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {consultations.map(consultation => (
-                      <TableRow key={consultation.id} className="hover:bg-gray-50">
+                    {consultations.map(consultation => <TableRow key={consultation.id} className="hover:bg-gray-50">
                         <TableCell className="font-medium">{consultation.patientName}</TableCell>
                         <TableCell>{consultation.appointmentType}</TableCell>
                         <TableCell>
@@ -245,8 +193,7 @@ const HomePage = () => {
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </TableCell>
-                      </TableRow>
-                    ))}
+                      </TableRow>)}
                   </TableBody>
                 </Table>
                 
@@ -275,8 +222,7 @@ const HomePage = () => {
                     </PaginationContent>
                   </Pagination>
                 </div>
-              </>
-            )}
+              </>}
           </div>
           
           <div className="text-center text-sm text-gray-500">
@@ -284,8 +230,6 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-    </ClinicalLayout>
-  );
+    </ClinicalLayout>;
 };
-
 export default HomePage;
