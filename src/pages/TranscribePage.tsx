@@ -1,5 +1,6 @@
+
 import React, { useState, useRef } from "react";
-import { ArrowRightIcon, UploadIcon, SettingsIcon, FileTextIcon, TrashIcon } from "lucide-react";
+import { ArrowRightIcon, UploadIcon, SettingsIcon, FileTextIcon, TrashIcon, Mic as MicIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
