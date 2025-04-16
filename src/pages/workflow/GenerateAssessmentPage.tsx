@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -53,24 +52,7 @@ const GenerateAssessmentPage = () => {
     toast.success("Starting report generation");
   };
   return <div className="min-h-screen bg-white">
-      <div className="border-b border-gray-100 px-6 bg-white py-[8px]">
-        <div className="container max-w-5xl mx-auto">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                
-              </BreadcrumbItem>
-              <BreadcrumbItem className="ml-auto">
-                
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </div>
+      
 
       <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
         <div className="container max-w-5xl mx-auto">
