@@ -9,7 +9,6 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbS
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
-
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -23,7 +22,6 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
-
 const ReviewInformationPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [dateOfBirth, setDateOfBirth] = useState("05/12/1980");
@@ -36,14 +34,14 @@ const ReviewInformationPage = () => {
   const [referralReason, setReferralReason] = useState("Assessment and management of chronic pain and hypertension");
   const [medicalSummary, setMedicalSummary] = useState("Patient reports experiencing moderate depressive symptoms for approximately 3 months, including low mood, decreased interest in activities, and poor sleep. Patient also mentions occasional anxiety in social situations.");
   const [assessmentNotes, setAssessmentNotes] = useState("Initial assessment indicates mild to moderate depression with comorbid social anxiety. Patient is responsive to cognitive behavioral approaches and shows good insight into their condition.");
-
   const handleSave = () => {
     toast.success("Patient information saved");
   };
-
   return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
-        <div className="container mx-auto" style={{ maxWidth: "1243px" }}>
+        <div className="container mx-auto" style={{
+        maxWidth: "1243px"
+      }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex flex-col">
@@ -71,11 +69,15 @@ const ReviewInformationPage = () => {
         </div>
       </div>
       
-      <div className="container mx-auto py-4" style={{ maxWidth: "1243px" }}>
+      <div className="container mx-auto py-4" style={{
+      maxWidth: "1243px"
+    }}>
         <StepProgress currentStep={2} steps={workflowSteps} />
       </div>
       
-      <div className="container mx-auto px-6 py-8" style={{ maxWidth: "1243px" }}>
+      <div className="container mx-auto px-6 py-8" style={{
+      maxWidth: "1243px"
+    }}>
         <h1 className="font-bold mb-1 text-lg">Review Patient Information</h1>
         <p className="text-gray-600 mb-8 text-sm">
           Please review and update the patient information below.
@@ -84,40 +86,40 @@ const ReviewInformationPage = () => {
         <Card className="p-6 mb-8">
           <h2 className="text-lg font-semibold mb-4">Patient Details</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div>
-              <Label htmlFor="patientName" className="mb-1 block">Patient Name</Label>
+            <div className="my-0 py-0">
+              <Label htmlFor="patientName" className="mb-1 block pb-px\n">Patient Name</Label>
               <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} />
             </div>
             <div>
-              <Label htmlFor="dob" className="mb-1 block">Date of Birth</Label>
+              <Label htmlFor="dob" className="mb-1 block pb-px\n">Date of Birth</Label>
               <Input id="dob" value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)} />
             </div>
             <div>
-              <Label htmlFor="homeAddress" className="mb-1 block">Home Address</Label>
+              <Label htmlFor="homeAddress" className="mb-1 block pb-px\n">Home Address</Label>
               <Input id="homeAddress" value={homeAddress} onChange={e => setHomeAddress(e.target.value)} />
             </div>
             <div>
-              <Label htmlFor="contactNumber" className="mb-1 block">Contact Number</Label>
+              <Label htmlFor="contactNumber" className="mb-1 block pb-px\n">Contact Number</Label>
               <Input id="contactNumber" value={contactNumber} onChange={e => setContactNumber(e.target.value)} />
             </div>
             <div>
-              <Label htmlFor="nhsNumber" className="mb-1 block">NHS Number</Label>
+              <Label htmlFor="nhsNumber" className="mb-1 block pb-px\n">NHS Number</Label>
               <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} />
             </div>
             <div>
-              <Label htmlFor="referrer" className="mb-1 block">Referrer</Label>
+              <Label htmlFor="referrer" className="mb-1 block pb-px\n">Referrer</Label>
               <Input id="referrer" value={referrer} onChange={e => setReferrer(e.target.value)} />
             </div>
             <div>
-              <Label htmlFor="allergies" className="mb-1 block">Allergies</Label>
+              <Label htmlFor="allergies" className="mb-1 block pb-px\n">Allergies</Label>
               <Input id="allergies" value={allergies} onChange={e => setAllergies(e.target.value)} />
             </div>
             <div>
-              <Label htmlFor="careCoordinator" className="mb-1 block">Care Coordinator/Key-Worker</Label>
+              <Label htmlFor="careCoordinator" className="mb-1 block pb-px\n">Care Coordinator/Key-Worker</Label>
               <Input id="careCoordinator" value={careCoordinator} onChange={e => setCareCoordinator(e.target.value)} />
             </div>
             <div className="md:col-span-2">
-              <Label htmlFor="referralReason" className="mb-1 block">Reason for Referral</Label>
+              <Label htmlFor="referralReason" className="mb-1 block pb-px\n">Reason for Referral</Label>
               <Textarea id="referralReason" value={referralReason} onChange={e => setReferralReason(e.target.value)} className="min-h-[100px]" />
             </div>
           </div>
@@ -140,5 +142,4 @@ const ReviewInformationPage = () => {
       </div>
     </div>;
 };
-
 export default ReviewInformationPage;
