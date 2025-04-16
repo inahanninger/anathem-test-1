@@ -19,7 +19,7 @@ const SourcesPanel = ({
             Transcript
           </TabsTrigger>
           <TabsTrigger value="file-upload" className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm">
-            <UploadIcon className="h-3.5 w-3.5 mr-1.5" />
+            
             Supporting Documents
           </TabsTrigger>
         </TabsList>
@@ -85,17 +85,7 @@ const SourcesPanel = ({
         </TabsContent>
         
         <TabsContent value="file-upload" className="m-0 p-4 px-4 flex-1">
-          <div className="flex items-center justify-center h-full border-2 border-dashed border-gray-300 rounded-md p-6">
-            <div className="text-center">
-              <UploadIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 mb-2">Drag and drop files here</p>
-              <p className="text-gray-400 text-sm mb-4">or</p>
-              <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-                Browse Files
-              </button>
-              <p className="text-gray-400 text-xs mt-2">PDF, DOC, DOCX, JPG, PNG (max 10MB)</p>
-            </div>
-          </div>
+          
         </TabsContent>
       </Tabs>
     </div>;
