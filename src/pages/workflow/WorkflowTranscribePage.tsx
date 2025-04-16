@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon, MicIcon, SettingsIcon, FileTextIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";

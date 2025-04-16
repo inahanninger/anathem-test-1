@@ -20,9 +20,6 @@ const workflowSteps = [{
   name: "Transcribe",
   path: "/workflow/transcribe"
 }, {
-  name: "Generate",
-  path: "/workflow/generate"
-}, {
   name: "Report",
   path: "/workflow/report"
 }];

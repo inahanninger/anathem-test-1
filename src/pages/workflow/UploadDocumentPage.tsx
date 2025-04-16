@@ -1,4 +1,3 @@
-
 import { useState, useRef } from "react";
 import { ArrowRightIcon, UploadIcon, FileTextIcon, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
 import FileUploadSection from "@/components/FileUploadSection";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -36,9 +35,6 @@ const workflowSteps = [
     name: "Transcribe",
     path: "/workflow/transcribe"
   }, {
-    name: "Generate",
-    path: "/workflow/generate"
-  }, {
     name: "Report",
     path: "/workflow/report"
   }
@@ -51,8 +47,8 @@ const UploadDocumentPage = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [assessmentType, setAssessmentType] = useState<AssessmentType>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
-  // Define the sections for our upload fields
   const sections = [
     { id: "conners", name: "Conners Questionnaire", required: true },
     { id: "snap4", name: "SNAP4", required: false },
@@ -64,7 +60,6 @@ const UploadDocumentPage = () => {
   const handleFileUpload = (files: FileList | null, sectionId: string) => {
     if (!files || files.length === 0) return;
     
-    // We'll take only the first file for each section
     const file = files[0];
     
     const newUpload: FileUpload = {
@@ -76,10 +71,8 @@ const UploadDocumentPage = () => {
       section: sectionId
     };
     
-    // Remove any existing files for this section
     const filteredUploads = uploads.filter(upload => upload.section !== sectionId);
     
-    // Add the new file
     setUploads([...filteredUploads, newUpload]);
     toast.success(`${file.name} uploaded successfully`);
   };
@@ -124,19 +117,17 @@ const UploadDocumentPage = () => {
 
   const handleSubmitFiles = () => {
     toast.success("Files submitted successfully");
-    // Navigate to the next step
+    navigate("/workflow/review");
   };
 
   const handleAssessmentChange = (value: string) => {
     setAssessmentType(value as AssessmentType);
   };
 
-  // Check if a file is uploaded for a specific section
   const isFileUploaded = (sectionId: string) => {
     return uploads.some(upload => upload.section === sectionId);
   };
 
-  // Get file for a specific section
   const getFileForSection = (sectionId: string) => {
     return uploads.find(upload => upload.section === sectionId);
   };
