@@ -56,7 +56,7 @@ const ClinicalTabsSection = ({
     }
   };
   return <div className="overflow-hidden">
-      <div className="flex justify-between items-center py-2 border-b px-0">
+      <div className="flex justify-between items-center py-2 border-b px-[2px]">
         <h2 className="font-semibold text-base">Review Information</h2>
         <ActionButtons showSources={showSources} handleViewSources={handleViewSources} />
       </div>
