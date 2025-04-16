@@ -8,7 +8,6 @@ import StepProgress from "@/components/StepProgress";
 import ReviewPage from "../ReviewPage";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Skeleton } from "@/components/ui/skeleton";
-
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -22,19 +21,16 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
-
 const WorkflowReportPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
   const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
-
   return <ClinicalLayout>
       <div className="min-h-screen bg-white">
         <div className="border-b border-gray-100 px-6 py-[12px] bg-neutral-50">
@@ -78,11 +74,10 @@ const WorkflowReportPage = () => {
               <Skeleton className="h-36 w-full" />
               <Skeleton className="h-48 w-full" />
             </div>
-          </div> : <div className="mt-0 w-6xl mx-auto">
+          </div> : <div className="mt-0 w-6xl w-full">
             <ReviewPage />
           </div>}
       </div>
     </ClinicalLayout>;
 };
-
 export default WorkflowReportPage;
