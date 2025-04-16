@@ -86,7 +86,7 @@ const TranscribePage = () => {
       return;
     }
     toast.success("Generating report");
-    navigate("/report");
+    navigate("/workflow/report");
   };
 
   const handleClickUpload = () => {

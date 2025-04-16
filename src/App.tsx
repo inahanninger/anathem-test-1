@@ -5,7 +5,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import ReviewPage from "./pages/ReviewPage";
 import TranscribePage from "./pages/TranscribePage";
 import UploadDocumentPage from "./pages/workflow/UploadDocumentPage";
 import ReviewInformationPage from "./pages/workflow/ReviewInformationPage";
@@ -23,7 +22,6 @@ const App = () => (
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/transcribe" element={<TranscribePage />} />
-          <Route path="/report" element={<ReviewPage />} />
           
           {/* New Workflow Routes */}
           <Route path="/workflow/upload" element={<UploadDocumentPage />} />
