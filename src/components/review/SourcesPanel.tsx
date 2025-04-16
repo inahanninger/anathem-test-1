@@ -1,6 +1,7 @@
+
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { FileTextIcon, UploadIcon, ClockIcon } from "lucide-react";
+import { FileTextIcon } from "lucide-react";
 interface SourcesPanelProps {
   isVisible: boolean;
 }
@@ -9,7 +10,7 @@ const SourcesPanel = ({
 }: SourcesPanelProps) => {
   const [activeTab, setActiveTab] = useState("transcript");
   if (!isVisible) return null;
-  return <div className="h-full flex flex-col">
+  return <div className="h-full flex flex-col" style={{ maxWidth: "1243px" }}>
       
       
       <Tabs defaultValue="transcript" value={activeTab} onValueChange={setActiveTab} className="w-full flex-1 py-[8px] px-[8px]">

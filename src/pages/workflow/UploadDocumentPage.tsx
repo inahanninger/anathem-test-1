@@ -1,14 +1,11 @@
-
 import { useState, useRef } from "react";
-import { ArrowRightIcon, UploadIcon, FileTextIcon, TrashIcon, MicIcon, SettingsIcon } from "lucide-react";
+import { ArrowRightIcon, UploadIcon, FileTextIcon, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
@@ -48,8 +45,6 @@ const workflowSteps = [
 const UploadDocumentPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
-  const [patientCareName, setPatientCareName] = useState("");
-  const [transcription, setTranscription] = useState("");
   const [uploads, setUploads] = useState<FileUpload[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [assessmentType, setAssessmentType] = useState<AssessmentType>("");
@@ -110,15 +105,6 @@ const UploadDocumentPage = () => {
   const handleClickUpload = (fileInputRef: React.RefObject<HTMLInputElement>) => {
     fileInputRef.current?.click();
   };
-  
-  const handleTranscribe = () => {
-    toast.success("Transcription started");
-    // Simulate transcription after a delay
-    setTimeout(() => {
-      setTranscription("This is a sample transcription text that would be generated from the recording.");
-      toast.success("Transcription completed");
-    }, 2000);
-  };
 
   const handleSubmitFiles = () => {
     toast.success("Files submitted successfully");
@@ -131,7 +117,7 @@ const UploadDocumentPage = () => {
 
   return <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
-        <div className="container max-w-5xl mx-auto">
+        <div className="container mx-auto" style={{ maxWidth: "1243px" }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex flex-col">
@@ -157,11 +143,11 @@ const UploadDocumentPage = () => {
         </div>
       </div>
       
-      <div className="container max-w-5xl mx-auto py-4">
+      <div className="container mx-auto py-4" style={{ maxWidth: "1243px" }}>
         <StepProgress currentStep={1} steps={workflowSteps} />
       </div>
       
-      <div className="container max-w-5xl mx-auto px-6 py-8">
+      <div className="container mx-auto px-6 py-8" style={{ maxWidth: "1243px" }}>
         <div className="mb-6">
           <Label htmlFor="assessmentType" className="text-sm font-medium mb-2 block">Select Assessment Type</Label>
           <Select value={assessmentType} onValueChange={handleAssessmentChange}>
@@ -182,7 +168,7 @@ const UploadDocumentPage = () => {
         </p>
         
         {assessmentType ? (
-          <Card className="p-8 mb-8">
+          <div className="mb-8">
             {/* Documents Section */}
             <FileUploadSection title="Documents" required>
               {/* Conners Questionnaire */}
@@ -197,8 +183,8 @@ const UploadDocumentPage = () => {
                   </Button>
                 </div>
                 <div
-                  className={`border border-dashed rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer transition-colors
-                    ${isDragging ? 'bg-blue-50 border-blue-300' : 'border-gray-300 bg-gray-50'}`}
+                  className={`rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer transition-colors
+                    ${isDragging ? 'bg-blue-50' : 'bg-gray-50'}`}
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
                   onDrop={(e) => handleDrop(e, "dictation")}
@@ -225,7 +211,7 @@ const UploadDocumentPage = () => {
                   </Button>
                 </div>
                 <div
-                  className="border border-dashed rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer bg-gray-50"
+                  className="rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer bg-gray-50"
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
                   onDrop={(e) => handleDrop(e, "transcription")}
@@ -254,7 +240,7 @@ const UploadDocumentPage = () => {
                   </Button>
                 </div>
                 <div
-                  className="border border-dashed rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer bg-gray-50"
+                  className="rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer bg-gray-50"
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
                   onDrop={(e) => handleDrop(e, "patient notes")}
@@ -281,7 +267,7 @@ const UploadDocumentPage = () => {
                   </Button>
                 </div>
                 <div
-                  className="border border-dashed rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer bg-gray-50"
+                  className="rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer bg-gray-50"
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
                   onDrop={(e) => handleDrop(e, "letter")}
@@ -301,18 +287,6 @@ const UploadDocumentPage = () => {
 
             {/* Inputs Section */}
             <FileUploadSection title="Inputs" required>
-              {/* Patient Care Name */}
-              <div>
-                <Label htmlFor="patientCareName" className="font-medium block mb-2">Patient Care Name</Label>
-                <Input 
-                  id="patientCareName" 
-                  value={patientCareName} 
-                  onChange={e => setPatientCareName(e.target.value)} 
-                  placeholder="Enter patient care name"
-                  className="w-full"
-                />
-              </div>
-
               {/* QB Score */}
               <div>
                 <div className="flex justify-between items-center mb-2">
@@ -325,7 +299,7 @@ const UploadDocumentPage = () => {
                   </Button>
                 </div>
                 <div
-                  className="border border-dashed rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer bg-gray-50"
+                  className="rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer bg-gray-50"
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
                   onDrop={handleDrop}
@@ -339,33 +313,6 @@ const UploadDocumentPage = () => {
                 >
                   <UploadIcon className="h-10 w-10 text-gray-400 mb-3" />
                   <p className="text-gray-500 text-sm text-center">Click or drag file to this area to upload</p>
-                </div>
-              </div>
-            </FileUploadSection>
-
-            {/* Consultation Transcript Section */}
-            <FileUploadSection title="Consultation Transcript" className="mb-0">
-              <div className="space-y-4">
-                <Label htmlFor="transcript" className="font-medium block">Transcript</Label>
-                <Textarea 
-                  id="transcript"
-                  value={transcription}
-                  onChange={(e) => setTranscription(e.target.value)}
-                  placeholder="Active transcription appears here..."
-                  className="min-h-[150px] resize-none bg-gray-50"
-                  readOnly={true}
-                />
-                <div className="flex gap-2">
-                  <Button 
-                    className="bg-red-500 hover:bg-red-600 text-white"
-                    onClick={handleTranscribe}
-                  >
-                    <MicIcon size={16} className="mr-2" />
-                    Transcribe
-                  </Button>
-                  <Button variant="outline" size="icon">
-                    <SettingsIcon size={16} />
-                  </Button>
                 </div>
               </div>
             </FileUploadSection>
@@ -417,70 +364,50 @@ const UploadDocumentPage = () => {
                 </div>
               </div>
             )}
-          </Card>
+          </div>
         ) : (
           // Skeleton Loader when no assessment type is selected
-          <Card className="p-8 mb-8">
-            <div className="mb-8">
-              <Skeleton className="h-7 w-32 mb-4" />
-              <div className="space-y-6">
-                <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <Skeleton className="h-5 w-48" />
-                    <Skeleton className="h-9 w-32" />
-                  </div>
-                  <Skeleton className="h-40 w-full rounded-lg" />
+          <div className="mb-8">
+            <Skeleton className="h-7 w-32 mb-4" />
+            <div className="space-y-6">
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <Skeleton className="h-5 w-48" />
+                  <Skeleton className="h-9 w-32" />
                 </div>
-                <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <Skeleton className="h-5 w-36" />
-                    <Skeleton className="h-9 w-32" />
-                  </div>
-                  <Skeleton className="h-40 w-full rounded-lg" />
+                <Skeleton className="h-40 w-full rounded-lg" />
+              </div>
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <Skeleton className="h-5 w-36" />
+                  <Skeleton className="h-9 w-32" />
                 </div>
-                <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <Skeleton className="h-5 w-40" />
-                    <Skeleton className="h-9 w-32" />
-                  </div>
-                  <Skeleton className="h-40 w-full rounded-lg" />
+                <Skeleton className="h-40 w-full rounded-lg" />
+              </div>
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <Skeleton className="h-5 w-40" />
+                  <Skeleton className="h-9 w-32" />
                 </div>
+                <Skeleton className="h-40 w-full rounded-lg" />
               </div>
             </div>
             
-            <div className="mb-8">
-              <Skeleton className="h-7 w-24 mb-4" />
-              <div className="space-y-6">
-                <div>
-                  <Skeleton className="h-5 w-40 mb-2" />
-                  <Skeleton className="h-10 w-full rounded-md" />
+            <Skeleton className="h-7 w-24 mb-4 mt-8" />
+            <div className="space-y-6">
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <Skeleton className="h-5 w-32" />
+                  <Skeleton className="h-9 w-32" />
                 </div>
-                <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <Skeleton className="h-5 w-32" />
-                    <Skeleton className="h-9 w-32" />
-                  </div>
-                  <Skeleton className="h-40 w-full rounded-lg" />
-                </div>
-              </div>
-            </div>
-            
-            <div className="mb-8">
-              <Skeleton className="h-7 w-48 mb-4" />
-              <div className="space-y-4">
-                <Skeleton className="h-5 w-28" />
-                <Skeleton className="h-36 w-full rounded-md" />
-                <div className="flex gap-2">
-                  <Skeleton className="h-10 w-32 rounded-md" />
-                  <Skeleton className="h-10 w-10 rounded-md" />
-                </div>
+                <Skeleton className="h-40 w-full rounded-lg" />
               </div>
             </div>
             
             <div className="flex justify-end mt-8">
               <Skeleton className="h-10 w-36 rounded-md" />
             </div>
-          </Card>
+          </div>
         )}
       </div>
     </div>;
