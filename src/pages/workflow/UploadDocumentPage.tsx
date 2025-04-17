@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from "react";
 import { ArrowRightIcon, UploadIcon, FileTextIcon, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -32,6 +31,7 @@ interface FileUpload {
   dateUploaded: Date;
   size: number;
 }
+
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
