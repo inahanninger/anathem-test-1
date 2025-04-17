@@ -1,8 +1,10 @@
+
 import { Tabs } from "@/components/ui/tabs";
 import TableOfContents from "@/components/TableOfContents";
 import { TableOfContentsItem } from "./TabContentData";
 import TabsHeader from "./TabsHeader";
 import TabsContentSection from "./TabsContentSection";
+
 interface StandardViewProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
@@ -16,6 +18,7 @@ interface StandardViewProps {
   tocItems: TableOfContentsItem[];
   onSelectItem: (id: string) => void;
 }
+
 const StandardView = ({
   activeTab,
   setActiveTab,
@@ -31,12 +34,30 @@ const StandardView = ({
 }: StandardViewProps) => {
   // Only show table of contents on mobile for developmental history tab
   const shouldShowMobileToc = activeTab === "developmental-history" && tocVisible;
-  return <div>
-      {shouldShowMobileToc && <div className="md:hidden">
+
+  return (
+    <div>
+      {shouldShowMobileToc && (
+        <div className="md:hidden">
           <TableOfContents items={tocItems} onSelectItem={onSelectItem} visible={tocVisible} />
-        </div>}
+        </div>
+      )}
       
-      
-    </div>;
+      <Tabs defaultValue="progress-notes" value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsHeader activeTab={activeTab} />
+        
+        <TabsContentSection 
+          progressNotes={progressNotes}
+          setProgressNotes={setProgressNotes}
+          clinicalDetails={clinicalDetails}
+          setClinicalDetails={setClinicalDetails}
+          developmentalHistory={developmentalHistory}
+          setDevelopmentalHistory={setDevelopmentalHistory}
+          showSources={false}
+        />
+      </Tabs>
+    </div>
+  );
 };
+
 export default StandardView;
