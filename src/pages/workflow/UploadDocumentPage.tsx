@@ -94,7 +94,7 @@ const UploadDocumentPage = () => {
       <div className="min-h-screen bg-white">
         <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
           <div className="container mx-auto w-6xl">
-            <div className="flex items-center justify-between w-full">
+            <div className="flex items-center justify-between w-auto">
               <div className="flex items-center gap-4">
                 <div className="flex flex-col">
                   <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
