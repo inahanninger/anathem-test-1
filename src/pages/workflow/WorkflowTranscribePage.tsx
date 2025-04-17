@@ -10,6 +10,26 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import RecordingButton from "@/components/RecordingButton";
+import StepProgress from "@/components/StepProgress";
+
+const workflowSteps = [
+  {
+    name: "Upload",
+    path: "/workflow/upload"
+  }, 
+  {
+    name: "Review",
+    path: "/workflow/review"
+  }, 
+  {
+    name: "Transcribe",
+    path: "/workflow/transcribe"
+  }, 
+  {
+    name: "Report",
+    path: "/workflow/report"
+  }
+];
 
 const WorkflowTranscribePage = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -65,6 +85,10 @@ const WorkflowTranscribePage = () => {
             </div>
           </div>
         </div>
+      </div>
+      
+      <div className="container mx-auto py-4">
+        <StepProgress currentStep={3} steps={workflowSteps} />
       </div>
       
       <div className="container mx-auto px-6 py-[8px] w-6xl">
