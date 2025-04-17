@@ -12,7 +12,7 @@ const TabsHeader = ({
   const [showGenerateModal, setShowGenerateModal] = useState(false);
   return <>
       <div className="flex items-center mb-2">
-        <Button variant="outline" size="sm" onClick={() => setShowGenerateModal(true)} className="h-9 gap-1 border-gray-200 text-gray-700 mr-4 bg-neutral-200 hover:bg-neutral-100">
+        <Button variant="outline" size="sm" onClick={() => setShowGenerateModal(true)} className="h-9 gap-1 border-gray-200 mr-4 text-white bg-blue-900 hover:bg-blue-800">
           <FilePlusIcon className="h-4 w-4" />
           <span className="text-xs">Generate</span>
         </Button>
