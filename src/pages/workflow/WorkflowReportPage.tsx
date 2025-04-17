@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,7 +9,6 @@ import ReviewPage from "../ReviewPage";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Skeleton } from "@/components/ui/skeleton";
 import ReportActionButton from "@/components/ReportActionButton";
-
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -24,19 +22,16 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
-
 const WorkflowReportPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
   const [isLoading, setIsLoading] = useState(true);
-  
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
-  
   return <ClinicalLayout>
       <div className="min-h-screen bg-white">
         <div className="border-b border-gray-100 px-6 py-[12px] bg-neutral-50 sticky top-0 z-10 shadow-sm">
@@ -79,13 +74,11 @@ const WorkflowReportPage = () => {
             </div>
           </div> : <div className="mt-0 w-6xl w-full">
             <ReviewPage />
-            <div className="container mx-auto w-6xl flex justify-end mt-4">
+            <div className="container mx-auto w-6xl flex justify-end mt-4 py-[24px]">
               <ReportActionButton />
             </div>
           </div>}
       </div>
     </ClinicalLayout>;
 };
-
 export default WorkflowReportPage;
-
