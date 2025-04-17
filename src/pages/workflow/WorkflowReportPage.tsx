@@ -58,7 +58,6 @@ const WorkflowReportPage = () => {
                     <ArrowLeftIcon size={16} /> Back
                   </Link>
                 </Button>
-                <ReportActionButton />
               </div>
             </div>
           </div>
@@ -80,9 +79,13 @@ const WorkflowReportPage = () => {
             </div>
           </div> : <div className="mt-0 w-6xl w-full">
             <ReviewPage />
+            <div className="container mx-auto w-6xl flex justify-end mt-4">
+              <ReportActionButton />
+            </div>
           </div>}
       </div>
     </ClinicalLayout>;
 };
 
 export default WorkflowReportPage;
+
