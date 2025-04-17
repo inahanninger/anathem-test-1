@@ -1,7 +1,7 @@
+
 import { useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
+import { Separator } from "@/components/ui/separator";
 
 const workflowSteps = [{
   name: "Upload",
@@ -89,7 +90,7 @@ const ReviewInformationPage = () => {
           Please review and update the patient information below.
         </p>
         
-        <Card className="p-6 mb-8">
+        <div className="mb-8">
           <h2 className="text-lg font-semibold mb-4">Patient Details</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div className="my-0 py-0">
@@ -129,21 +130,20 @@ const ReviewInformationPage = () => {
               <Textarea id="referralReason" value={referralReason} onChange={e => setReferralReason(e.target.value)} className="min-h-[100px]" />
             </div>
           </div>
-          
-        </Card>
+        </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-8">
-          <Card className="p-6">
-            <h2 className="text-lg font-semibold mb-4">QB Summary</h2>
-            <Textarea value={medicalSummary} onChange={e => setMedicalSummary(e.target.value)} className="min-h-[200px] mb-4" placeholder="Enter medical summary here..." />
-            
-          </Card>
-          
-          <Card className="p-6">
-            <h2 className="text-lg font-semibold mb-4">Connor's Questionnaire Summary</h2>
-            <Textarea value={assessmentNotes} onChange={e => setAssessmentNotes(e.target.value)} className="min-h-[200px] mb-4" placeholder="Enter assessment notes here..." />
-            
-          </Card>
+        <Separator className="my-8" />
+        
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold mb-4">QB Summary</h2>
+          <Textarea value={medicalSummary} onChange={e => setMedicalSummary(e.target.value)} className="min-h-[200px] mb-4" placeholder="Enter medical summary here..." />
+        </div>
+        
+        <Separator className="my-8" />
+        
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold mb-4">Connor's Questionnaire Summary</h2>
+          <Textarea value={assessmentNotes} onChange={e => setAssessmentNotes(e.target.value)} className="min-h-[200px] mb-4" placeholder="Enter assessment notes here..." />
         </div>
       </div>
     </div>
