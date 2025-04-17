@@ -26,13 +26,13 @@ const HomePage = () => {
             <p className="text-gray-600 mb-6 ml-8">
               Generate paperwork through transcribing a patient consultation.
             </p>
-            <Button 
-              className="w-full bg-red-600 hover:bg-red-700"
-              as={Link}
-              to="/transcribe"
-            >
-              <Mic className="h-4 w-4 mr-2" /> Start Transcription
-            </Button>
+            <Link to="/transcribe" className="block">
+              <Button 
+                className="w-full bg-red-600 hover:bg-red-700"
+              >
+                <Mic className="h-4 w-4 mr-2" /> Start Transcription
+              </Button>
+            </Link>
           </div>
 
           {/* Create Assessment Report Card */}
@@ -44,13 +44,13 @@ const HomePage = () => {
             <p className="text-gray-600 mb-6 ml-8">
               Generate reports with multiple file uploads and consultation recordings.
             </p>
-            <Button 
-              className="w-full bg-blue-600 hover:bg-blue-700"
-              as={Link}
-              to="/workflow/upload"
-            >
-              <FileText className="h-4 w-4 mr-2" /> Create Report
-            </Button>
+            <Link to="/workflow/upload" className="block">
+              <Button 
+                className="w-full bg-blue-600 hover:bg-blue-700"
+              >
+                <FileText className="h-4 w-4 mr-2" /> Create Report
+              </Button>
+            </Link>
           </div>
         </div>
 
