@@ -7,9 +7,7 @@ import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
-
 type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
-
 interface FileUpload {
   id: string;
   name: string;
@@ -17,7 +15,6 @@ interface FileUpload {
   dateUploaded: Date;
   size: number;
 }
-
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -31,7 +28,6 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
-
 const UploadDocumentPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
@@ -39,7 +35,6 @@ const UploadDocumentPage = () => {
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-
   const handleFileUpload = (files: FileList | null) => {
     if (!files || files.length === 0) return;
     Array.from(files).forEach(file => {
@@ -54,18 +49,15 @@ const UploadDocumentPage = () => {
       toast.success(`${file.name} uploaded successfully`);
     });
   };
-
   const handleDeleteFile = (fileId: string) => {
     setUploads(uploads.filter(upload => upload.id !== fileId));
     toast.success("File deleted successfully");
   };
-
   const formatFileSize = (bytes: number) => {
     if (bytes < 1024) return `${bytes} bytes`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
-
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("en-GB", {
       day: "numeric",
@@ -73,7 +65,6 @@ const UploadDocumentPage = () => {
       year: "numeric"
     });
   };
-
   const handleContinue = () => {
     if (uploads.length === 0) {
       toast.error("Please upload at least one file");
@@ -81,28 +72,23 @@ const UploadDocumentPage = () => {
     }
     navigate("/workflow/review");
   };
-
   const handleClickUpload = () => {
     fileInputRef.current?.click();
   };
-
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(true);
   };
-
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
   };
-
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
     const files = e.dataTransfer.files;
     handleFileUpload(files);
   };
-
   return <ClinicalLayout>
       <div className="min-h-screen bg-white">
         <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
@@ -146,11 +132,7 @@ const UploadDocumentPage = () => {
           
           <div className="mb-8 w-full">
             <div className={`w-full border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center
-                ${isDragging ? 'bg-blue-50 border-blue-300' : 'border-gray-300 bg-gray-50'}`} 
-                onDragOver={handleDragOver} 
-                onDragLeave={handleDragLeave} 
-                onDrop={handleDrop} 
-                onClick={handleClickUpload}>
+                ${isDragging ? 'bg-blue-50 border-blue-300' : 'border-gray-300 bg-gray-50'}`} onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop} onClick={handleClickUpload}>
               <input type="file" ref={fileInputRef} onChange={e => handleFileUpload(e.target.files)} className="hidden" multiple />
               <UploadIcon className="h-12 w-12 text-gray-400 mb-4" />
               <p className="text-blue-600 font-medium mb-2">Click to upload or drag and drop</p>
@@ -167,7 +149,7 @@ const UploadDocumentPage = () => {
                         <FileTextIcon className="h-6 w-6 text-blue-600" />
                       </div>
                       <div>
-                        <p className="font-medium">{file.name}</p>
+                        <p className="font-medium text-sm">{file.name}</p>
                         <p className="text-xs text-gray-500">
                           {formatFileSize(file.size)} • Uploaded {formatDate(file.dateUploaded)}
                         </p>
@@ -183,5 +165,4 @@ const UploadDocumentPage = () => {
       </div>
     </ClinicalLayout>;
 };
-
 export default UploadDocumentPage;
