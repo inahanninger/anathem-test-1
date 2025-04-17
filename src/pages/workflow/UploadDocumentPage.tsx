@@ -8,7 +8,6 @@ import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
-
 type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
 interface FileUpload {
   id: string;
@@ -17,26 +16,19 @@ interface FileUpload {
   dateUploaded: Date;
   size: number;
 }
-
-const workflowSteps = [
-  {
-    name: "Upload",
-    path: "/workflow/upload"
-  }, 
-  {
-    name: "Review",
-    path: "/workflow/review"
-  }, 
-  {
-    name: "Transcribe",
-    path: "/workflow/transcribe"
-  }, 
-  {
-    name: "Report",
-    path: "/workflow/report"
-  }
-];
-
+const workflowSteps = [{
+  name: "Upload",
+  path: "/workflow/upload"
+}, {
+  name: "Review",
+  path: "/workflow/review"
+}, {
+  name: "Transcribe",
+  path: "/workflow/transcribe"
+}, {
+  name: "Report",
+  path: "/workflow/report"
+}];
 const UploadDocumentPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
@@ -44,7 +36,6 @@ const UploadDocumentPage = () => {
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-
   const handleFileUpload = (files: FileList | null) => {
     if (!files || files.length === 0) return;
     Array.from(files).forEach(file => {
@@ -59,18 +50,15 @@ const UploadDocumentPage = () => {
       toast.success(`${file.name} uploaded successfully`);
     });
   };
-
   const handleDeleteFile = (fileId: string) => {
     setUploads(uploads.filter(upload => upload.id !== fileId));
     toast.success("File deleted successfully");
   };
-
   const formatFileSize = (bytes: number) => {
     if (bytes < 1024) return `${bytes} bytes`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
-
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("en-GB", {
       day: "numeric",
@@ -78,7 +66,6 @@ const UploadDocumentPage = () => {
       year: "numeric"
     });
   };
-
   const handleContinue = () => {
     if (uploads.length === 0) {
       toast.error("Please upload at least one file");
@@ -86,34 +73,28 @@ const UploadDocumentPage = () => {
     }
     navigate("/workflow/review");
   };
-
   const handleClickUpload = () => {
     fileInputRef.current?.click();
   };
-
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(true);
   };
-
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
   };
-
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
     const files = e.dataTransfer.files;
     handleFileUpload(files);
   };
-
-  return (
-    <ClinicalLayout>
+  return <ClinicalLayout>
       <div className="min-h-screen bg-white">
         <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
           <div className="container mx-auto w-6xl">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between w-full">
               <div className="flex items-center gap-4">
                 <div className="flex flex-col">
                   <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
@@ -151,33 +132,19 @@ const UploadDocumentPage = () => {
           </p>
           
           <Card className="p-6 mb-8">
-            <div 
-              className={`border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center
-                ${isDragging ? 'bg-blue-50 border-blue-300' : 'border-gray-300 bg-gray-50'}`}
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-              onClick={handleClickUpload}
-            >
-              <input 
-                type="file" 
-                ref={fileInputRef} 
-                onChange={e => handleFileUpload(e.target.files)} 
-                className="hidden" 
-                multiple 
-              />
+            <div className={`border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center
+                ${isDragging ? 'bg-blue-50 border-blue-300' : 'border-gray-300 bg-gray-50'}`} onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop} onClick={handleClickUpload}>
+              <input type="file" ref={fileInputRef} onChange={e => handleFileUpload(e.target.files)} className="hidden" multiple />
               <UploadIcon className="h-12 w-12 text-gray-400 mb-4" />
               <p className="text-blue-600 font-medium mb-2">Click to upload or drag and drop</p>
               <p className="text-gray-500 text-sm">PDF, DOC, DOCX, JPG, PNG up to 10MB</p>
             </div>
           </Card>
           
-          {uploads.length > 0 && (
-            <Card className="p-6">
+          {uploads.length > 0 && <Card className="p-6">
               <h2 className="text-lg font-semibold mb-4">Uploaded Documents</h2>
               <div className="space-y-3">
-                {uploads.map(file => (
-                  <div key={file.id} className="border rounded-lg p-4 flex items-center justify-between bg-white">
+                {uploads.map(file => <div key={file.id} className="border rounded-lg p-4 flex items-center justify-between bg-white">
                     <div className="flex items-center space-x-3">
                       <div className="bg-blue-50 p-3 rounded-lg">
                         <FileTextIcon className="h-6 w-6 text-blue-600" />
@@ -189,22 +156,14 @@ const UploadDocumentPage = () => {
                         </p>
                       </div>
                     </div>
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
-                      onClick={() => handleDeleteFile(file.id)}
-                    >
+                    <Button variant="ghost" size="icon" onClick={() => handleDeleteFile(file.id)}>
                       <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
                     </Button>
-                  </div>
-                ))}
+                  </div>)}
               </div>
-            </Card>
-          )}
+            </Card>}
         </div>
       </div>
-    </ClinicalLayout>
-  );
+    </ClinicalLayout>;
 };
-
 export default UploadDocumentPage;
