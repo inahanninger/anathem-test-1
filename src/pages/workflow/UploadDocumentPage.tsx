@@ -142,7 +142,7 @@ const UploadDocumentPage = () => {
           </Card>
           
           {uploads.length > 0 && <Card className="p-6">
-              <h2 className="text-lg font-semibold mb-4">Uploaded Documents</h2>
+              <h2 className="font-semibold mb-4 text-base">Uploaded Documents</h2>
               <div className="space-y-3">
                 {uploads.map(file => <div key={file.id} className="border rounded-lg p-4 flex items-center justify-between bg-white">
                     <div className="flex items-center space-x-3">
