@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, Plus, Calendar, Settings, User, FileText, X, Sliders, ChevronDown, ChevronUp } from 'lucide-react';
+import { Home, Plus, Calendar, Settings, User, FileText, X, Sliders, ChevronDown, ChevronUp, Upload, FileInput, Mic, Clipboard } from 'lucide-react';
 import { useSidebar } from '@/context/SidebarContext';
 
 type NavItem = {
@@ -28,6 +28,24 @@ const navItems: NavItem[] = [
     icon: Plus,
     path: '/workflow/upload'
   }, 
+  {
+    name: 'Workflow',
+    icon: Clipboard,
+    children: [
+      {
+        name: 'Upload Documents',
+        path: '/workflow/upload'
+      },
+      {
+        name: 'Review Information',
+        path: '/workflow/review'
+      },
+      {
+        name: 'Transcribe',
+        path: '/workflow/transcribe'
+      }
+    ]
+  },
   {
     name: 'Schedule',
     icon: Calendar,
