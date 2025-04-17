@@ -1,28 +1,18 @@
-
 import { FileTextIcon, ClipboardIcon, BookIcon, FilePlusIcon } from "lucide-react";
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import GenerateModal from "./GenerateModal";
-
 interface TabsHeaderProps {
   activeTab: string;
 }
-
 const TabsHeader = ({
   activeTab
 }: TabsHeaderProps) => {
   const [showGenerateModal, setShowGenerateModal] = useState(false);
-
-  return (
-    <>
+  return <>
       <div className="flex items-center mb-2">
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="h-8 gap-1 bg-white border-gray-200 hover:bg-gray-50 text-gray-700 mr-4"
-          onClick={() => setShowGenerateModal(true)}
-        >
+        <Button variant="outline" size="sm" onClick={() => setShowGenerateModal(true)} className="h-18 gap-1 border-gray-200 text-gray-700 mr-4 bg-neutral-200 hover:bg-neutral-100">
           <FilePlusIcon className="h-4 w-4" />
           <span className="text-xs">Generate</span>
         </Button>
@@ -40,11 +30,7 @@ const TabsHeader = ({
         </TabsList>
       </div>
       
-      {showGenerateModal && (
-        <GenerateModal open={showGenerateModal} setOpen={setShowGenerateModal} />
-      )}
-    </>
-  );
+      {showGenerateModal && <GenerateModal open={showGenerateModal} setOpen={setShowGenerateModal} />}
+    </>;
 };
-
 export default TabsHeader;
