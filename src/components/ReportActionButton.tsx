@@ -50,7 +50,7 @@ const ReportActionButton = () => {
             onClick={handleClick}
             className="text-sm bg-emerald-800 text-white hover:bg-emerald-700"
           >
-            Download Documents
+            Download Document
             <Download className="ml-2 h-4 w-4" />
           </Button>
         );
