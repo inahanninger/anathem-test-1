@@ -9,6 +9,13 @@ import { Link, useNavigate } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Dialog,
   DialogContent,
   DialogHeader,
@@ -39,9 +46,16 @@ const workflowSteps = [{
   path: "/workflow/report"
 }];
 
+const appointmentTypes = [
+  "ADHD Assessment",
+  "Autism Assessment",
+  "ADHD/Autism Combined Assessment"
+];
+
 const UploadDocumentPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
+  const [appointmentType, setAppointmentType] = useState<string>(appointmentTypes[0]);
   const [uploads, setUploads] = useState<FileUpload[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState<FileUpload | null>(null);
@@ -170,6 +184,27 @@ const UploadDocumentPage = () => {
           <p className="text-gray-600 mb-8 text-sm">
             Upload your documents to get started with the workflow.
           </p>
+          
+          <div className="mb-8">
+            <div className="flex flex-col">
+              <Label htmlFor="appointmentType" className="text-sm font-medium mb-2">Appointment Type</Label>
+              <Select
+                value={appointmentType}
+                onValueChange={setAppointmentType}
+              >
+                <SelectTrigger className="w-full md:w-[300px]">
+                  <SelectValue placeholder="Select appointment type" />
+                </SelectTrigger>
+                <SelectContent>
+                  {appointmentTypes.map((type) => (
+                    <SelectItem key={type} value={type}>
+                      {type}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
           
           <div className="mb-8 w-full">
             <div className={`w-full border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center
