@@ -1,4 +1,3 @@
-
 import React from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Button } from "@/components/ui/button";
@@ -6,13 +5,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Mic, FileText, Search, Calendar } from "lucide-react";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
-
 const HomePage = () => {
   const today = new Date();
   const formattedDate = format(today, "'Today,' EEE, dd MMM");
-
-  return (
-    <ClinicalLayout>
+  return <ClinicalLayout>
       <div className="container mx-auto px-6 py-8">
         <h1 className="text-2xl font-semibold text-blue-600 mb-6">{formattedDate}</h1>
         
@@ -27,9 +23,7 @@ const HomePage = () => {
               Generate paperwork through transcribing a patient consultation.
             </p>
             <Link to="/transcribe" className="block">
-              <Button 
-                className="w-full bg-red-600 hover:bg-red-700"
-              >
+              <Button className="w-full bg-red-800 hover:bg-red-700">
                 <Mic className="h-4 w-4 mr-2" /> Start Transcription
               </Button>
             </Link>
@@ -45,9 +39,7 @@ const HomePage = () => {
               Generate reports with multiple file uploads and consultation recordings.
             </p>
             <Link to="/workflow/upload" className="block">
-              <Button 
-                className="w-full bg-blue-600 hover:bg-blue-700"
-              >
+              <Button className="w-full bg-blue-800 hover:bg-blue-700">
                 <FileText className="h-4 w-4 mr-2" /> Create Report
               </Button>
             </Link>
@@ -73,11 +65,7 @@ const HomePage = () => {
             <div className="p-4 flex justify-between border-b">
               <div className="relative w-64">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <input 
-                  type="text" 
-                  placeholder="Search" 
-                  className="pl-10 pr-4 py-2 w-full border rounded-md"
-                />
+                <input type="text" placeholder="Search" className="pl-10 pr-4 py-2 w-full border rounded-md" />
               </div>
               <div className="flex gap-2">
                 <button className="p-2 border rounded-md">
@@ -98,8 +86,6 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-    </ClinicalLayout>
-  );
+    </ClinicalLayout>;
 };
-
 export default HomePage;
