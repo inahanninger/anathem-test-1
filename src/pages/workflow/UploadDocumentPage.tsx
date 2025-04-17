@@ -1,4 +1,3 @@
-
 import { useState, useRef } from "react";
 import { ArrowRightIcon, UploadIcon, FileTextIcon, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -22,7 +21,7 @@ interface FileUpload {
   type: UploadType | "";
   dateUploaded: Date;
   size: number;
-  section?: string; // To track which section the file belongs to
+  section?: string;
 }
 
 const workflowSteps = [
@@ -302,50 +301,14 @@ const UploadDocumentPage = () => {
             </div>
           </>
         ) : (
-          // Skeleton Loader when no assessment type is selected
-          <div className="mb-8">
-            {/* Skeleton for title and subtitle */}
-            <Skeleton className="h-7 w-48 mb-1" />
-            <Skeleton className="h-5 w-96 mb-8" />
-
-            <Skeleton className="h-7 w-32 mb-4" />
-            <div className="space-y-6">
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <Skeleton className="h-5 w-48" />
-                  <Skeleton className="h-9 w-32" />
-                </div>
-                <Skeleton className="h-40 w-full rounded-lg" />
+          // Empty state when no assessment type is selected
+          <div className="mb-8 text-center py-16 border rounded-lg bg-gray-50">
+            <div className="max-w-md mx-auto">
+              <h2 className="text-xl font-medium text-gray-800 mb-2">Select an Assessment Type</h2>
+              <p className="text-gray-600 mb-4">Please select an assessment type from the dropdown above to continue with document uploads.</p>
+              <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+                <FileTextIcon className="h-10 w-10 text-gray-400" />
               </div>
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <Skeleton className="h-5 w-36" />
-                  <Skeleton className="h-9 w-32" />
-                </div>
-                <Skeleton className="h-40 w-full rounded-lg" />
-              </div>
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <Skeleton className="h-5 w-40" />
-                  <Skeleton className="h-9 w-32" />
-                </div>
-                <Skeleton className="h-40 w-full rounded-lg" />
-              </div>
-            </div>
-            
-            <Skeleton className="h-7 w-24 mb-4 mt-8" />
-            <div className="space-y-6">
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <Skeleton className="h-5 w-32" />
-                  <Skeleton className="h-9 w-32" />
-                </div>
-                <Skeleton className="h-40 w-full rounded-lg" />
-              </div>
-            </div>
-            
-            <div className="flex justify-end mt-8">
-              <Skeleton className="h-10 w-36 rounded-md" />
             </div>
           </div>
         )}
