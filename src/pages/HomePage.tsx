@@ -1,24 +1,100 @@
 
 import React from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Mic, FileText, Search, Calendar } from "lucide-react";
+import { format } from "date-fns";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
+  const today = new Date();
+  const formattedDate = format(today, "'Today,' EEE, dd MMM");
+
   return (
     <ClinicalLayout>
       <div className="container mx-auto px-6 py-8">
-        <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white shadow rounded-lg p-6">
-            <h2 className="text-lg font-semibold mb-2">Recent Patients</h2>
-            <p className="text-gray-500">No recent patients</p>
+        <h1 className="text-2xl font-semibold text-blue-600 mb-6">{formattedDate}</h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+          {/* Transcribe a Consultation Card */}
+          <div className="border rounded-lg p-6">
+            <div className="flex items-start gap-3 mb-2">
+              <Mic className="h-5 w-5 text-gray-500" />
+              <h2 className="text-lg font-semibold">Transcribe a Consultation</h2>
+            </div>
+            <p className="text-gray-600 mb-6 ml-8">
+              Generate paperwork through transcribing a patient consultation.
+            </p>
+            <Button 
+              className="w-full bg-red-600 hover:bg-red-700"
+              as={Link}
+              to="/transcribe"
+            >
+              <Mic className="h-4 w-4 mr-2" /> Start Transcription
+            </Button>
           </div>
-          <div className="bg-white shadow rounded-lg p-6">
-            <h2 className="text-lg font-semibold mb-2">Upcoming Appointments</h2>
-            <p className="text-gray-500">No upcoming appointments</p>
+
+          {/* Create Assessment Report Card */}
+          <div className="border rounded-lg p-6">
+            <div className="flex items-start gap-3 mb-2">
+              <FileText className="h-5 w-5 text-gray-500" />
+              <h2 className="text-lg font-semibold">Create Assessment Report</h2>
+            </div>
+            <p className="text-gray-600 mb-6 ml-8">
+              Generate reports with multiple file uploads and consultation recordings.
+            </p>
+            <Button 
+              className="w-full bg-blue-600 hover:bg-blue-700"
+              as={Link}
+              to="/workflow/upload"
+            >
+              <FileText className="h-4 w-4 mr-2" /> Create Report
+            </Button>
           </div>
-          <div className="bg-white shadow rounded-lg p-6">
-            <h2 className="text-lg font-semibold mb-2">Tasks</h2>
-            <p className="text-gray-500">No pending tasks</p>
+        </div>
+
+        {/* Consultations Section */}
+        <div className="mt-10">
+          <h2 className="text-xl font-semibold mb-4">Consultations</h2>
+          
+          <div className="border rounded-lg">
+            {/* Tabs */}
+            <div className="flex border-b">
+              <button className="px-4 py-2 font-medium text-gray-900 border-b-2 border-blue-600">
+                Consultations
+              </button>
+              <button className="px-4 py-2 font-medium text-gray-600">
+                To Do
+              </button>
+            </div>
+            
+            {/* Search and Filters */}
+            <div className="p-4 flex justify-between border-b">
+              <div className="relative w-64">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <input 
+                  type="text" 
+                  placeholder="Search" 
+                  className="pl-10 pr-4 py-2 w-full border rounded-md"
+                />
+              </div>
+              <div className="flex gap-2">
+                <button className="p-2 border rounded-md">
+                  <span className="h-2 w-2 rounded-full bg-blue-600 inline-block mr-2"></span>
+                  <span className="text-sm">▼</span>
+                </button>
+                <button className="p-2 border rounded-md">
+                  <Calendar className="h-4 w-4" />
+                </button>
+                <button className="p-2 border rounded-md">▼</button>
+              </div>
+            </div>
+            
+            {/* Empty State */}
+            <div className="p-10 text-center text-gray-500">
+              Your appointments will appear here.
+            </div>
           </div>
         </div>
       </div>
