@@ -17,9 +17,9 @@ const HomePage = () => {
           <div className="border rounded-lg p-6">
             <div className="flex items-start gap-3 mb-2">
               <Mic className="h-5 w-5 text-gray-500" />
-              <h2 className="text-lg font-semibold">Transcribe a Consultation</h2>
+              <h2 className="font-semibold text-base">Transcribe a Consultation</h2>
             </div>
-            <p className="text-gray-600 mb-6 ml-8">
+            <p className="mb-6 ml-8 text-sm text-neutral-500">
               Generate paperwork through transcribing a patient consultation.
             </p>
             <Link to="/transcribe" className="block">
@@ -33,9 +33,9 @@ const HomePage = () => {
           <div className="border rounded-lg p-6">
             <div className="flex items-start gap-3 mb-2">
               <FileText className="h-5 w-5 text-gray-500" />
-              <h2 className="text-lg font-semibold">Create Assessment Report</h2>
+              <h2 className="font-semibold text-base">Create Assessment Report</h2>
             </div>
-            <p className="text-gray-600 mb-6 ml-8">
+            <p className="mb-6 ml-8 text-sm text-neutral-500">
               Generate reports with multiple file uploads and consultation recordings.
             </p>
             <Link to="/workflow/upload" className="block">
@@ -48,7 +48,7 @@ const HomePage = () => {
 
         {/* Consultations Section */}
         <div className="mt-10">
-          <h2 className="text-xl font-semibold mb-4">Consultations</h2>
+          <h2 className="font-semibold mb-4 text-base">Consultations</h2>
           
           <div className="border rounded-lg">
             {/* Tabs */}
