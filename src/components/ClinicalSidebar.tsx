@@ -31,6 +31,7 @@ const navItems: NavItem[] = [
   {
     name: 'Workflow',
     icon: Clipboard,
+    path: '/workflow', // Added the path property to fix the TypeScript error
     children: [
       {
         name: 'Upload Documents',
