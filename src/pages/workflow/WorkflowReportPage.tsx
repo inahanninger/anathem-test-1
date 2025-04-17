@@ -74,7 +74,7 @@ const WorkflowReportPage = () => {
             </div>
           </div> : <div className="mt-0 w-6xl w-full">
             <ReviewPage />
-            <div className="container mx-auto w-6xl flex justify-end mt-4 py-[24px]">
+            <div className="container mx-auto w-6xl flex justify-end mt-4 py-[16px]">
               <ReportActionButton />
             </div>
           </div>}
