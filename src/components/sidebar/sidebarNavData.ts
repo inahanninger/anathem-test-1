@@ -1,5 +1,5 @@
 
-import { Home, Plus, Calendar, Settings, User, FileText, Clipboard, Upload, FileInput, Mic } from 'lucide-react';
+import { Home, Plus, FileText, Calendar, Settings } from 'lucide-react';
 
 export type NavSubItem = {
   name: string;
@@ -15,36 +15,22 @@ export type NavItem = {
 
 export const navItems: NavItem[] = [
   {
-    name: 'Dashboard',
+    name: 'Home',
     icon: Home,
     path: '/'
   }, 
   {
-    name: 'New Report',
+    name: 'New Session',
     icon: Plus,
     path: '/workflow/upload'
   }, 
   {
-    name: 'Workflow',
-    icon: Clipboard,
-    path: '/workflow',
-    children: [
-      {
-        name: 'Upload Documents',
-        path: '/workflow/upload'
-      },
-      {
-        name: 'Review Information',
-        path: '/workflow/review'
-      },
-      {
-        name: 'Transcribe',
-        path: '/workflow/transcribe'
-      }
-    ]
+    name: 'Generate Assessment',
+    icon: FileText,
+    path: '/workflow/report'
   },
   {
-    name: 'Schedule',
+    name: 'All Consultations',
     icon: Calendar,
     path: '/schedule'
   }, 
