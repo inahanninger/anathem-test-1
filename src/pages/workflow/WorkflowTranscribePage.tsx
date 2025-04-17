@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon, MicIcon, SettingsIcon, FileTextIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,6 +10,7 @@ import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import RecordingButton from "@/components/RecordingButton";
 import StepProgress from "@/components/StepProgress";
+import { ClinicalLayout } from "@/components/ClinicalLayout";
 
 const workflowSteps = [
   {
@@ -57,7 +57,8 @@ const WorkflowTranscribePage = () => {
     navigate("/workflow/report");
   };
 
-  return <div className="min-h-screen bg-white">
+  return <ClinicalLayout>
+    <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
         <div className="container mx-auto w-6xl">
           <div className="flex items-center justify-between">
@@ -134,7 +135,8 @@ const WorkflowTranscribePage = () => {
           </Card>
         </div>
       </div>
-    </div>;
+    </div>
+  </ClinicalLayout>;
 };
 
 export default WorkflowTranscribePage;

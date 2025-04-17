@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Link, useNavigate } from "react-router-dom";
 import RecordingButton from "@/components/RecordingButton";
+import { ClinicalLayout } from "@/components/ClinicalLayout";
 
 type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
 interface FileUpload {
@@ -110,7 +111,8 @@ const TranscribePage = () => {
     handleFileUpload(files);
   };
 
-  return <div className="min-h-screen bg-white">
+  return <ClinicalLayout>
+    <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 bg-gray-50/80 py-3 px-6 sticky top-0 z-10 shadow-sm">
         <div className="container mx-auto w-6xl">
           <div className="flex items-center justify-between">
@@ -218,7 +220,8 @@ const TranscribePage = () => {
           </div>
         </div>
       </div>
-    </div>;
+    </div>
+  </ClinicalLayout>;
 };
 
 export default TranscribePage;
