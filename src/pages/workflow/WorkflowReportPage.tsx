@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -5,34 +6,32 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
-import ReviewPage from "../ReviewPage";
+import { ReviewPage } from "../ReviewPage";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Skeleton } from "@/components/ui/skeleton";
 import ReportActionButton from "@/components/ReportActionButton";
-const workflowSteps = [{
-  name: "Upload",
-  path: "/workflow/upload"
-}, {
-  name: "Review",
-  path: "/workflow/review"
-}, {
-  name: "Transcribe",
-  path: "/workflow/transcribe"
-}, {
-  name: "Report",
-  path: "/workflow/report"
-}];
+
+const workflowSteps = [
+  { name: "Upload", path: "/workflow/upload" },
+  { name: "Review", path: "/workflow/review" },
+  { name: "Transcribe", path: "/workflow/transcribe" },
+  { name: "Report", path: "/workflow/report" }
+];
+
 const WorkflowReportPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
-  return <ClinicalLayout>
+
+  return (
+    <ClinicalLayout>
       <div className="min-h-screen bg-white">
         <div className="border-b border-gray-100 px-6 py-[12px] bg-neutral-50 sticky top-0 z-10 shadow-sm">
           <div className="container mx-auto w-6xl">
@@ -62,7 +61,8 @@ const WorkflowReportPage = () => {
           <StepProgress currentStep={4} steps={workflowSteps} />
         </div>
         
-        {isLoading ? <div className="container mx-auto px-6 py-8 w-6xl">
+        {isLoading ? (
+          <div className="container mx-auto px-6 py-8 w-6xl">
             <Skeleton className="h-8 w-48 mb-4" />
             <Skeleton className="h-4 w-96 mb-8" />
             
@@ -72,13 +72,18 @@ const WorkflowReportPage = () => {
               <Skeleton className="h-36 w-full" />
               <Skeleton className="h-48 w-full" />
             </div>
-          </div> : <div className="mt-0 w-6xl w-full">
+          </div>
+        ) : (
+          <div className="mt-0 w-6xl w-full">
             <ReviewPage />
             <div className="container mx-auto w-6xl flex justify-end mt-4 py-[16px]">
               <ReportActionButton />
             </div>
-          </div>}
+          </div>
+        )}
       </div>
-    </ClinicalLayout>;
+    </ClinicalLayout>
+  );
 };
+
 export default WorkflowReportPage;
