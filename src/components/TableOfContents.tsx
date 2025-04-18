@@ -5,7 +5,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-interface TableOfContentsItem {
+export interface TableOfContentsItem {
   id: string;
   title: string;
   level: number;
@@ -44,7 +44,7 @@ const TableOfContents = ({
         <CollapsibleContent>
           <ScrollArea className="max-h-[calc(100vh-200px)] overflow-auto">
             <div className="px-2 py-1">
-              {items.map(item => (
+              {items && items.map(item => (
                 <Button 
                   key={item.id} 
                   variant="ghost" 

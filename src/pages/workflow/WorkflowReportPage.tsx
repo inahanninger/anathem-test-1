@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
-import { ReviewPage } from "../ReviewPage";
+import { ReviewPage } from "@/pages/ReviewPage";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Skeleton } from "@/components/ui/skeleton";
 import ReportActionButton from "@/components/ReportActionButton";

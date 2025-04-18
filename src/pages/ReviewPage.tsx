@@ -19,6 +19,7 @@ import { CitableText } from "@/components/CitationTooltip";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import StepProgress from "@/components/StepProgress";
 import { Link, useNavigate } from "react-router-dom";
+import { TableOfContentsItem } from "@/components/TableOfContents";
 
 export const ReviewPage = () => {
   const [presentingIssues, setPresentingIssues] = useState<string>(
@@ -37,11 +38,14 @@ export const ReviewPage = () => {
     "Initial assessment reveals patient in moderate respiratory distress. Oxygen saturation 92% on room air. Wheezing and crackles on auscultation. Heart rate 105 bpm, blood pressure 145/85 mmHg. Temperature 38.2°C. Started on oxygen therapy, nebulized bronchodilators, and IV antibiotics. Plan to admit to respiratory ward for ongoing management."
   );
 
+  const [clinicalDetails, setClinicalDetails] = useState<string>("");
+  const [developmentalHistory, setDevelopmentalHistory] = useState<string>("");
+
   const [medications, setMedications] = useState<Medication[]>([
-    { id: "1", name: "Salbutamol", dosage: "100mcg", frequency: "2 puffs QID PRN", route: "Inhaled" },
-    { id: "2", name: "Tiotropium", dosage: "18mcg", frequency: "Once daily", route: "Inhaled" },
-    { id: "3", name: "Prednisolone", dosage: "30mg", frequency: "Once daily", route: "Oral" },
-    { id: "4", name: "Amoxicillin", dosage: "500mg", frequency: "TID", route: "Oral" }
+    { id: "1", name: "Salbutamol", dosage: "100mcg", frequency: "2 puffs QID PRN" },
+    { id: "2", name: "Tiotropium", dosage: "18mcg", frequency: "Once daily" },
+    { id: "3", name: "Prednisolone", dosage: "30mg", frequency: "Once daily" },
+    { id: "4", name: "Amoxicillin", dosage: "500mg", frequency: "TID" }
   ]);
 
   // Track the number of sections that have been reviewed
@@ -53,8 +57,7 @@ export const ReviewPage = () => {
       id: (medications.length + 1).toString(),
       name: "",
       dosage: "",
-      frequency: "",
-      route: ""
+      frequency: ""
     };
     setMedications([...medications, newMedication]);
   };
@@ -74,6 +77,30 @@ export const ReviewPage = () => {
     toast.success("Report generated successfully");
   };
 
+  const tocItems: TableOfContentsItem[] = [
+    { id: "presenting-issues", title: "Presenting Issues", level: 1 },
+    { id: "medications", title: "Medications", level: 1 },
+    { id: "social-history", title: "Social History", level: 1 },
+    { id: "family-history", title: "Family History", level: 1 },
+    { id: "clinical-notes", title: "Clinical Notes", level: 1 }
+  ];
+
+  const onSelectItem = (id: string) => {
+    // Scroll to the section
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+      // Highlight the section briefly
+      element.classList.add("bg-yellow-50");
+      setTimeout(() => {
+        element.classList.remove("bg-yellow-50");
+      }, 2000);
+    }
+  };
+
   return (
     <div className="container mx-auto px-6 py-6 w-6xl">
       <div className="flex flex-col gap-6">
@@ -87,7 +114,7 @@ export const ReviewPage = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <div className="lg:col-span-3 space-y-6">
-            <Card className="p-4 shadow-sm">
+            <Card className="p-4 shadow-sm" id="presenting-issues">
               <SectionHeader title="Presenting Issues" confidenceLevel="high" confidenceScore={0.92} />
               <CitableText 
                 text={presentingIssues} 
@@ -95,7 +122,7 @@ export const ReviewPage = () => {
               />
             </Card>
 
-            <Card className="p-4 shadow-sm">
+            <Card className="p-4 shadow-sm" id="medications">
               <SectionHeader title="Medications" />
               <MedicationSection 
                 medications={medications} 
@@ -105,7 +132,7 @@ export const ReviewPage = () => {
               />
             </Card>
 
-            <Card className="p-4 shadow-sm">
+            <Card className="p-4 shadow-sm" id="social-history">
               <SectionHeader title="Social History" confidenceLevel="medium" confidenceScore={0.78} />
               <CitableText 
                 text={socialHistory} 
@@ -113,7 +140,7 @@ export const ReviewPage = () => {
               />
             </Card>
 
-            <Card className="p-4 shadow-sm">
+            <Card className="p-4 shadow-sm" id="family-history">
               <SectionHeader title="Family History" confidenceLevel="low" confidenceScore={0.65} />
               <CitableText 
                 text={familyHistory} 
@@ -121,23 +148,22 @@ export const ReviewPage = () => {
               />
             </Card>
 
-            <Card className="p-4 shadow-sm">
+            <Card className="p-4 shadow-sm" id="clinical-notes">
               <ClinicalTabsSection 
                 progressNotes={progressNotes}
                 setProgressNotes={setProgressNotes}
+                clinicalDetails={clinicalDetails}
+                setClinicalDetails={setClinicalDetails}
+                developmentalHistory={developmentalHistory}
+                setDevelopmentalHistory={setDevelopmentalHistory}
               />
             </Card>
           </div>
 
           <div className="lg:col-span-1">
             <TableOfContents 
-              sections={[
-                { id: "presenting-issues", title: "Presenting Issues", status: "complete" },
-                { id: "medications", title: "Medications", status: "complete" },
-                { id: "social-history", title: "Social History", status: "complete" },
-                { id: "family-history", title: "Family History", status: "complete" },
-                { id: "clinical-notes", title: "Clinical Notes", status: "incomplete" }
-              ]}
+              items={tocItems}
+              onSelectItem={onSelectItem}
             />
           </div>
         </div>
