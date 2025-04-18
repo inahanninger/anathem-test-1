@@ -84,6 +84,7 @@ export default {
       boxShadow: {
         'input': '0 1px 2px rgba(0, 0, 0, 0.05)',
         'card': '0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)',
+        'tooltip': '0 0 10px rgba(0,0,0,0.1)',
       },
       keyframes: {
         'accordion-down': {
@@ -119,6 +120,12 @@ export default {
       },
       maxWidth: {
         '6xl': '1243px'
+      },
+      fontSize: {
+        'citation': '16px',
+      },
+      lineHeight: {
+        'citation': '24px',
       }
     }
   },
