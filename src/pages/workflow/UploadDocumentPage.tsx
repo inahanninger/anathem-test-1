@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { ArrowRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,19 +9,9 @@ import StepProgress from "@/components/StepProgress";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import FileUploadSection from "@/components/FileUploadSection";
-
 type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
-
-const documentTypes = [
-  "referral letter",
-  "patient information",
-  "QB report",
-  "Connor's questionaire",
-  "SNAP4",
-] as const;
-
+const documentTypes = ["referral letter", "patient information", "QB report", "Connor's questionaire", "SNAP4"] as const;
 type DocumentType = typeof documentTypes[number];
-
 interface FileUpload {
   id: string;
   name: string;
@@ -31,7 +20,6 @@ interface FileUpload {
   dateUploaded: Date;
   size: number;
 }
-
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -45,7 +33,6 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
-
 const appointmentTypes = ["ADHD Assessment", "Autism Assessment", "ADHD/Autism Combined Assessment"];
 
 // Categories for file uploads
@@ -53,16 +40,14 @@ const FILE_CATEGORIES = {
   CONNERS: "Connor's questionaire",
   SNAP4: "SNAP4",
   QB_TEST: "QB report",
-  PATIENT_NOTES: "patient notes",
+  PATIENT_NOTES: "patient notes"
 } as const;
-
 const UploadDocumentPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
   const [appointmentType, setAppointmentType] = useState<string>(appointmentTypes[0]);
   const [uploads, setUploads] = useState<FileUpload[]>([]);
   const navigate = useNavigate();
-
   const handleFileUpload = (files: File[], documentType: DocumentType | "") => {
     files.forEach(file => {
       const newUpload: FileUpload = {
@@ -77,12 +62,10 @@ const UploadDocumentPage = () => {
       toast.success(`${file.name} uploaded successfully`);
     });
   };
-
   const handleDeleteFile = (fileId: string) => {
     setUploads(uploads.filter(upload => upload.id !== fileId));
     toast.success("File deleted successfully");
   };
-
   const handleContinue = () => {
     if (uploads.length === 0) {
       toast.error("Please upload at least one file");
@@ -95,9 +78,7 @@ const UploadDocumentPage = () => {
   const getUploadsByType = (documentType: DocumentType | "") => {
     return uploads.filter(upload => upload.documentType === documentType);
   };
-
-  return (
-    <ClinicalLayout>
+  return <ClinicalLayout>
       <div className="min-h-screen bg-white">
         <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
           <div className="container mx-auto w-6xl">
@@ -146,58 +127,27 @@ const UploadDocumentPage = () => {
                   <SelectValue placeholder="Select appointment type" />
                 </SelectTrigger>
                 <SelectContent>
-                  {appointmentTypes.map(type => (
-                    <SelectItem key={type} value={type}>
+                  {appointmentTypes.map(type => <SelectItem key={type} value={type}>
                       {type}
-                    </SelectItem>
-                  ))}
+                    </SelectItem>)}
                 </SelectContent>
               </Select>
             </div>
           </div>
           
           <div className="mt-8">
-            <h2 className="font-semibold mb-6 text-base">Required Assessment Documents</h2>
             
-            <FileUploadSection
-              title="Conners Questionnaire"
-              required={true}
-              documentType={FILE_CATEGORIES.CONNERS}
-              onFileUpload={(files) => handleFileUpload(files, FILE_CATEGORIES.CONNERS)}
-              uploadedFiles={getUploadsByType(FILE_CATEGORIES.CONNERS)}
-              onDeleteFile={handleDeleteFile}
-            />
             
-            <FileUploadSection
-              title="SNAP-IV Rating Scale"
-              required={true}
-              documentType={FILE_CATEGORIES.SNAP4}
-              onFileUpload={(files) => handleFileUpload(files, FILE_CATEGORIES.SNAP4)}
-              uploadedFiles={getUploadsByType(FILE_CATEGORIES.SNAP4)}
-              onDeleteFile={handleDeleteFile}
-            />
+            <FileUploadSection title="Conners Questionnaire" required={true} documentType={FILE_CATEGORIES.CONNERS} onFileUpload={files => handleFileUpload(files, FILE_CATEGORIES.CONNERS)} uploadedFiles={getUploadsByType(FILE_CATEGORIES.CONNERS)} onDeleteFile={handleDeleteFile} />
             
-            <FileUploadSection
-              title="QB Test Results"
-              required={true}
-              documentType={FILE_CATEGORIES.QB_TEST}
-              onFileUpload={(files) => handleFileUpload(files, FILE_CATEGORIES.QB_TEST)}
-              uploadedFiles={getUploadsByType(FILE_CATEGORIES.QB_TEST)}
-              onDeleteFile={handleDeleteFile}
-            />
+            <FileUploadSection title="SNAP-IV Rating Scale" required={true} documentType={FILE_CATEGORIES.SNAP4} onFileUpload={files => handleFileUpload(files, FILE_CATEGORIES.SNAP4)} uploadedFiles={getUploadsByType(FILE_CATEGORIES.SNAP4)} onDeleteFile={handleDeleteFile} />
             
-            <FileUploadSection
-              title="Patient Notes"
-              documentType={FILE_CATEGORIES.PATIENT_NOTES}
-              onFileUpload={(files) => handleFileUpload(files, FILE_CATEGORIES.PATIENT_NOTES)}
-              uploadedFiles={getUploadsByType(FILE_CATEGORIES.PATIENT_NOTES)}
-              onDeleteFile={handleDeleteFile}
-            />
+            <FileUploadSection title="QB Test Results" required={true} documentType={FILE_CATEGORIES.QB_TEST} onFileUpload={files => handleFileUpload(files, FILE_CATEGORIES.QB_TEST)} uploadedFiles={getUploadsByType(FILE_CATEGORIES.QB_TEST)} onDeleteFile={handleDeleteFile} />
+            
+            <FileUploadSection title="Patient Notes" documentType={FILE_CATEGORIES.PATIENT_NOTES} onFileUpload={files => handleFileUpload(files, FILE_CATEGORIES.PATIENT_NOTES)} uploadedFiles={getUploadsByType(FILE_CATEGORIES.PATIENT_NOTES)} onDeleteFile={handleDeleteFile} />
           </div>
         </div>
       </div>
-    </ClinicalLayout>
-  );
+    </ClinicalLayout>;
 };
-
 export default UploadDocumentPage;
