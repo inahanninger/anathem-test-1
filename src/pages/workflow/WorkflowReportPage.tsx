@@ -1,10 +1,9 @@
-
 import { useState, useEffect } from "react";
-import { ArrowLeftIcon } from "lucide-react";
+import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
 import { ReviewPage } from "@/pages/ReviewPage";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
@@ -23,12 +22,18 @@ const WorkflowReportPage = () => {
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
   const [isLoading, setIsLoading] = useState(true);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
+
+  const handleContinue = () => {
+    navigate("/");
+  };
 
   return (
     <ClinicalLayout>
@@ -51,6 +56,13 @@ const WorkflowReportPage = () => {
                   <Link to="/workflow/transcribe" className="flex items-center gap-1">
                     <ArrowLeftIcon size={16} /> Back
                   </Link>
+                </Button>
+                <Button 
+                  variant="default" 
+                  className="text-sm flex items-center gap-1"
+                  onClick={handleContinue}
+                >
+                  Continue <ArrowRightIcon size={16} />
                 </Button>
               </div>
             </div>
