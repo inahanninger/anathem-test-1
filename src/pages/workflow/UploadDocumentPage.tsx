@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from "react";
 import { ArrowRightIcon, UploadIcon, FileTextIcon, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -140,7 +141,7 @@ const UploadDocumentPage = () => {
     setIsDialogOpen(true);
   };
 
-  const handleUpdateFileType = (type: UploadType) => {
+  const handleUpdateFileType = (type: DocumentType) => {
     if (!selectedFile) return;
     
     setUploads(prev => 
@@ -315,32 +316,32 @@ const UploadDocumentPage = () => {
                   <Label htmlFor="fileType" className="block mb-2">File Type</Label>
                   <div className="grid grid-cols-2 gap-2">
                     <Button 
-                      variant={selectedFile.type === "transcript" ? "default" : "outline"} 
+                      variant={selectedFile.type === "Consultation Transcript" ? "default" : "outline"} 
                       className="justify-start"
-                      onClick={() => handleUpdateFileType("transcript")}
+                      onClick={() => handleUpdateFileType("Consultation Transcript")}
                     >
-                      Transcript
+                      Consultation Transcript
                     </Button>
                     <Button 
-                      variant={selectedFile.type === "dictation" ? "default" : "outline"} 
+                      variant={selectedFile.type === "Referral Letter" ? "default" : "outline"} 
                       className="justify-start"
-                      onClick={() => handleUpdateFileType("dictation")}
+                      onClick={() => handleUpdateFileType("Referral Letter")}
                     >
-                      Dictation
+                      Referral Letter
                     </Button>
                     <Button 
-                      variant={selectedFile.type === "letter" ? "default" : "outline"} 
+                      variant={selectedFile.type === "Connor's Questionnaire" ? "default" : "outline"} 
                       className="justify-start"
-                      onClick={() => handleUpdateFileType("letter")}
+                      onClick={() => handleUpdateFileType("Connor's Questionnaire")}
                     >
-                      Letter
+                      Connor's Questionnaire
                     </Button>
                     <Button 
-                      variant={selectedFile.type === "patient notes" ? "default" : "outline"} 
+                      variant={selectedFile.type === "Patient Information" ? "default" : "outline"} 
                       className="justify-start"
-                      onClick={() => handleUpdateFileType("patient notes")}
+                      onClick={() => handleUpdateFileType("Patient Information")}
                     >
-                      Patient Notes
+                      Patient Information
                     </Button>
                   </div>
                 </div>
