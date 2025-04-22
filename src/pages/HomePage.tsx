@@ -23,7 +23,7 @@ const HomePage = () => {
               Generate paperwork through transcribing a patient consultation.
             </p>
             <Link to="/transcribe" className="block">
-              <Button className="w-full bg-red-800 hover:bg-red-700">
+              <Button className="w-full bg-red-900 hover:bg-red-800">
                 <Mic className="h-4 w-4 mr-2" /> Start Transcription
               </Button>
             </Link>
@@ -39,7 +39,7 @@ const HomePage = () => {
               Generate reports with multiple file uploads and consultation recordings.
             </p>
             <Link to="/workflow/upload" className="block">
-              <Button className="w-full bg-blue-800 hover:bg-blue-700">
+              <Button className="w-full text-white bg-blue-800 hover:bg-blue-700">
                 <FileText className="h-4 w-4 mr-2" /> Create Report
               </Button>
             </Link>
