@@ -12,6 +12,7 @@ import RecordingButton from "@/components/RecordingButton";
 import StepProgress from "@/components/StepProgress";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Switch } from "@/components/ui/switch";
+
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -25,6 +26,7 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
+
 const WorkflowTranscribePage = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [transcription, setTranscription] = useState("");
@@ -34,6 +36,7 @@ const WorkflowTranscribePage = () => {
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
   const [isOnlineCall, setIsOnlineCall] = useState(false);
   const navigate = useNavigate();
+
   const toggleRecording = () => {
     if (isRecording) {
       setIsRecording(false);
@@ -45,14 +48,17 @@ const WorkflowTranscribePage = () => {
       toast.success("Recording started");
     }
   };
+
   const handleContinue = () => {
     toast.success("Generating report");
     navigate("/workflow/report");
   };
+
   const toggleOnlineCall = () => {
     setIsOnlineCall(!isOnlineCall);
     toast.info(isOnlineCall ? "Online call disabled" : "Online call enabled");
   };
+
   return <ClinicalLayout>
     <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
@@ -91,17 +97,20 @@ const WorkflowTranscribePage = () => {
       <div className="container mx-auto px-6 py-[8px] w-6xl">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <Card className="rounded-lg overflow-hidden">
-            <div className="bg-gray-50 p-4 flex items-left justify-left border-b">
-              
-              <div className="flex items-center gap-2">
-                <div className="flex items-center space-x-2">
-                  <VideoIcon className="w-4 h-4 text-gray-600" />
-                  <Label htmlFor="online-call" className="text-sm">Online call</Label>
-                  <Switch id="online-call" checked={isOnlineCall} onCheckedChange={toggleOnlineCall} />
-                </div>
-                <RecordingButton isRecording={isRecording} onClick={toggleRecording} />
-                
+            <div className="bg-gray-50 p-4 flex items-center justify-end border-b space-x-2">
+              <div className="flex items-center space-x-2 mr-2">
+                <VideoIcon className="w-4 h-4 text-gray-600" />
+                <Label htmlFor="online-call" className="text-sm">Online call</Label>
+                <Switch 
+                  id="online-call" 
+                  checked={isOnlineCall} 
+                  onCheckedChange={toggleOnlineCall} 
+                />
               </div>
+              <RecordingButton 
+                isRecording={isRecording} 
+                onClick={toggleRecording} 
+              />
             </div>
             <div className="p-4 min-h-[400px] bg-white">
               {transcription ? <div className="p-4 text-sm px-[8px] py-[8px]">{transcription}</div> : <div className="flex flex-col items-center justify-center h-full text-center p-8 text-gray-500 bg-gray-50 rounded-md">
@@ -134,4 +143,5 @@ const WorkflowTranscribePage = () => {
     </div>
   </ClinicalLayout>;
 };
+
 export default WorkflowTranscribePage;
