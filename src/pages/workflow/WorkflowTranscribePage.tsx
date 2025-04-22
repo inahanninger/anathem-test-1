@@ -14,7 +14,6 @@ import StepProgress from "@/components/StepProgress";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import FileUploadTab from "@/components/workflow/FileUploadTab";
 import { Timer } from 'lucide-react';
-
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -28,7 +27,6 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
-
 const WorkflowTranscribePage = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [transcription, setTranscription] = useState("");
@@ -39,7 +37,6 @@ const WorkflowTranscribePage = () => {
   const [isOnlineCall, setIsOnlineCall] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
   const navigate = useNavigate();
-
   const toggleRecording = () => {
     if (isRecording) {
       setIsRecording(false);
@@ -50,39 +47,32 @@ const WorkflowTranscribePage = () => {
       toast.success("Recording started");
     }
   };
-
   const handleContinue = () => {
     toast.success("Generating report");
     navigate("/workflow/report");
   };
-
   const toggleOnlineCall = () => {
     setIsOnlineCall(!isOnlineCall);
     toast.info(isOnlineCall ? "Online call disabled" : "Online call enabled");
   };
-
   useEffect(() => {
     let interval: NodeJS.Timeout;
-    
     if (isRecording) {
       interval = setInterval(() => {
-        setRecordingTime((prev) => prev + 1);
+        setRecordingTime(prev => prev + 1);
       }, 1000);
     } else {
       setRecordingTime(0);
     }
-
     return () => {
       if (interval) clearInterval(interval);
     };
   }, [isRecording]);
-
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
-
   return <ClinicalLayout>
     <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
@@ -123,26 +113,17 @@ const WorkflowTranscribePage = () => {
           <Card className="rounded-lg overflow-hidden">
             <div className="bg-gray-50 p-4 flex items-center justify-between border-b">
               <div className="flex items-center space-x-4">
-                <RecordingButton 
-                  isRecording={isRecording} 
-                  onClick={toggleRecording}
-                  className="min-w-[140px]"
-                />
-                {isRecording && (
-                  <div className="flex items-center space-x-3">
+                <RecordingButton isRecording={isRecording} onClick={toggleRecording} className="min-w-[140px]" />
+                {isRecording && <div className="flex items-center space-x-3">
                     <Timer className="h-4 w-4 text-gray-600" />
                     <span className="text-sm font-medium">{formatTime(recordingTime)}</span>
-                  </div>
-                )}
+                  </div>}
               </div>
               <div className="flex items-center space-x-4">
-                <Volume2 className="h-4 w-4 text-gray-600" />
+                
                 <div className="flex items-center space-x-2">
                   <span className="text-sm text-gray-600">Online Call</span>
-                  <Switch
-                    checked={isOnlineCall}
-                    onCheckedChange={toggleOnlineCall}
-                  />
+                  <Switch checked={isOnlineCall} onCheckedChange={toggleOnlineCall} />
                 </div>
                 <Button variant="ghost" size="icon" className="h-8 w-8">
                   <Settings className="h-4 w-4" />
@@ -188,5 +169,4 @@ const WorkflowTranscribePage = () => {
     </div>
   </ClinicalLayout>;
 };
-
 export default WorkflowTranscribePage;
