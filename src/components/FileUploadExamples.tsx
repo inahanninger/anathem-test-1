@@ -22,10 +22,19 @@ const FileUploadExamples: React.FC = () => {
     }
   };
 
+  const onExampleFileUpload = (files: File[], documentType: string) => {
+    setFiles(prev => [...prev, ...files]);
+    toast.success(`${files.length} ${documentType} file(s) uploaded`);
+  };
+
   return (
     <div className="space-y-8">
       {/* Basic usage with simple upload button */}
-      <FileUploadSection title="Basic File Upload">
+      <FileUploadSection 
+        title="Basic File Upload" 
+        documentType="example" 
+        onFileUpload={onExampleFileUpload}
+      >
         <div className="flex items-center justify-center border-2 border-dashed rounded-md p-6">
           <Button onClick={() => fileInputRef.current?.click()}>
             <UploadIcon className="mr-2 h-4 w-4" />
@@ -42,7 +51,12 @@ const FileUploadExamples: React.FC = () => {
       </FileUploadSection>
 
       {/* Required file upload with additional form elements */}
-      <FileUploadSection title="Document Upload" required={true}>
+      <FileUploadSection 
+        title="Document Upload" 
+        required={true} 
+        documentType="document" 
+        onFileUpload={onExampleFileUpload}
+      >
         <Label htmlFor="document-type">Document Type</Label>
         <Input id="document-type" placeholder="Enter document type" className="mb-4" />
         
@@ -58,7 +72,12 @@ const FileUploadExamples: React.FC = () => {
       </FileUploadSection>
 
       {/* Custom styling example */}
-      <FileUploadSection title="Profile Picture" className="bg-blue-50 p-4 rounded-lg">
+      <FileUploadSection 
+        title="Profile Picture" 
+        className="bg-blue-50 p-4 rounded-lg" 
+        documentType="profile" 
+        onFileUpload={onExampleFileUpload}
+      >
         <div className="flex flex-col items-center justify-center">
           <div className="w-24 h-24 rounded-full bg-gray-200 mb-4 flex items-center justify-center">
             <Upload className="h-8 w-8 text-gray-500" />
