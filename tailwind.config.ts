@@ -74,7 +74,16 @@ export default {
           neutral: '#F9FAFB',
           'neutral-dark': '#374151',
           border: '#E5E7EB',
-        }
+        },
+        hover: {
+          DEFAULT: 'hsl(var(--blue-100))',
+        },
+      },
+      backgroundColor: {
+        'hover-blue': 'hsl(var(--blue-100))',
+      },
+      transitionProperty: {
+        'hover-bg': 'background-color, color',
       },
       borderRadius: {
         lg: 'var(--radius)',
