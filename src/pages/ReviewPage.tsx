@@ -18,7 +18,6 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import StepProgress from "@/components/StepProgress";
 import { Link, useNavigate } from "react-router-dom";
 import { TableOfContentsItem } from "@/components/TableOfContents";
-
 export const ReviewPage = () => {
   const [presentingIssues, setPresentingIssues] = useState<string>("Patient presents with a 2-week history of worsening breathlessness, productive cough with yellow-green sputum, and fever. History of COPD for 10 years, with 2 exacerbations requiring hospitalization in the past year.");
   const [socialHistory, setSocialHistory] = useState<string>("Current smoker with 30 pack-year history. Lives alone in a single-story house. Works as a retired factory worker. Drinks 10 units of alcohol per week.");
@@ -47,7 +46,6 @@ export const ReviewPage = () => {
     dosage: "500mg",
     frequency: "TID"
   }]);
-
   const completedSections = 4;
   const totalSections = 5;
   const handleAddMedication = () => {
@@ -103,19 +101,12 @@ export const ReviewPage = () => {
       }, 2000);
     }
   };
-  return <div className="container mx-auto px-6 py-6 w-6xl">
+  return <div className="container mx-auto px-6 w-6xl py-0">
       <div className="flex flex-col gap-6">
         <div className="grid grid-cols-1 gap-6">
           <div className="lg:col-span-3 space-y-6">
             <div className="w-full" id="clinical-notes">
-              <ClinicalTabsSection 
-                progressNotes={progressNotes} 
-                setProgressNotes={setProgressNotes} 
-                clinicalDetails={clinicalDetails} 
-                setClinicalDetails={setClinicalDetails} 
-                developmentalHistory={developmentalHistory} 
-                setDevelopmentalHistory={setDevelopmentalHistory} 
-              />
+              <ClinicalTabsSection progressNotes={progressNotes} setProgressNotes={setProgressNotes} clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} />
             </div>
           </div>
         </div>
