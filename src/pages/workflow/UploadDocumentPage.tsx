@@ -220,7 +220,7 @@ const UploadDocumentPage = () => {
               <h2 className="font-semibold mb-4 text-base">Uploaded Documents</h2>
               <div className="space-y-3">
                 {uploads.map(file => (
-                  <div key={file.id} className="bg-white rounded-lg p-4 border border-gray-100 hover:bg-gray-50">
+                  <div key={file.id} className="bg-white rounded-lg p-4 border border-neutral-100 hover:bg-neutral-50">
                     <div className="flex items-center justify-between w-full">
                       <div className="flex items-center space-x-3">
                         <div className="bg-blue-50 p-3 rounded-lg">
@@ -228,7 +228,7 @@ const UploadDocumentPage = () => {
                         </div>
                         <div>
                           <p className="font-medium text-sm">{file.name}</p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-neutral-500">
                             {formatFileSize(file.size)} • Uploaded {formatDate(file.dateUploaded)}
                           </p>
                         </div>
@@ -238,8 +238,8 @@ const UploadDocumentPage = () => {
                           value={file.documentType}
                           onValueChange={(value: DocumentType) => handleUpdateDocumentType(file.id, value)}
                         >
-                          <SelectTrigger className="w-[200px] h-8 text-sm">
-                            <SelectValue placeholder="Select document type" />
+                          <SelectTrigger className="w-[180px] h-8 text-sm bg-white">
+                            <SelectValue placeholder="Select type" />
                           </SelectTrigger>
                           <SelectContent>
                             {documentTypes.map(type => (
@@ -257,7 +257,7 @@ const UploadDocumentPage = () => {
                             handleDeleteFile(file.id);
                           }}
                         >
-                          <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
+                          <TrashIcon className="h-5 w-5 text-neutral-500 hover:text-red-500" />
                         </Button>
                       </div>
                     </div>
