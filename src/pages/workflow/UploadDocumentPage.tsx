@@ -220,45 +220,45 @@ const UploadDocumentPage = () => {
               <h2 className="font-semibold mb-4 text-base">Uploaded Documents</h2>
               <div className="space-y-3">
                 {uploads.map(file => (
-                  <div key={file.id} className="bg-white rounded-lg p-4 flex items-center justify-between border border-gray-100 hover:bg-gray-50">
-                    <div className="flex items-center space-x-3 w-full">
-                      <div className="bg-blue-50 p-3 rounded-lg">
-                        <FileTextIcon className="h-6 w-6 text-blue-600" />
-                      </div>
-                      <div className="flex-grow space-y-2">
+                  <div key={file.id} className="bg-white rounded-lg p-4 border border-gray-100 hover:bg-gray-50">
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center space-x-3">
+                        <div className="bg-blue-50 p-3 rounded-lg">
+                          <FileTextIcon className="h-6 w-6 text-blue-600" />
+                        </div>
                         <div>
                           <p className="font-medium text-sm">{file.name}</p>
                           <p className="text-xs text-gray-500">
                             {formatFileSize(file.size)} • Uploaded {formatDate(file.dateUploaded)}
                           </p>
                         </div>
-                        <div className="flex items-center space-x-2">
-                          <Select
-                            value={file.documentType}
-                            onValueChange={(value: DocumentType) => handleUpdateDocumentType(file.id, value)}
-                          >
-                            <SelectTrigger className="w-[200px] h-8 text-sm">
-                              <SelectValue placeholder="Select document type" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {documentTypes.map(type => (
-                                <SelectItem key={type} value={type} className="text-sm">
-                                  {type}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <Button 
-                            variant="ghost" 
-                            size="icon" 
-                            onClick={e => {
-                              e.stopPropagation();
-                              handleDeleteFile(file.id);
-                            }}
-                          >
-                            <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
-                          </Button>
-                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Select
+                          value={file.documentType}
+                          onValueChange={(value: DocumentType) => handleUpdateDocumentType(file.id, value)}
+                        >
+                          <SelectTrigger className="w-[200px] h-8 text-sm">
+                            <SelectValue placeholder="Select document type" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {documentTypes.map(type => (
+                              <SelectItem key={type} value={type} className="text-sm">
+                                {type}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          onClick={e => {
+                            e.stopPropagation();
+                            handleDeleteFile(file.id);
+                          }}
+                        >
+                          <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
+                        </Button>
                       </div>
                     </div>
                   </div>
