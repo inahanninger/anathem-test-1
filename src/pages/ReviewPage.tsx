@@ -11,7 +11,6 @@ import MedicationSection from "@/components/review/MedicationSection";
 import SocialHistorySection from "@/components/review/SocialHistorySection";
 import FamilyHistorySection from "@/components/review/FamilyHistorySection";
 import SectionHeader from "@/components/SectionHeader";
-import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CitableText } from "@/components/CitationTooltip";
@@ -19,6 +18,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import StepProgress from "@/components/StepProgress";
 import { Link, useNavigate } from "react-router-dom";
 import { TableOfContentsItem } from "@/components/TableOfContents";
+
 export const ReviewPage = () => {
   const [presentingIssues, setPresentingIssues] = useState<string>("Patient presents with a 2-week history of worsening breathlessness, productive cough with yellow-green sputum, and fever. History of COPD for 10 years, with 2 exacerbations requiring hospitalization in the past year.");
   const [socialHistory, setSocialHistory] = useState<string>("Current smoker with 30 pack-year history. Lives alone in a single-story house. Works as a retired factory worker. Drinks 10 units of alcohol per week.");
@@ -48,7 +48,6 @@ export const ReviewPage = () => {
     frequency: "TID"
   }]);
 
-  // Track the number of sections that have been reviewed
   const completedSections = 4;
   const totalSections = 5;
   const handleAddMedication = () => {
@@ -92,14 +91,12 @@ export const ReviewPage = () => {
     level: 1
   }];
   const onSelectItem = (id: string) => {
-    // Scroll to the section
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({
         behavior: "smooth",
         block: "start"
       });
-      // Highlight the section briefly
       element.classList.add("bg-yellow-50");
       setTimeout(() => {
         element.classList.remove("bg-yellow-50");
@@ -108,24 +105,19 @@ export const ReviewPage = () => {
   };
   return <div className="container mx-auto px-6 py-6 w-6xl">
       <div className="flex flex-col gap-6">
-        
-
         <div className="grid grid-cols-1 gap-6">
           <div className="lg:col-span-3 space-y-6">
-            
-
-            
-
-            
-
-            
-
-            <Card className="p-4 shadow-sm" id="clinical-notes">
-              <ClinicalTabsSection progressNotes={progressNotes} setProgressNotes={setProgressNotes} clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} />
-            </Card>
+            <div className="w-full" id="clinical-notes">
+              <ClinicalTabsSection 
+                progressNotes={progressNotes} 
+                setProgressNotes={setProgressNotes} 
+                clinicalDetails={clinicalDetails} 
+                setClinicalDetails={setClinicalDetails} 
+                developmentalHistory={developmentalHistory} 
+                setDevelopmentalHistory={setDevelopmentalHistory} 
+              />
+            </div>
           </div>
-
-          
         </div>
       </div>
     </div>;
