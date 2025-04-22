@@ -8,7 +8,6 @@ import { Link, useNavigate } from "react-router-dom";
 import StepProgress from "@/components/StepProgress";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
 
 type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
 
@@ -220,17 +219,19 @@ const UploadDocumentPage = () => {
               <h2 className="font-semibold mb-4 text-base">Uploaded Documents</h2>
               <div className="space-y-3">
                 {uploads.map(file => (
-                  <div key={file.id} className="bg-white rounded-lg p-4 flex items-center justify-between border border-gray-100 cursor-pointer hover:bg-gray-50">
-                    <div className="flex items-center space-x-3">
+                  <div key={file.id} className="bg-white rounded-lg p-4 flex items-center justify-between border border-gray-100 hover:bg-gray-50">
+                    <div className="flex items-center space-x-3 w-full">
                       <div className="bg-blue-50 p-3 rounded-lg">
                         <FileTextIcon className="h-6 w-6 text-blue-600" />
                       </div>
-                      <div>
-                        <p className="font-medium text-sm">{file.name}</p>
-                        <p className="text-xs text-gray-500">
-                          {formatFileSize(file.size)} • Uploaded {formatDate(file.dateUploaded)}
-                        </p>
-                        <div className="mt-2">
+                      <div className="flex-grow space-y-2">
+                        <div>
+                          <p className="font-medium text-sm">{file.name}</p>
+                          <p className="text-xs text-gray-500">
+                            {formatFileSize(file.size)} • Uploaded {formatDate(file.dateUploaded)}
+                          </p>
+                        </div>
+                        <div className="flex items-center space-x-2">
                           <Select
                             value={file.documentType}
                             onValueChange={(value: DocumentType) => handleUpdateDocumentType(file.id, value)}
@@ -246,15 +247,19 @@ const UploadDocumentPage = () => {
                               ))}
                             </SelectContent>
                           </Select>
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            onClick={e => {
+                              e.stopPropagation();
+                              handleDeleteFile(file.id);
+                            }}
+                          >
+                            <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
+                          </Button>
                         </div>
                       </div>
                     </div>
-                    <Button variant="ghost" size="icon" onClick={e => {
-                        e.stopPropagation();
-                        handleDeleteFile(file.id);
-                      }}>
-                      <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
-                    </Button>
                   </div>
                 ))}
               </div>
