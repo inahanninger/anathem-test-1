@@ -13,7 +13,6 @@ import StepProgress from "@/components/StepProgress";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Switch } from "@/components/ui/switch";
 import FileUploadTab from "@/components/workflow/FileUploadTab";
-
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -27,7 +26,6 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
-
 const WorkflowTranscribePage = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [transcription, setTranscription] = useState("");
@@ -37,7 +35,6 @@ const WorkflowTranscribePage = () => {
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
   const [isOnlineCall, setIsOnlineCall] = useState(false);
   const navigate = useNavigate();
-
   const toggleRecording = () => {
     if (isRecording) {
       setIsRecording(false);
@@ -49,17 +46,14 @@ const WorkflowTranscribePage = () => {
       toast.success("Recording started");
     }
   };
-
   const handleContinue = () => {
     toast.success("Generating report");
     navigate("/workflow/report");
   };
-
   const toggleOnlineCall = () => {
     setIsOnlineCall(!isOnlineCall);
     toast.info(isOnlineCall ? "Online call disabled" : "Online call enabled");
   };
-
   return <ClinicalLayout>
     <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
@@ -76,7 +70,7 @@ const WorkflowTranscribePage = () => {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
+              <Button variant="outline" className="text-sm bg-inherit text-inherit">
                 <Link to="/workflow/review" className="flex items-center gap-1">
                   <ArrowLeftIcon size={16} /> Back
                 </Link>
@@ -102,25 +96,14 @@ const WorkflowTranscribePage = () => {
               <div className="flex items-center space-x-2 mr-2">
                 <VideoIcon className="w-4 h-4 text-gray-600" />
                 <Label htmlFor="online-call" className="text-sm">Online call</Label>
-                <Switch 
-                  id="online-call" 
-                  checked={isOnlineCall} 
-                  onCheckedChange={toggleOnlineCall} 
-                />
+                <Switch id="online-call" checked={isOnlineCall} onCheckedChange={toggleOnlineCall} />
               </div>
-              <RecordingButton 
-                isRecording={isRecording} 
-                onClick={toggleRecording} 
-              />
+              <RecordingButton isRecording={isRecording} onClick={toggleRecording} />
             </div>
             <div className="p-4 min-h-[400px] bg-white">
-              {transcription ? (
-                <div className="p-4 text-sm px-[8px] py-[8px]">{transcription}</div>
-              ) : (
-                <div className="flex flex-col items-center justify-center h-full text-center p-8 text-gray-500 bg-gray-50 rounded-md">
+              {transcription ? <div className="p-4 text-sm px-[8px] py-[8px]">{transcription}</div> : <div className="flex flex-col items-center justify-center h-full text-center p-8 text-gray-500 bg-gray-50 rounded-md">
                   <p className="text-sm">Click the button above to start recording your consultation. Transcription will appear here once active.</p>
-                </div>
-              )}
+                </div>}
             </div>
           </Card>
 
@@ -140,12 +123,7 @@ const WorkflowTranscribePage = () => {
               </div>
               
               <TabsContent value="clinical-notes" className="p-4 min-h-[400px] m-0 border-0">
-                <Textarea 
-                  placeholder="Enter clinical notes here..." 
-                  value={clinicalNotes} 
-                  onChange={e => setClinicalNotes(e.target.value)} 
-                  className="min-h-[370px] resize-none border-0 focus-visible:ring-0" 
-                />
+                <Textarea placeholder="Enter clinical notes here..." value={clinicalNotes} onChange={e => setClinicalNotes(e.target.value)} className="min-h-[370px] resize-none border-0 focus-visible:ring-0" />
                 <div className="text-xs text-gray-400 mt-2 text-right">
                   Changes are automatically saved
                 </div>
@@ -161,5 +139,4 @@ const WorkflowTranscribePage = () => {
     </div>
   </ClinicalLayout>;
 };
-
 export default WorkflowTranscribePage;
