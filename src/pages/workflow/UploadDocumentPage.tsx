@@ -23,11 +23,20 @@ import {
   DialogClose
 } from "@/components/ui/dialog";
 
-type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
+const documentTypes = [
+  "Consultation Transcript",
+  "Referral Letter",
+  "Connor's Questionnaire",
+  "Patient Information",
+  "QB Report"
+] as const;
+
+type DocumentType = typeof documentTypes[number];
+
 interface FileUpload {
   id: string;
   name: string;
-  type: UploadType | "";
+  type: DocumentType | "";
   dateUploaded: Date;
   size: number;
 }
@@ -69,7 +78,7 @@ const UploadDocumentPage = () => {
       const newUpload: FileUpload = {
         id: crypto.randomUUID(),
         name: file.name,
-        type: "",
+        type: "" as DocumentType,
         dateUploaded: new Date(),
         size: file.size
       };
@@ -142,6 +151,15 @@ const UploadDocumentPage = () => {
     
     setSelectedFile(prev => prev ? { ...prev, type } : null);
     toast.success(`File type updated to ${type}`);
+  };
+
+  const handleUpdateDocumentType = (fileId: string, newType: DocumentType) => {
+    setUploads(prev =>
+      prev.map(upload =>
+        upload.id === fileId ? { ...upload, type: newType } : upload
+      )
+    );
+    toast.success(`Document type updated to ${newType}`);
   };
 
   return <ClinicalLayout>
@@ -223,7 +241,6 @@ const UploadDocumentPage = () => {
                   <div 
                     key={file.id} 
                     className="bg-white rounded-lg p-4 flex items-center justify-between border border-gray-100 cursor-pointer hover:bg-gray-50"
-                    onClick={() => handleFileClick(file)}
                   >
                     <div className="flex items-center space-x-3">
                       <div className="bg-blue-50 p-3 rounded-lg">
@@ -233,20 +250,36 @@ const UploadDocumentPage = () => {
                         <p className="font-medium text-sm">{file.name}</p>
                         <p className="text-xs text-gray-500">
                           {formatFileSize(file.size)} • Uploaded {formatDate(file.dateUploaded)}
-                          {file.type && ` • Type: ${file.type}`}
                         </p>
                       </div>
                     </div>
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteFile(file.id);
-                      }}
-                    >
-                      <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
-                    </Button>
+                    <div className="flex items-center gap-2">
+                      <Select
+                        value={file.type}
+                        onValueChange={(value: DocumentType) => handleUpdateDocumentType(file.id, value)}
+                      >
+                        <SelectTrigger className="w-[180px] h-8">
+                          <SelectValue placeholder="Select document type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {documentTypes.map((type) => (
+                            <SelectItem key={type} value={type}>
+                              {type}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteFile(file.id);
+                        }}
+                      >
+                        <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
+                      </Button>
+                    </div>
                   </div>
                 ))}
               </div>
