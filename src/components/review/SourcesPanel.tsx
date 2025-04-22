@@ -30,56 +30,56 @@ const SourcesPanel = ({
           <div className="space-y-4">
             <div className="flex justify-between items-start py-2 border-b border-gray-100">
               <div>
-                <p className="text-blue-600 font-medium">Speaker 1</p>
-                <p className="text-gray-800">Good morning.</p>
+                <p className="font-medium text-inherit">Speaker 1</p>
+                <p className="text-inherit">Good morning.</p>
               </div>
               <span className="text-gray-500 text-xs whitespace-nowrap">0:01</span>
             </div>
             
             <div className="flex justify-between items-start py-2 border-b border-gray-100">
               <div>
-                <p className="text-blue-600 font-medium">Speaker 2</p>
-                <p className="text-gray-800">Good morning. Could you please state your name, position, and the location of your employment for the record?</p>
+                <p className="font-medium text-inherit">Speaker 2</p>
+                <p className="text-inherit text-sm font-normal">Good morning. Could you please state your name, position, and the location of your employment for the record?</p>
               </div>
               <span className="text-gray-500 text-xs whitespace-nowrap">0:02</span>
             </div>
             
             <div className="flex justify-between items-start py-2 border-b border-gray-100">
               <div>
-                <p className="text-blue-600 font-medium">Speaker 1</p>
-                <p className="text-gray-800">Good morning, Doctor. My name is James Wilson, and I'm here for my follow-up appointment.</p>
+                <p className="font-medium text-inherit">Speaker 1</p>
+                <p className="text-gray-800 text-sm">Good morning, Doctor. My name is James Wilson, and I'm here for my follow-up appointment.</p>
               </div>
               <span className="text-gray-500 text-xs whitespace-nowrap">0:20</span>
             </div>
             
             <div className="flex justify-between items-start py-2 border-b border-gray-100">
               <div>
-                <p className="text-blue-600 font-medium">Speaker 2</p>
-                <p className="text-gray-800">Thank you, Mr. Wilson. We're here to discuss your recent test results and how your current treatment plan is working. How have you been feeling since our last appointment?</p>
+                <p className="font-medium text-inherit">Speaker 2</p>
+                <p className="text-sm text-inherit">Thank you, Mr. Wilson. We're here to discuss your recent test results and how your current treatment plan is working. How have you been feeling since our last appointment?</p>
               </div>
               <span className="text-gray-500 text-xs whitespace-nowrap">0:55</span>
             </div>
             
             <div className="flex justify-between items-start py-2 border-b border-gray-100">
               <div>
-                <p className="text-blue-600 font-medium">Speaker 1</p>
-                <p className="text-gray-800">I've been doing better with the medication, but I still have occasional back pain, especially after sitting for long periods.</p>
+                <p className="font-medium text-inherit">Speaker 1</p>
+                <p className="text-sm text-inherit">I've been doing better with the medication, but I still have occasional back pain, especially after sitting for long periods.</p>
               </div>
               <span className="text-gray-500 text-xs whitespace-nowrap">1:10</span>
             </div>
             
             <div className="flex justify-between items-start py-2 border-b border-gray-100">
               <div>
-                <p className="text-blue-600 font-medium">Speaker 2</p>
-                <p className="text-gray-800">Let's talk about that. Have you been doing the recommended exercises?</p>
+                <p className="font-medium text-inherit">Speaker 2</p>
+                <p className="text-sm text-inherit">Let's talk about that. Have you been doing the recommended exercises?</p>
               </div>
               <span className="text-gray-500 text-xs whitespace-nowrap">1:45</span>
             </div>
             
             <div className="flex justify-between items-start py-2 border-b border-gray-100">
               <div>
-                <p className="text-blue-600 font-medium">Speaker 1</p>
-                <p className="text-gray-800">Yes, I've been trying to do them regularly, but sometimes I forget or I'm too tired after work.</p>
+                <p className="font-medium text-inherit">Speaker 1</p>
+                <p className="text-sm text-inherit">Yes, I've been trying to do them regularly, but sometimes I forget or I'm too tired after work.</p>
               </div>
               <span className="text-gray-500 text-xs whitespace-nowrap">2:01</span>
             </div>
