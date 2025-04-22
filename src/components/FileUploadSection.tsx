@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from "react";
 import { UploadIcon, FileTextIcon, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -44,6 +45,11 @@ interface FileUploadSectionProps {
    * Callback function when a file is deleted
    */
   onDeleteFile?: (fileId: string) => void;
+
+  /**
+   * Optional children for custom content
+   */
+  children?: React.ReactNode;
 }
 
 /**
@@ -57,7 +63,8 @@ const FileUploadSection: React.FC<FileUploadSectionProps> = ({
   documentType,
   onFileUpload,
   uploadedFiles = [],
-  onDeleteFile
+  onDeleteFile,
+  children
 }) => {
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -110,34 +117,36 @@ const FileUploadSection: React.FC<FileUploadSectionProps> = ({
       </h3>
       
       <div className="space-y-3">
-        <div 
-          className={`w-full border-2 border-dashed rounded-lg p-4 flex flex-col items-center justify-center transition-colors
-            ${isDragging ? 'bg-blue-50 border-blue-300' : 'border-gray-300 bg-gray-50/80'}`} 
-          onDragOver={handleDragOver} 
-          onDragLeave={handleDragLeave} 
-          onDrop={handleDrop} 
-          onClick={handleClickUpload}
-        >
-          <input 
-            type="file" 
-            ref={fileInputRef} 
-            onChange={e => handleFileUpload(e.target.files)} 
-            className="hidden" 
-            multiple 
-          />
-          <UploadIcon className="h-8 w-8 text-gray-400 mb-2" />
-          <p className="text-blue-600 font-medium mb-1 text-sm">Click to upload or drag and drop</p>
-          <p className="text-gray-500 text-xs">PDF, DOC, DOCX, JPG, PNG up to 10MB</p>
-        </div>
+        {children || (
+          <div 
+            className={`w-full border-2 border-dashed rounded-lg p-4 flex flex-col items-center justify-center transition-colors
+              ${isDragging ? 'bg-blue-50 border-blue-300' : 'border-gray-300 bg-gray-50/80'}`} 
+            onDragOver={handleDragOver} 
+            onDragLeave={handleDragLeave} 
+            onDrop={handleDrop} 
+            onClick={handleClickUpload}
+          >
+            <input 
+              type="file" 
+              ref={fileInputRef} 
+              onChange={e => handleFileUpload(e.target.files)} 
+              className="hidden" 
+              multiple 
+            />
+            <UploadIcon className="h-6 w-6 text-gray-400 mb-2" />
+            <p className="text-blue-600 font-medium mb-1 text-sm">Click to upload or drag and drop</p>
+            <p className="text-gray-500 text-xs">PDF, DOC, DOCX, JPG, PNG up to 10MB</p>
+          </div>
+        )}
 
         {uploadedFiles.length > 0 && (
           <div className="space-y-3">
             {uploadedFiles.map(file => (
-              <div key={file.id} className="bg-white rounded-lg p-4 border border-gray-100 hover:bg-gray-50">
+              <div key={file.id} className="bg-white rounded-lg p-3 border border-gray-100 hover:bg-gray-50">
                 <div className="flex items-center justify-between w-full">
                   <div className="flex items-center space-x-3">
-                    <div className="bg-blue-50 p-3 rounded-lg">
-                      <FileTextIcon className="h-6 w-6 text-blue-600" />
+                    <div className="bg-blue-50 p-2 rounded-lg">
+                      <FileTextIcon className="h-5 w-5 text-blue-600" />
                     </div>
                     <div>
                       <p className="font-medium text-sm">{file.name}</p>
@@ -155,7 +164,7 @@ const FileUploadSection: React.FC<FileUploadSectionProps> = ({
                         onDeleteFile && onDeleteFile(file.id);
                       }}
                     >
-                      <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
+                      <TrashIcon className="h-4 w-4 text-gray-500 hover:text-red-500" />
                     </Button>
                   </div>
                 </div>
