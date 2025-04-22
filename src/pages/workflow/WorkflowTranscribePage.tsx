@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ArrowRightIcon, ArrowLeftIcon, MicIcon, SettingsIcon, FileTextIcon, VideoIcon } from "lucide-react";
+import { ArrowRightIcon, ArrowLeftIcon, MicIcon, SettingsIcon, FileTextIcon, VideoIcon, UploadIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,6 +12,7 @@ import RecordingButton from "@/components/RecordingButton";
 import StepProgress from "@/components/StepProgress";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Switch } from "@/components/ui/switch";
+import FileUploadTab from "@/components/workflow/FileUploadTab";
 
 const workflowSteps = [{
   name: "Upload",
@@ -113,9 +114,13 @@ const WorkflowTranscribePage = () => {
               />
             </div>
             <div className="p-4 min-h-[400px] bg-white">
-              {transcription ? <div className="p-4 text-sm px-[8px] py-[8px]">{transcription}</div> : <div className="flex flex-col items-center justify-center h-full text-center p-8 text-gray-500 bg-gray-50 rounded-md">
+              {transcription ? (
+                <div className="p-4 text-sm px-[8px] py-[8px]">{transcription}</div>
+              ) : (
+                <div className="flex flex-col items-center justify-center h-full text-center p-8 text-gray-500 bg-gray-50 rounded-md">
                   <p className="text-sm">Click the button above to start recording your consultation. Transcription will appear here once active.</p>
-                </div>}
+                </div>
+              )}
             </div>
           </Card>
 
@@ -127,14 +132,27 @@ const WorkflowTranscribePage = () => {
                     <FileTextIcon className="w-4 h-4 mr-2" />
                     Clinical Notes
                   </TabsTrigger>
+                  <TabsTrigger value="file-upload" className="flex-1">
+                    <UploadIcon className="w-4 h-4 mr-2" />
+                    Upload Files
+                  </TabsTrigger>
                 </TabsList>
               </div>
               
               <TabsContent value="clinical-notes" className="p-4 min-h-[400px] m-0 border-0">
-                <Textarea placeholder="Enter clinical notes here..." value={clinicalNotes} onChange={e => setClinicalNotes(e.target.value)} className="min-h-[370px] resize-none border-0 focus-visible:ring-0" />
+                <Textarea 
+                  placeholder="Enter clinical notes here..." 
+                  value={clinicalNotes} 
+                  onChange={e => setClinicalNotes(e.target.value)} 
+                  className="min-h-[370px] resize-none border-0 focus-visible:ring-0" 
+                />
                 <div className="text-xs text-gray-400 mt-2 text-right">
                   Changes are automatically saved
                 </div>
+              </TabsContent>
+              
+              <TabsContent value="file-upload" className="min-h-[400px] m-0 border-0">
+                <FileUploadTab />
               </TabsContent>
             </Tabs>
           </Card>
