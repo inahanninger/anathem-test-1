@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -17,10 +16,10 @@ const GenerateModal = ({ open, setOpen }: GenerateModalProps) => {
   const [selectedSummaries, setSelectedSummaries] = useState<string[]>([]);
 
   const documents = [
-    { id: "doc1", name: "Clinical Letter (05/04/2025)" },
-    { id: "doc2", name: "Health Assessment (27/03/2025)" },
-    { id: "doc3", name: "Previous Treatment Notes (15/03/2025)" },
-    { id: "doc4", name: "Referral Document (01/03/2025)" },
+    { id: "doc1", name: "Clinical Letter" },
+    { id: "doc2", name: "Health Assessment" },
+    { id: "doc3", name: "Previous Treatment Notes" },
+    { id: "doc4", name: "Referral Document" },
   ];
 
   const summaries = [
@@ -52,13 +51,10 @@ const GenerateModal = ({ open, setOpen }: GenerateModalProps) => {
       return;
     }
 
-    // Here you would handle the generation logic
     toast.success("Generating content from selected sources...");
     
-    // Close the modal
     setOpen(false);
     
-    // Reset selections for next time
     setSelectedDocuments([]);
     setSelectedSummaries([]);
   };
