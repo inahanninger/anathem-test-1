@@ -14,7 +14,7 @@ const RecordingButton = ({ isRecording, onClick, className }: RecordingButtonPro
   return (
     <Button
       className={cn(
-        `px-4 relative ${isRecording ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-600 hover:bg-blue-700'}`,
+        `px-4 relative ${isRecording ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-500 hover:bg-blue-600'}`,
         className
       )}
       onClick={onClick}
