@@ -78,6 +78,25 @@ export default {
         hover: {
           DEFAULT: 'hsl(var(--blue-100))',
         },
+        neutral: {
+          50: '#F9FAFB',
+          100: '#F3F4F6',
+          200: '#E5E7EB',
+          400: '#9CA3AF',
+          500: '#6B7280',
+          700: '#374151',
+          800: '#1F2937',
+          900: '#111827',
+        },
+        red: {
+          50: '#FEF2F2',
+          700: '#B91C1C',
+          800: '#991B1B',
+        },
+        blue: {
+          50: '#EFF6FF',
+          500: '#3B82F6',
+        },
       },
       backgroundColor: {
         'hover-blue': 'hsl(var(--blue-100))',
@@ -91,7 +110,7 @@ export default {
         sm: 'calc(var(--radius) - 4px)'
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        inter: ['Inter', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         xs: '0.75rem',
