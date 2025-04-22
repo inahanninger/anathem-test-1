@@ -14,7 +14,7 @@ const HomePage = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
           {/* Transcribe a Consultation Card */}
-          <div className="border rounded-lg p-6">
+          <div className="border rounded-lg p-6 bg-neutral-50">
             <div className="flex items-start gap-3 mb-2">
               <Mic className="h-5 w-5 text-gray-500" />
               <h2 className="font-semibold text-base">Transcribe a Consultation</h2>
@@ -30,7 +30,7 @@ const HomePage = () => {
           </div>
 
           {/* Create Assessment Report Card */}
-          <div className="border rounded-lg p-6">
+          <div className="border rounded-lg p-6 bg-neutral-50">
             <div className="flex items-start gap-3 mb-2">
               <FileText className="h-5 w-5 text-gray-500" />
               <h2 className="font-semibold text-base">Begin Patient Assessment Workflow</h2>
