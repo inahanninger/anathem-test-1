@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { ArrowRightIcon, ArrowLeftIcon, MicIcon, SettingsIcon, FileTextIcon, VideoIcon, UploadIcon } from "lucide-react";
+import { ArrowRightIcon, ArrowLeftIcon, MicIcon, SettingsIcon, FileTextIcon, VideoIcon, UploadIcon, Volume2, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import RecordingButton from "@/components/RecordingButton";
 import StepProgress from "@/components/StepProgress";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
-import { Switch } from "@/components/ui/switch";
 import FileUploadTab from "@/components/workflow/FileUploadTab";
-import { Timer, ChevronDown, Volume2 } from 'lucide-react';
+import { Timer, Volume2 } from 'lucide-react';
 
 const workflowSteps = [{
   name: "Upload",
@@ -135,10 +135,17 @@ const WorkflowTranscribePage = () => {
                   </div>
                 )}
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-4">
                 <Volume2 className="h-4 w-4 text-gray-600" />
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm text-gray-600">Online Call</span>
+                  <Switch
+                    checked={isOnlineCall}
+                    onCheckedChange={toggleOnlineCall}
+                  />
+                </div>
                 <Button variant="ghost" size="icon" className="h-8 w-8">
-                  <ChevronDown className="h-4 w-4" />
+                  <Settings className="h-4 w-4" />
                 </Button>
               </div>
             </div>
