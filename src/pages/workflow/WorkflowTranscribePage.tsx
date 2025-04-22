@@ -91,7 +91,7 @@ const WorkflowTranscribePage = () => {
       <div className="container mx-auto px-6 py-[8px] w-6xl">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <Card className="rounded-lg overflow-hidden">
-            <div className="bg-gray-50 p-4 flex items-center justify-left border-b">
+            <div className="bg-gray-50 p-4 flex items-left justify-left border-b">
               
               <div className="flex items-center gap-2">
                 <div className="flex items-center space-x-2">
