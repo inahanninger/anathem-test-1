@@ -13,7 +13,7 @@ import RecordingButton from "@/components/RecordingButton";
 import StepProgress from "@/components/StepProgress";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import FileUploadTab from "@/components/workflow/FileUploadTab";
-import { Timer, Volume2 } from 'lucide-react';
+import { Timer } from 'lucide-react';
 
 const workflowSteps = [{
   name: "Upload",
