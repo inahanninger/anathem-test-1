@@ -9,14 +9,27 @@ import StepProgress from "@/components/StepProgress";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
+
 type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
+
+const documentTypes = [
+  "referral letter",
+  "patient information",
+  "QB report",
+  "Connor's questionaire"
+] as const;
+
+type DocumentType = typeof documentTypes[number];
+
 interface FileUpload {
   id: string;
   name: string;
   type: UploadType | "";
+  documentType: DocumentType | "";
   dateUploaded: Date;
   size: number;
 }
+
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -30,7 +43,9 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
+
 const appointmentTypes = ["ADHD Assessment", "Autism Assessment", "ADHD/Autism Combined Assessment"];
+
 const UploadDocumentPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
@@ -41,6 +56,7 @@ const UploadDocumentPage = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+
   const handleFileUpload = (files: FileList | null) => {
     if (!files || files.length === 0) return;
     Array.from(files).forEach(file => {
@@ -48,6 +64,7 @@ const UploadDocumentPage = () => {
         id: crypto.randomUUID(),
         name: file.name,
         type: "",
+        documentType: "",
         dateUploaded: new Date(),
         size: file.size
       };
@@ -55,15 +72,18 @@ const UploadDocumentPage = () => {
       toast.success(`${file.name} uploaded successfully`);
     });
   };
+
   const handleDeleteFile = (fileId: string) => {
     setUploads(uploads.filter(upload => upload.id !== fileId));
     toast.success("File deleted successfully");
   };
+
   const formatFileSize = (bytes: number) => {
     if (bytes < 1024) return `${bytes} bytes`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
+
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("en-GB", {
       day: "numeric",
@@ -71,6 +91,7 @@ const UploadDocumentPage = () => {
       year: "numeric"
     });
   };
+
   const handleContinue = () => {
     if (uploads.length === 0) {
       toast.error("Please upload at least one file");
@@ -78,27 +99,33 @@ const UploadDocumentPage = () => {
     }
     navigate("/workflow/review");
   };
+
   const handleClickUpload = () => {
     fileInputRef.current?.click();
   };
+
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(true);
   };
+
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
   };
+
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
     const files = e.dataTransfer.files;
     handleFileUpload(files);
   };
+
   const handleFileClick = (file: FileUpload) => {
     setSelectedFile(file);
     setIsDialogOpen(true);
   };
+
   const handleUpdateFileType = (type: UploadType) => {
     if (!selectedFile) return;
     setUploads(prev => prev.map(upload => upload.id === selectedFile.id ? {
@@ -111,6 +138,17 @@ const UploadDocumentPage = () => {
     } : null);
     toast.success(`File type updated to ${type}`);
   };
+
+  const handleUpdateDocumentType = (fileId: string, documentType: DocumentType) => {
+    setUploads(prev => prev.map(upload => 
+      upload.id === fileId ? {
+        ...upload,
+        documentType
+      } : upload
+    ));
+    toast.success(`Document type updated to ${documentType}`);
+  };
+
   return <ClinicalLayout>
       <div className="min-h-screen bg-white">
         <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
@@ -181,7 +219,8 @@ const UploadDocumentPage = () => {
           {uploads.length > 0 && <div className="w-full">
               <h2 className="font-semibold mb-4 text-base">Uploaded Documents</h2>
               <div className="space-y-3">
-                {uploads.map(file => <div key={file.id} className="bg-white rounded-lg p-4 flex items-center justify-between border border-gray-100 cursor-pointer hover:bg-gray-50" onClick={() => handleFileClick(file)}>
+                {uploads.map(file => (
+                  <div key={file.id} className="bg-white rounded-lg p-4 flex items-center justify-between border border-gray-100 cursor-pointer hover:bg-gray-50">
                     <div className="flex items-center space-x-3">
                       <div className="bg-blue-50 p-3 rounded-lg">
                         <FileTextIcon className="h-6 w-6 text-blue-600" />
@@ -190,17 +229,34 @@ const UploadDocumentPage = () => {
                         <p className="font-medium text-sm">{file.name}</p>
                         <p className="text-xs text-gray-500">
                           {formatFileSize(file.size)} • Uploaded {formatDate(file.dateUploaded)}
-                          {file.type && ` • Type: ${file.type}`}
                         </p>
+                        <div className="mt-2">
+                          <Select
+                            value={file.documentType}
+                            onValueChange={(value: DocumentType) => handleUpdateDocumentType(file.id, value)}
+                          >
+                            <SelectTrigger className="w-[200px] h-8 text-sm">
+                              <SelectValue placeholder="Select document type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {documentTypes.map(type => (
+                                <SelectItem key={type} value={type} className="text-sm">
+                                  {type}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
                       </div>
                     </div>
                     <Button variant="ghost" size="icon" onClick={e => {
-                e.stopPropagation();
-                handleDeleteFile(file.id);
-              }}>
+                        e.stopPropagation();
+                        handleDeleteFile(file.id);
+                      }}>
                       <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
                     </Button>
-                  </div>)}
+                  </div>
+                ))}
               </div>
             </div>}
         </div>
@@ -265,4 +321,5 @@ const UploadDocumentPage = () => {
       </Dialog>
     </ClinicalLayout>;
 };
+
 export default UploadDocumentPage;
