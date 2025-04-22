@@ -3,6 +3,7 @@ import { Tabs } from "@/components/ui/tabs";
 import SourcesPanel from "../SourcesPanel";
 import TabsHeader from "./TabsHeader";
 import TabsContentSection from "./TabsContentSection";
+
 interface SplitViewProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
@@ -14,6 +15,7 @@ interface SplitViewProps {
   setDevelopmentalHistory: (value: string) => void;
   showSources: boolean;
 }
+
 const SplitView = ({
   activeTab,
   setActiveTab,
@@ -25,7 +27,7 @@ const SplitView = ({
   setDevelopmentalHistory,
   showSources
 }: SplitViewProps) => {
-  return <ResizablePanelGroup direction="horizontal" className="min-h-[600px] border rounded-md overflow-hidden">
+  return <ResizablePanelGroup direction="horizontal" className={`min-h-[600px] ${!showSources ? 'border' : ''} rounded-md overflow-hidden`}>
       <ResizablePanel defaultSize={50} minSize={30}>
         <div className="">
           <Tabs defaultValue="progress-notes" value={activeTab} onValueChange={setActiveTab} className="w-full h-full flex flex-col py-[8px] px-[4px]">
@@ -45,4 +47,5 @@ const SplitView = ({
       </ResizablePanel>
     </ResizablePanelGroup>;
 };
+
 export default SplitView;
