@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from "react";
 import { UploadIcon, FileTextIcon, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -104,15 +103,15 @@ const FileUploadSection: React.FC<FileUploadSectionProps> = ({
   };
 
   return (
-    <div className={`mb-8 ${className || ""}`}>
+    <div className={`mb-6 ${className || ""}`}>
       <h3 className="text-base font-semibold mb-2 flex items-center">
         {title}
         {required && <span className="text-red-500 ml-1">*</span>}
       </h3>
       
-      <div className="space-y-4">
+      <div className="space-y-3">
         <div 
-          className={`w-full border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center transition-colors
+          className={`w-full border-2 border-dashed rounded-lg p-4 flex flex-col items-center justify-center transition-colors
             ${isDragging ? 'bg-blue-50 border-blue-300' : 'border-gray-300 bg-gray-50/80'}`} 
           onDragOver={handleDragOver} 
           onDragLeave={handleDragLeave} 
@@ -126,8 +125,8 @@ const FileUploadSection: React.FC<FileUploadSectionProps> = ({
             className="hidden" 
             multiple 
           />
-          <UploadIcon className="h-12 w-12 text-gray-400 mb-4" />
-          <p className="text-blue-600 font-medium mb-2 text-sm">Click to upload or drag and drop</p>
+          <UploadIcon className="h-8 w-8 text-gray-400 mb-2" />
+          <p className="text-blue-600 font-medium mb-1 text-sm">Click to upload or drag and drop</p>
           <p className="text-gray-500 text-xs">PDF, DOC, DOCX, JPG, PNG up to 10MB</p>
         </div>
 
