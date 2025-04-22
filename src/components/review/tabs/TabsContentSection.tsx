@@ -23,24 +23,28 @@ const TabsContentSection = ({
   setDevelopmentalHistory,
   showSources
 }: TabsContentSectionProps) => {
-  const padding = showSources ? "px-4" : "px-0";
-  
   return (
     <>
-      <TabsContent value="progress-notes" className={`m-0 p-4 py-[16px] ${padding} flex-1 overflow-auto`}>
-        <ProgressNotesTab progressNotes={progressNotes} setProgressNotes={setProgressNotes} />
+      <TabsContent value="progress-notes" className="m-0 flex-1 w-full overflow-auto">
+        <div className="h-full w-full p-4">
+          <ProgressNotesTab progressNotes={progressNotes} setProgressNotes={setProgressNotes} />
+        </div>
       </TabsContent>
       
-      <TabsContent value="clinical-details" className={`m-0 p-4 ${padding} flex-1 overflow-auto`}>
-        <ClinicalDetailsTab clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} />
+      <TabsContent value="clinical-details" className="m-0 flex-1 w-full overflow-auto">
+        <div className="h-full w-full p-4">
+          <ClinicalDetailsTab clinicalDetails={clinicalDetails} setClinicalDetails={setClinicalDetails} />
+        </div>
       </TabsContent>
       
-      <TabsContent value="developmental-history" className={`m-0 p-4 ${padding} flex-1 overflow-auto`}>
-        <DevelopmentalHistoryTab 
-          developmentalHistory={developmentalHistory} 
-          setDevelopmentalHistory={setDevelopmentalHistory} 
-          showSources={showSources}
-        />
+      <TabsContent value="developmental-history" className="m-0 flex-1 w-full overflow-auto">
+        <div className="h-full w-full p-4">
+          <DevelopmentalHistoryTab 
+            developmentalHistory={developmentalHistory} 
+            setDevelopmentalHistory={setDevelopmentalHistory} 
+            showSources={showSources}
+          />
+        </div>
       </TabsContent>
     </>
   );
