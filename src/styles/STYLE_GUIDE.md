@@ -3,46 +3,94 @@
 
 ## Colors and Theme
 
-Our project uses a carefully curated HSL color system defined in `tailwind.config.ts`:
+Our project uses a carefully curated color system defined in `tailwind.config.ts`:
 
 ### Base Colors
-- Background: `--background: 0 0% 100%` (White)
-- Foreground: `--foreground: 240 10% 3.9%` (Dark Gray)
-- Primary: `--primary: 240 5.9% 10%` (Dark Gray)
-- Secondary: `--secondary: 240 4.8% 95.9%` (Light Gray)
+- Background: `--background: 0 0% 100%` (Pure White)
+- Foreground: `--foreground: 220 14% 10%` (Dark Gray/almost black)
+- Primary: `--primary: 220 70% 30%` (Blue-800)
+- Secondary: `--secondary: 210 40% 96.1%` (Light Gray/off-white)
 
 ### Semantic Colors
 - Card: White background with subtle shadow
 - Popover: White with higher elevation shadow
-- Muted: Light gray for less prominent elements
-- Accent: Light gray for highlighted elements
-- Border: Soft gray (`240 5.9% 90%`)
+- Muted: Light gray (`220 14% 95%`) for less prominent elements
+- Accent: Light blue (`218 60% 65%`) for hover states and selected items
+- Border: Very light gray (`220 14% 95%`, neutral-100)
+- Success: Green (`145 65% 30%`, emerald-700)
 
 ## Typography
 
 ### Font Family
 - Primary font: Inter
 - Import: `@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap')`
-- Weights used: 300 (light), 400 (regular), 500 (medium), 600 (semibold), 700 (bold)
+- System fallback: system-ui, sans-serif
 
 ### Text Sizes
-Use Tailwind's built-in size classes:
-- Headings: `text-2xl`, `text-xl`, `text-lg`
-- Body: `text-base`, `text-sm`
-- Small text: `text-xs`
+- Base Font Size: 14px (`text-sm`/`text-base`)
+- Headings:
+  - H1: 24px (`text-2xl`) with line height 1.2
+  - H2: 18px (`text-xl`) with line height 1.3
+  - H3: 16px (`text-lg`) with line height 1.3
+- Body: 14px with line height 1.5
+
+### Font Weights
+- Regular: 400
+- Medium: 500 (used for most text)
+- Semibold: 600 (headings, buttons)
+
+## Layout and Spacing
+
+### Base Grid
+- 8px unit (`spacing-2`)
+
+### Spacing Scale
+- Item Spacing: 16px (`spacing-4`) between related elements
+- Section Spacing: 32px (`spacing-8`) between major sections
+- Page Padding: 24px (`spacing-6`)
+
+### Container Width
+- Maximum Content Width: 1243px centered
+- Responsive padding: 1.5rem (24px)
+
+### Grid System
+Use Tailwind's grid utilities:
+```tsx
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+```
 
 ## Components
 
+### Sidebar
+- Width: 240px
+- Light background: neutral-50
+- Navigation items with 12px vertical padding
+- Icons left-aligned with text
+
 ### Buttons
+- Border Radius: 8px
+- Primary: Blue background (blue-800), white text
+  ```tsx
+  <Button variant="default">Primary Action</Button>
+  // or custom class
+  <button className="btn-primary">Primary Action</button>
+  ```
+- Secondary: White background, grey border, dark text
+  ```tsx
+  <Button variant="secondary">Secondary Action</Button>
+  // or custom class
+  <button className="btn-secondary">Secondary Action</button>
+  ```
+- Font Weight: 500 or 600
+- Padding: 8px 16px
+
+### Search Fields
 ```tsx
-// Primary button
-<Button variant="default">Primary Action</Button>
-
-// Secondary button
-<Button variant="secondary">Secondary Action</Button>
-
-// Outline button
-<Button variant="outline">Outline Action</Button>
+<div className="search-field">
+  <SearchIcon className="w-4 h-4 mr-2" />
+  <input type="text" placeholder="Search..." className="bg-transparent outline-none flex-1" />
+  <span className="text-xs text-neutral-400">⌘K</span>
+</div>
 ```
 
 ### Cards
@@ -56,36 +104,28 @@ Use Tailwind's built-in size classes:
 </Card>
 ```
 
-## Layout and Spacing
-
-### Container Width
-- Max width: 1280px
-- Centered with auto margins
-- Responsive padding: 1rem (16px)
-
-### Spacing Scale
-Use Tailwind's spacing utilities:
-- `space-y-4` for vertical spacing
-- `space-x-4` for horizontal spacing
-- `gap-4` for grid/flex gaps
-
-### Grid System
-Use Tailwind's grid utilities:
-```tsx
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-```
-
-## Animations
+## Interactive Elements
 
 ### Transitions
-- Default duration: 200ms
+- Default duration: 150-200ms
 - Easing: ease-out
 - Use for: hover states, focus states, showing/hiding elements
 
 ```tsx
 // Example transition
-<div className="transition-colors duration-200 ease-out">
+<div className="transition-colors duration-150 ease-out">
 ```
+
+### Hover States
+- Subtle background change (2-3% darker)
+- Primary buttons: slightly darker blue
+- Secondary buttons: light gray background
+
+### Active/Selected States
+- Navigation items: Light blue background
+- Buttons: Slightly darker than hover state
+
+## Animations
 
 ### Pre-built Animations
 - Accordion animations
@@ -98,15 +138,23 @@ Use Tailwind's grid utilities:
 ### Common Utility Classes
 ```css
 .section-header {
-  @apply text-lg font-medium text-gray-800 mb-4;
+  @apply text-lg font-medium text-neutral-900 mb-4;
 }
 
 .input-label {
   @apply text-sm font-medium text-muted-foreground mb-1 block;
 }
 
-.confidence-badge {
-  @apply inline-flex items-center text-xs font-medium px-2 py-1 rounded-full;
+.btn-primary {
+  @apply bg-primary text-primary-foreground font-medium rounded-lg px-4 py-2 hover:bg-primary/90 transition-colors duration-150;
+}
+
+.btn-secondary {
+  @apply bg-white border border-neutral-200 text-neutral-900 font-medium rounded-lg px-4 py-2 hover:bg-neutral-50 transition-colors duration-150;
+}
+
+.search-field {
+  @apply bg-neutral-100 rounded-lg px-3 py-2 text-sm flex items-center border border-transparent focus-within:border-neutral-200 transition-colors duration-150;
 }
 ```
 
@@ -119,7 +167,7 @@ Use Tailwind's grid utilities:
 2. **Responsive Design**
    - Mobile-first approach
    - Use Tailwind breakpoint prefixes: `sm:`, `md:`, `lg:`
-   - Test all components at different viewport sizes
+   - Sidebar collapses to icon-only or hidden menu on smaller screens
 
 3. **Accessibility**
    - Maintain color contrast ratios
@@ -131,11 +179,11 @@ Use Tailwind's grid utilities:
    - Use composition over inheritance
    - Maintain consistent naming conventions
 
-5. **State Styles**
-   - Hover: subtle color changes
-   - Focus: visible ring with offset
-   - Active: slight color darkening
-   - Disabled: reduced opacity
+5. **Icon Usage**
+   - Line style (outlined)
+   - Size: 20px for navigation, 16px for inline
+   - Color matches text they accompany
+   - Use from Lucide React library
 
 6. **Shadow Usage**
    - Cards: `shadow-sm`
@@ -158,10 +206,10 @@ src/
 
 ### Basic Layout Structure
 ```tsx
-<div className="container mx-auto px-4">
+<div className="container mx-auto px-6">
   <main className="py-8">
-    <section className="space-y-6">
-      <h1 className="text-2xl font-semibold">Page Title</h1>
+    <section className="space-y-8">
+      <h1 className="text-2xl font-semibold leading-tight">Page Title</h1>
       <div className="grid gap-4">
         {/* Content */}
       </div>
@@ -174,10 +222,10 @@ src/
 ```tsx
 <div className="space-y-4">
   <div className="space-y-2">
-    <Label htmlFor="name">Name</Label>
-    <Input id="name" placeholder="Enter your name" />
+    <Label htmlFor="name" className="text-sm font-medium">Name</Label>
+    <Input id="name" placeholder="Enter your name" className="rounded-lg" />
   </div>
-  <Button type="submit">Submit</Button>
+  <Button type="submit" className="font-medium">Submit</Button>
 </div>
 ```
 

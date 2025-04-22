@@ -12,9 +12,9 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: '1rem',
+      padding: '1.5rem',
       screens: {
-        '2xl': '1280px'
+        '2xl': '1243px'
       }
     },
     extend: {
@@ -62,7 +62,10 @@ export default {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))'
         },
-        // Clinical interface colors
+        success: {
+          DEFAULT: 'hsl(var(--success))',
+          foreground: 'hsl(var(--success-foreground))'
+        },
         clinical: {
           blue: '#3B82F6',
           'blue-light': '#EFF6FF',
@@ -79,12 +82,34 @@ export default {
         sm: 'calc(var(--radius) - 4px)'
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        xs: '0.75rem',
+        sm: '0.875rem',
+        base: '0.875rem',
+        lg: '1rem',
+        xl: '1.125rem',
+        '2xl': '1.5rem',
+        'citation': '16px',
+      },
+      lineHeight: {
+        tight: '1.2',
+        snug: '1.3',
+        normal: '1.5',
+        'citation': '24px',
       },
       boxShadow: {
         'input': '0 1px 2px rgba(0, 0, 0, 0.05)',
         'card': '0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)',
         'tooltip': '0 0 10px rgba(0,0,0,0.1)',
+      },
+      spacing: {
+        '2': '0.5rem',
+        '3': '0.75rem',
+        '4': '1rem',
+        '6': '1.5rem',
+        '8': '2rem',
       },
       keyframes: {
         'accordion-down': {
@@ -121,11 +146,9 @@ export default {
       maxWidth: {
         '6xl': '1243px'
       },
-      fontSize: {
-        'citation': '16px',
-      },
-      lineHeight: {
-        'citation': '24px',
+      transitionDuration: {
+        '150': '150ms',
+        '200': '200ms',
       }
     }
   },
