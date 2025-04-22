@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Square, MicIcon } from "lucide-react";
+import { Square } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -14,34 +14,19 @@ const RecordingButton = ({ isRecording, onClick, className }: RecordingButtonPro
   return (
     <Button
       className={cn(
-        `px-3 relative ${isRecording ? 'bg-red-600 hover:bg-red-700' : 'bg-red-700 hover:bg-red-800'}`,
+        `px-4 relative ${isRecording ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-600 hover:bg-blue-700'}`,
         className
       )}
       onClick={onClick}
     >
-      {isRecording ? <Square className="w-4 h-4 mr-2" /> : <MicIcon className="w-4 h-4 mr-2" />}
-      
-      {isRecording && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <span className="flex space-x-1">
-            {[1, 2, 3, 4].map((i) => (
-              <span
-                key={i}
-                className={`bg-white h-3 w-0.5 opacity-75 animate-pulse`}
-                style={{
-                  animationDelay: `${i * 0.15}s`,
-                  animationDuration: `${0.75 + (i * 0.1)}s`,
-                  height: `${6 + Math.sin(i * 0.8) * 6}px`,
-                }}
-              />
-            ))}
-          </span>
-        </div>
+      {isRecording ? (
+        <>
+          <Square className="w-4 h-4 mr-2" />
+          <span>End recording</span>
+        </>
+      ) : (
+        <span>Start recording</span>
       )}
-      
-      <span className="z-10">
-        {isRecording ? 'Transcribing' : 'Start Recording'}
-      </span>
     </Button>
   );
 };
