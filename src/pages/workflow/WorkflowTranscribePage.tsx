@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ArrowRightIcon, ArrowLeftIcon, MicIcon, SettingsIcon, FileTextIcon } from "lucide-react";
+import { ArrowRightIcon, ArrowLeftIcon, MicIcon, SettingsIcon, FileTextIcon, VideoIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import RecordingButton from "@/components/RecordingButton";
 import StepProgress from "@/components/StepProgress";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
+import { Switch } from "@/components/ui/switch";
 
 const workflowSteps = [
   {
@@ -38,6 +39,7 @@ const WorkflowTranscribePage = () => {
   const [activeTab, setActiveTab] = useState<string>("clinical-notes");
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
+  const [isOnlineCall, setIsOnlineCall] = useState(false);
   const navigate = useNavigate();
 
   const toggleRecording = () => {
@@ -55,6 +57,11 @@ const WorkflowTranscribePage = () => {
   const handleContinue = () => {
     toast.success("Generating report");
     navigate("/workflow/report");
+  };
+
+  const toggleOnlineCall = () => {
+    setIsOnlineCall(!isOnlineCall);
+    toast.info(isOnlineCall ? "Online call disabled" : "Online call enabled");
   };
 
   return <ClinicalLayout>
@@ -100,7 +107,16 @@ const WorkflowTranscribePage = () => {
                 <MicIcon className="w-5 h-5 text-blue-800" />
                 <h2 className="text-base font-semibold">Transcription</h2>
               </div>
-              <div className="flex gap-2">
+              <div className="flex items-center gap-2">
+                <div className="flex items-center space-x-2">
+                  <VideoIcon className="w-4 h-4 text-gray-600" />
+                  <Label htmlFor="online-call" className="text-sm">Online call</Label>
+                  <Switch 
+                    id="online-call"
+                    checked={isOnlineCall}
+                    onCheckedChange={toggleOnlineCall}
+                  />
+                </div>
                 <RecordingButton isRecording={isRecording} onClick={toggleRecording} />
                 <Button variant="outline" size="icon" className="bg-white">
                   <SettingsIcon className="w-4 h-4" />
