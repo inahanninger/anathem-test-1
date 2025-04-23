@@ -11,6 +11,7 @@ import WorkflowTranscribePage from "./pages/workflow/WorkflowTranscribePage";
 import WorkflowReportPage from "./pages/workflow/WorkflowReportPage";
 import ProfilePage from "./pages/settings/ProfilePage";
 import PreferencesPage from "./pages/settings/PreferencesPage";
+import PatientStartPage from "./pages/PatientStartPage";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/transcribe" element={<TranscribePage />} />
           <Route path="/review" element={<TranscribePage />} />
           <Route path="/generate" element={<TranscribePage />} />
+          <Route path="/patient-start" element={<PatientStartPage />} />
           
           <Route path="/workflow/upload" element={<UploadDocumentPage />} />
           <Route path="/workflow/review" element={<ReviewInformationPage />} />
