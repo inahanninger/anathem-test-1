@@ -76,6 +76,16 @@ const UploadDocumentPage = () => {
   const getUploadsByType = (documentType: DocumentType | "") => {
     return uploads.filter(upload => upload.documentType === documentType);
   };
+
+  const [snapRating, setSnapRating] = useState("");
+  const [snapDocument, setSnapDocument] = useState("");
+
+  const snapDocuments = [
+    "Parent Form",
+    "Teacher Form",
+    "Self-Report Form"
+  ];
+
   return <ClinicalLayout>
       <div className="min-h-screen bg-white">
         <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
@@ -136,7 +146,40 @@ const UploadDocumentPage = () => {
             
             <FileUploadSection title="Conners Questionnaire" required={true} documentType={FILE_CATEGORIES.CONNERS} onFileUpload={files => handleFileUpload(files, FILE_CATEGORIES.CONNERS)} uploadedFiles={getUploadsByType(FILE_CATEGORIES.CONNERS)} onDeleteFile={handleDeleteFile} />
             
-            <FileUploadSection title="SNAP-IV Rating Scale" required={true} documentType={FILE_CATEGORIES.SNAP4} onFileUpload={files => handleFileUpload(files, FILE_CATEGORIES.SNAP4)} uploadedFiles={getUploadsByType(FILE_CATEGORIES.SNAP4)} onDeleteFile={handleDeleteFile} />
+            <div className="mb-6">
+              <h3 className="text-base font-semibold mb-4 flex items-center">
+                SNAP-IV Rating Scale
+                <span className="text-red-500 ml-1">*</span>
+              </h3>
+              
+              <div className="flex gap-4 items-start">
+                <div className="flex-1">
+                  <Label htmlFor="snapRating" className="text-sm font-medium mb-2">Rating Score</Label>
+                  <Input
+                    id="snapRating"
+                    value={snapRating}
+                    onChange={(e) => setSnapRating(e.target.value)}
+                    placeholder="Enter SNAP-IV rating score"
+                    className="mb-2"
+                  />
+                </div>
+                <div className="flex-1">
+                  <Label htmlFor="snapDocument" className="text-sm font-medium mb-2">Document Type</Label>
+                  <Select value={snapDocument} onValueChange={setSnapDocument}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select document type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {snapDocuments.map(doc => (
+                        <SelectItem key={doc} value={doc}>
+                          {doc}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
             
             <FileUploadSection title="QB Test Results" required={true} documentType={FILE_CATEGORIES.QB_TEST} onFileUpload={files => handleFileUpload(files, FILE_CATEGORIES.QB_TEST)} uploadedFiles={getUploadsByType(FILE_CATEGORIES.QB_TEST)} onDeleteFile={handleDeleteFile} />
             
@@ -146,4 +189,5 @@ const UploadDocumentPage = () => {
       </div>
     </ClinicalLayout>;
 };
+
 export default UploadDocumentPage;
