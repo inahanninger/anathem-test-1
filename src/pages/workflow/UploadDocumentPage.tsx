@@ -9,11 +9,9 @@ import StepProgress from "@/components/StepProgress";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import FileUploadSection from "@/components/FileUploadSection";
-
 type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
 const documentTypes = ["referral letter", "patient information", "QB report", "Connor's questionaire", "SNAP4", "patient notes"] as const;
 type DocumentType = typeof documentTypes[number];
-
 interface FileUpload {
   id: string;
   name: string;
@@ -22,7 +20,6 @@ interface FileUpload {
   dateUploaded: Date;
   size: number;
 }
-
 const workflowSteps = [{
   name: "Upload",
   path: "/workflow/upload"
@@ -36,7 +33,6 @@ const workflowSteps = [{
   name: "Report",
   path: "/workflow/report"
 }];
-
 const appointmentTypes = ["ADHD Assessment", "Autism Assessment", "ADHD/Autism Combined Assessment"];
 
 // Categories for file uploads
@@ -46,14 +42,12 @@ const FILE_CATEGORIES = {
   QB_TEST: "QB report",
   PATIENT_NOTES: "patient notes"
 } as const;
-
 const UploadDocumentPage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
   const [appointmentType, setAppointmentType] = useState<string>(appointmentTypes[0]);
   const [uploads, setUploads] = useState<FileUpload[]>([]);
   const navigate = useNavigate();
-
   const handleFileUpload = (files: File[], documentType: DocumentType | "") => {
     files.forEach(file => {
       const newUpload: FileUpload = {
@@ -68,12 +62,10 @@ const UploadDocumentPage = () => {
       toast.success(`${file.name} uploaded successfully`);
     });
   };
-
   const handleDeleteFile = (fileId: string) => {
     setUploads(uploads.filter(upload => upload.id !== fileId));
     toast.success("File deleted successfully");
   };
-
   const handleContinue = () => {
     if (uploads.length === 0) {
       toast.error("Please upload at least one file");
@@ -81,11 +73,9 @@ const UploadDocumentPage = () => {
     }
     navigate("/workflow/review");
   };
-
   const getUploadsByType = (documentType: DocumentType | "") => {
     return uploads.filter(upload => upload.documentType === documentType);
   };
-
   return <ClinicalLayout>
       <div className="min-h-screen bg-white">
         <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
@@ -123,9 +113,7 @@ const UploadDocumentPage = () => {
         
         <div className="container mx-auto px-6 py-8 w-6xl bg-inherit">
           <h1 className="font-bold mb-1 text-lg">Upload Assessment Documents</h1>
-          <p className="text-gray-600 mb-8 text-sm">
-            Upload the required documents for the assessment pathway.
-          </p>
+          
           
           <div className="mb-8">
             <div className="flex flex-col">
@@ -158,5 +146,4 @@ const UploadDocumentPage = () => {
       </div>
     </ClinicalLayout>;
 };
-
 export default UploadDocumentPage;
