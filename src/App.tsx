@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -24,14 +23,14 @@ const App = () => (
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/transcribe" element={<TranscribePage />} />
+          <Route path="/review" element={<TranscribePage />} />
+          <Route path="/generate" element={<TranscribePage />} />
           
-          {/* New Workflow Routes */}
           <Route path="/workflow/upload" element={<UploadDocumentPage />} />
           <Route path="/workflow/review" element={<ReviewInformationPage />} />
           <Route path="/workflow/transcribe" element={<WorkflowTranscribePage />} />
           <Route path="/workflow/report" element={<WorkflowReportPage />} />
           
-          {/* Settings Routes */}
           <Route path="/settings" element={<ProfilePage />} />
           <Route path="/settings/preferences" element={<PreferencesPage />} />
           

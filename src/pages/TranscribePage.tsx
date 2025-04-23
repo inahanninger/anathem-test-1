@@ -11,6 +11,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Link, useNavigate } from "react-router-dom";
 import RecordingButton from "@/components/RecordingButton";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
+import StepProgress from "@/components/StepProgress";
 
 type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
 interface FileUpload {
@@ -20,6 +21,12 @@ interface FileUpload {
   dateUploaded: Date;
   size: number;
 }
+
+const workflowSteps = [
+  { name: "Transcribe/Upload", path: "/transcribe" },
+  { name: "Review", path: "/review" },
+  { name: "Generate", path: "/generate" }
+];
 
 const TranscribePage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
@@ -136,6 +143,10 @@ const TranscribePage = () => {
             </div>
           </div>
         </div>
+      </div>
+      
+      <div className="container mx-auto py-4 w-6xl">
+        <StepProgress currentStep={1} steps={workflowSteps} />
       </div>
       
       <div className="container mx-auto px-6 py-6 w-6xl">
