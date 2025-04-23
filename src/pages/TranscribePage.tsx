@@ -12,7 +12,6 @@ import { Link, useNavigate } from "react-router-dom";
 import RecordingButton from "@/components/RecordingButton";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import StepProgress from "@/components/StepProgress";
-
 type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
 interface FileUpload {
   id: string;
@@ -21,13 +20,16 @@ interface FileUpload {
   dateUploaded: Date;
   size: number;
 }
-
-const workflowSteps = [
-  { name: "Transcribe/Upload", path: "/transcribe" },
-  { name: "Review", path: "/review" },
-  { name: "Generate", path: "/generate" }
-];
-
+const workflowSteps = [{
+  name: "Transcribe/Upload",
+  path: "/transcribe"
+}, {
+  name: "Review",
+  path: "/review"
+}, {
+  name: "Generate",
+  path: "/generate"
+}];
 const TranscribePage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
@@ -41,7 +43,6 @@ const TranscribePage = () => {
   const navigate = useNavigate();
   const completedSections = 1;
   const totalSections = 6;
-
   const handleFileUpload = (files: FileList | null) => {
     if (!files || files.length === 0) return;
     Array.from(files).forEach(file => {
@@ -56,18 +57,15 @@ const TranscribePage = () => {
       toast.success(`${file.name} uploaded successfully`);
     });
   };
-
   const handleDeleteFile = (fileId: string) => {
     setUploads(uploads.filter(upload => upload.id !== fileId));
     toast.success("File deleted successfully");
   };
-
   const formatFileSize = (bytes: number) => {
     if (bytes < 1024) return `${bytes} bytes`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
-
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("en-GB", {
       day: "numeric",
@@ -75,7 +73,6 @@ const TranscribePage = () => {
       year: "numeric"
     });
   };
-
   const toggleRecording = () => {
     if (isRecording) {
       setIsRecording(false);
@@ -87,7 +84,6 @@ const TranscribePage = () => {
       setTranscription("");
     }
   };
-
   const handleContinue = () => {
     if (uploads.length === 0 && !transcription) {
       toast.error("Please upload a file or create a transcription");
@@ -96,28 +92,23 @@ const TranscribePage = () => {
     toast.success("Generating report");
     navigate("/workflow/report");
   };
-
   const handleClickUpload = () => {
     fileInputRef.current?.click();
   };
-
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(true);
   };
-
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
   };
-
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
     const files = e.dataTransfer.files;
     handleFileUpload(files);
   };
-
   return <ClinicalLayout>
     <div className="min-h-screen bg-white">
       <div className="border-b border-gray-100 bg-gray-50/80 py-3 px-6 sticky top-0 z-10 shadow-sm">
@@ -149,7 +140,7 @@ const TranscribePage = () => {
         <StepProgress currentStep={1} steps={workflowSteps} />
       </div>
       
-      <div className="container mx-auto px-6 py-6 w-6xl">
+      <div className="container mx-auto px-6 w-6xl py-[8px]">
         <div className="grid grid-cols-2 md:grid-cols-2 gap-3">
           <div>
             <Card className="rounded-lg overflow-hidden w-full h-full">
@@ -234,5 +225,4 @@ const TranscribePage = () => {
     </div>
   </ClinicalLayout>;
 };
-
 export default TranscribePage;
