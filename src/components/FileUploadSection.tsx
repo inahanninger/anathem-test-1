@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from "react";
 import { UploadIcon, FileTextIcon, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -110,7 +111,10 @@ const FileUploadSection: React.FC<FileUploadSectionProps> = ({
 
   return (
     <div className={`mb-6 ${className || ""}`}>
-      <h2 className="text-lg font-bold mb-4">{title}</h2>
+      <h3 className="text-base font-semibold mb-2 flex items-center">
+        {title}
+        {required && <span className="text-red-500 ml-1">*</span>}
+      </h3>
       
       <div className="space-y-3">
         {children || (
