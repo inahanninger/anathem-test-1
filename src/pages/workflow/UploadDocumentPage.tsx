@@ -112,7 +112,7 @@ const UploadDocumentPage = () => {
         </div>
         
         <div className="container mx-auto px-6 py-8 w-6xl bg-inherit">
-          <h1 className="font-bold mb-1 text-lg">Upload Assessment Documents</h1>
+          
           
           
           <div className="mb-8">
@@ -134,44 +134,16 @@ const UploadDocumentPage = () => {
           <div className="mt-8">
             
             
-            <FileUploadSection 
-              title="Conners Questionnaire" 
-              required={true} 
-              documentType={FILE_CATEGORIES.CONNERS} 
-              onFileUpload={files => handleFileUpload(files, FILE_CATEGORIES.CONNERS)} 
-              uploadedFiles={getUploadsByType(FILE_CATEGORIES.CONNERS)} 
-              onDeleteFile={handleDeleteFile} 
-            />
+            <FileUploadSection title="Conners Questionnaire" required={true} documentType={FILE_CATEGORIES.CONNERS} onFileUpload={files => handleFileUpload(files, FILE_CATEGORIES.CONNERS)} uploadedFiles={getUploadsByType(FILE_CATEGORIES.CONNERS)} onDeleteFile={handleDeleteFile} />
             
-            <FileUploadSection 
-              title="SNAP-IV Rating Scale" 
-              required={true} 
-              documentType={FILE_CATEGORIES.SNAP4} 
-              onFileUpload={files => handleFileUpload(files, FILE_CATEGORIES.SNAP4)} 
-              uploadedFiles={getUploadsByType(FILE_CATEGORIES.SNAP4)} 
-              onDeleteFile={handleDeleteFile} 
-            />
+            <FileUploadSection title="SNAP-IV Rating Scale" required={true} documentType={FILE_CATEGORIES.SNAP4} onFileUpload={files => handleFileUpload(files, FILE_CATEGORIES.SNAP4)} uploadedFiles={getUploadsByType(FILE_CATEGORIES.SNAP4)} onDeleteFile={handleDeleteFile} />
             
-            <FileUploadSection 
-              title="QB Test Results" 
-              required={true} 
-              documentType={FILE_CATEGORIES.QB_TEST} 
-              onFileUpload={files => handleFileUpload(files, FILE_CATEGORIES.QB_TEST)} 
-              uploadedFiles={getUploadsByType(FILE_CATEGORIES.QB_TEST)} 
-              onDeleteFile={handleDeleteFile} 
-            />
+            <FileUploadSection title="QB Test Results" required={true} documentType={FILE_CATEGORIES.QB_TEST} onFileUpload={files => handleFileUpload(files, FILE_CATEGORIES.QB_TEST)} uploadedFiles={getUploadsByType(FILE_CATEGORIES.QB_TEST)} onDeleteFile={handleDeleteFile} />
             
-            <FileUploadSection 
-              title="Patient Notes" 
-              documentType={FILE_CATEGORIES.PATIENT_NOTES} 
-              onFileUpload={files => handleFileUpload(files, FILE_CATEGORIES.PATIENT_NOTES)} 
-              uploadedFiles={getUploadsByType(FILE_CATEGORIES.PATIENT_NOTES)} 
-              onDeleteFile={handleDeleteFile} 
-            />
+            <FileUploadSection title="Patient Notes" documentType={FILE_CATEGORIES.PATIENT_NOTES} onFileUpload={files => handleFileUpload(files, FILE_CATEGORIES.PATIENT_NOTES)} uploadedFiles={getUploadsByType(FILE_CATEGORIES.PATIENT_NOTES)} onDeleteFile={handleDeleteFile} />
           </div>
         </div>
       </div>
     </ClinicalLayout>;
 };
-
 export default UploadDocumentPage;
