@@ -30,9 +30,7 @@ const HelpSupportPage = () => {
           <div className="container mx-auto w-6xl">
             <div className="flex items-center justify-between">
               <h1 className="text-xl font-semibold text-neutral-900">Help</h1>
-              <Button onClick={handleEmailSupport} className="bg-blue-800 hover:bg-blue-900">
-                Contact Support Team
-              </Button>
+              <Button onClick={handleEmailSupport} className="bg-blue-800 hover:bg-blue-900">Contact Support</Button>
             </div>
           </div>
         </div>
