@@ -42,7 +42,7 @@ const HelpSupportPage = () => {
           
           {/* Resources Section */}
           <div className="mb-10">
-            <h2 className="text-lg font-medium mb-2">Resources</h2>
+            <h2 className="text-lg mb-2 font-semibold">Resources</h2>
             <p className="text-neutral-600 mb-6">
               Learn how MediAssist works, understand best practices, and connect with our community
             </p>
@@ -106,14 +106,14 @@ const HelpSupportPage = () => {
             </Card>
             
             <div className="mt-10">
-              <h3 className="font-medium mb-4">Email Support</h3>
+              <h3 className="mb-4 text-lg font-semibold">Email Support</h3>
               <Button onClick={handleEmailSupport} className="bg-blue-800 hover:bg-blue-900">
                 Contact Support Team
               </Button>
             </div>
             
             <div className="mt-10">
-              <h3 className="font-medium mb-4">Submit Feedback</h3>
+              <h3 className="mb-4 font-semibold text-lg">Submit Feedback</h3>
               <form onSubmit={handleFeedbackSubmit} className="space-y-4">
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium mb-1.5 text-neutral-700">
