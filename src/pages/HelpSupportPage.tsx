@@ -72,7 +72,7 @@ const HelpSupportPage = () => {
                     <FileTextIcon className="h-5 w-5 text-blue-800" />
                   </div>
                   <div>
-                    <h3 className="font-medium">Templates</h3>
+                    <h3 className="font-medium">Watch full Anathem demo</h3>
                   </div>
                 </CardContent>
               </Card>
