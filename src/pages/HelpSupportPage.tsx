@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { FileText, Users, FileTextIcon, PlayCircle, ExternalLink } from "lucide-react";
@@ -8,29 +7,23 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-
 const HelpSupportPage = () => {
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [email, setEmail] = useState("");
-  
   const handleFeedbackSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!feedbackMessage.trim()) {
       toast.error("Please enter feedback message");
       return;
     }
-
     toast.success("Thank you for your feedback!");
     setFeedbackMessage("");
     setEmail("");
   };
-  
   const handleEmailSupport = () => {
     window.location.href = "mailto:support@mediassist.com?subject=Support Request";
   };
-  
-  return (
-    <ClinicalLayout>
+  return <ClinicalLayout>
       <div className="min-h-screen bg-white">
         {/* Header Section */}
         <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
@@ -103,45 +96,13 @@ const HelpSupportPage = () => {
           
           {/* External Support Section */}
           <div className="mb-6">
-            <h2 className="text-lg font-medium mb-2">External support</h2>
-            <p className="text-neutral-600 mb-2">
-              To diagnose problems or support you, we sometimes need to access your account. Turning this on will 
-              grant the MediAssist staff access to your account. You can revoke access any time.
-            </p>
             
-            <p className="text-neutral-600 mb-6">
-              Click any of the options below to enable support access for the chosen duration of time.
-            </p>
+            
+            
+            
             
             <Card className="border border-neutral-100 mb-6">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <ExternalLink className="h-5 w-5 mr-2" />
-                    <p className="font-medium">Support access granted until 31 Dec 2024</p>
-                  </div>
-                  <Button variant="outline" size="sm" className="text-red-500 hover:text-red-600 hover:bg-red-50">
-                    Revoke
-                  </Button>
-                </div>
-                
-                <Separator className="my-4" />
-                
-                <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="rounded-full">
-                    1 day
-                  </Button>
-                  <Button variant="outline" size="sm" className="rounded-full">
-                    1 week
-                  </Button>
-                  <Button variant="outline" size="sm" className="rounded-full">
-                    1 month
-                  </Button>
-                  <Button variant="outline" size="sm" className="rounded-full">
-                    Until further notice
-                  </Button>
-                </div>
-              </CardContent>
+              
             </Card>
             
             <div className="mt-10">
@@ -158,31 +119,15 @@ const HelpSupportPage = () => {
                   <label htmlFor="email" className="block text-sm font-medium mb-1.5 text-neutral-700">
                     Email (optional)
                   </label>
-                  <Input 
-                    id="email" 
-                    type="email" 
-                    value={email} 
-                    onChange={e => setEmail(e.target.value)} 
-                    placeholder="your.email@example.com" 
-                    className="max-w-md"
-                  />
+                  <Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your.email@example.com" className="max-w-md" />
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium mb-1.5 text-neutral-700">
                     Feedback
                   </label>
-                  <Textarea 
-                    id="message" 
-                    value={feedbackMessage} 
-                    onChange={e => setFeedbackMessage(e.target.value)} 
-                    placeholder="Please share your thoughts, suggestions, or report any issues..." 
-                    rows={4} 
-                    className="resize-none max-w-md" 
-                  />
+                  <Textarea id="message" value={feedbackMessage} onChange={e => setFeedbackMessage(e.target.value)} placeholder="Please share your thoughts, suggestions, or report any issues..." rows={4} className="resize-none max-w-md" />
                 </div>
-                <Button 
-                  type="submit" 
-                  className="bg-blue-800 hover:bg-blue-900">
+                <Button type="submit" className="bg-blue-800 hover:bg-blue-900">
                   Submit Feedback
                 </Button>
               </form>
@@ -190,8 +135,6 @@ const HelpSupportPage = () => {
           </div>
         </div>
       </div>
-    </ClinicalLayout>
-  );
+    </ClinicalLayout>;
 };
-
 export default HelpSupportPage;
