@@ -22,17 +22,17 @@ export const navItems: NavItem[] = [
   {
     name: 'New Session',
     icon: Plus,
-    path: '/workflow/upload'
+    path: '/transcribe'  // Changed from /workflow/upload to /transcribe
   }, 
   {
     name: 'Generate Assessment',
     icon: FileText,
-    path: '/workflow/report'
+    path: '/workflow/upload'  // This is already correct
   },
   {
     name: 'All Consultations',
     icon: Calendar,
-    path: '/schedule'
+    path: '/consultations'  // Changed from /schedule to /consultations
   }, 
   {
     name: 'Settings',

@@ -14,6 +14,7 @@ import ProfilePage from "./pages/settings/ProfilePage";
 import PreferencesPage from "./pages/settings/PreferencesPage";
 import PatientStartPage from "./pages/PatientStartPage";
 import HelpSupportPage from "./pages/HelpSupportPage";
+import ConsultationsPage from "./pages/ConsultationsPage";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/generate" element={<TranscribePage />} />
           <Route path="/patient-start" element={<PatientStartPage />} />
           <Route path="/help-support" element={<HelpSupportPage />} />
+          <Route path="/consultations" element={<ConsultationsPage />} />
           
           <Route path="/workflow/upload" element={<UploadDocumentPage />} />
           <Route path="/workflow/review" element={<ReviewInformationPage />} />
