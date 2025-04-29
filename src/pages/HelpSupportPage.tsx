@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
-import { FileText, Users, FileTextIcon, PlayCircle, ExternalLink } from "lucide-react";
+import { FileText, Users, FileTextIcon, PlayCircle, ExternalLink, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+
 const HelpSupportPage = () => {
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [email, setEmail] = useState("");
@@ -30,7 +31,10 @@ const HelpSupportPage = () => {
           <div className="container mx-auto w-6xl">
             <div className="flex items-center justify-between">
               <h1 className="text-xl font-semibold text-neutral-900">Help</h1>
-              <Button onClick={handleEmailSupport} className="bg-blue-800 hover:bg-blue-900">Contact Support</Button>
+              <Button onClick={handleEmailSupport} className="bg-blue-800 hover:bg-blue-900">
+                <Mail className="mr-2 h-4 w-4" />
+                Contact Support
+              </Button>
             </div>
           </div>
         </div>
@@ -132,4 +136,5 @@ const HelpSupportPage = () => {
       </div>
     </ClinicalLayout>;
 };
+
 export default HelpSupportPage;
