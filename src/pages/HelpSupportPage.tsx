@@ -48,105 +48,11 @@ const HelpSupportPage = () => {
 
         {/* Main Content */}
         <div className="container mx-auto px-6 py-8 w-6xl">
-          <Tabs defaultValue="videos" className="w-full">
-            <TabsList className="grid grid-cols-3 mb-8">
-              <TabsTrigger value="videos">Video Tutorials</TabsTrigger>
+          <Tabs defaultValue="support" className="w-full">
+            <TabsList className="grid grid-cols-2 mb-8">
               <TabsTrigger value="support">Support Options</TabsTrigger>
               <TabsTrigger value="feedback">Give Feedback</TabsTrigger>
             </TabsList>
-            
-            {/* Video Tutorials Tab */}
-            <TabsContent value="videos">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card>
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-lg">Getting Started</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="overflow-hidden rounded-md border border-neutral-100">
-                      <AspectRatio ratio={16/9}>
-                        <iframe 
-                          src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                          title="Getting Started" 
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                          className="h-full w-full"
-                          allowFullScreen
-                        />
-                      </AspectRatio>
-                    </div>
-                    <p className="text-sm text-muted-foreground mt-3">
-                      Learn the basics of using MediAssist for patient assessments.
-                    </p>
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-lg">Advanced Features</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="overflow-hidden rounded-md border border-neutral-100">
-                      <AspectRatio ratio={16/9}>
-                        <iframe 
-                          src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                          title="Advanced Features" 
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                          className="h-full w-full"
-                          allowFullScreen
-                        />
-                      </AspectRatio>
-                    </div>
-                    <p className="text-sm text-muted-foreground mt-3">
-                      Discover advanced features to streamline your workflow.
-                    </p>
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-lg">Document Management</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="overflow-hidden rounded-md border border-neutral-100">
-                      <AspectRatio ratio={16/9}>
-                        <iframe 
-                          src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                          title="Document Management" 
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                          className="h-full w-full"
-                          allowFullScreen
-                        />
-                      </AspectRatio>
-                    </div>
-                    <p className="text-sm text-muted-foreground mt-3">
-                      Learn how to manage patient documents efficiently.
-                    </p>
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-lg">Assessment Reports</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="overflow-hidden rounded-md border border-neutral-100">
-                      <AspectRatio ratio={16/9}>
-                        <iframe 
-                          src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                          title="Assessment Reports" 
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                          className="h-full w-full"
-                          allowFullScreen
-                        />
-                      </AspectRatio>
-                    </div>
-                    <p className="text-sm text-muted-foreground mt-3">
-                      Create comprehensive assessment reports quickly.
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
             
             {/* Support Options Tab */}
             <TabsContent value="support">
