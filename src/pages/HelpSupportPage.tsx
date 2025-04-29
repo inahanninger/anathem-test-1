@@ -36,16 +36,12 @@ const HelpSupportPage = () => {
 
         {/* Main Content */}
         <div className="container mx-auto px-6 py-8 w-6xl">
-          <p className="text-neutral-700 mb-8">
-            Explore our resources to learn MediAssist and get support
-          </p>
+          
           
           {/* Resources Section */}
           <div className="mb-10">
             <h2 className="text-lg mb-2 font-semibold">Resources</h2>
-            <p className="text-neutral-600 mb-6">
-              Learn how MediAssist works, understand best practices, and connect with our community
-            </p>
+            <p className="text-neutral-600 mb-6">Learn how Anathem works.</p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Card className="border border-neutral-100 shadow-sm hover:shadow transition-shadow">
