@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Mail, MessageSquare, HelpCircle, Info } from "lucide-react";
@@ -10,12 +9,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-
 const HelpSupportPage = () => {
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
-
   const handleFeedbackSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!feedbackMessage.trim()) {
@@ -29,13 +26,10 @@ const HelpSupportPage = () => {
     setEmail("");
     setSubject("");
   };
-
   const handleEmailSupport = () => {
     window.location.href = "mailto:support@mediassist.com?subject=Support Request";
   };
-
-  return (
-    <ClinicalLayout>
+  return <ClinicalLayout>
       <div className="min-h-screen bg-white">
         {/* Header Section */}
         <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
@@ -65,11 +59,8 @@ const HelpSupportPage = () => {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <p className="mb-4">Our support team is available Monday-Friday, 9am-5pm.</p>
-                    <Button 
-                      onClick={handleEmailSupport}
-                      className="bg-blue-800 hover:bg-blue-900"
-                    >
+                    <p className="mb-4">Our support team is available Monday-Friday, 8am - 6pm.</p>
+                    <Button onClick={handleEmailSupport} className="bg-blue-800 hover:bg-blue-900">
                       Contact Support
                     </Button>
                   </CardContent>
@@ -142,43 +133,22 @@ const HelpSupportPage = () => {
                         <label htmlFor="email" className="block text-sm font-medium mb-1.5 text-neutral-700">
                           Email (optional)
                         </label>
-                        <Input 
-                          id="email"
-                          type="email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder="your.email@example.com"
-                        />
+                        <Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your.email@example.com" />
                       </div>
                       <div>
                         <label htmlFor="subject" className="block text-sm font-medium mb-1.5 text-neutral-700">
                           Subject
                         </label>
-                        <Input 
-                          id="subject"
-                          value={subject}
-                          onChange={(e) => setSubject(e.target.value)}
-                          placeholder="What is your feedback about?"
-                        />
+                        <Input id="subject" value={subject} onChange={e => setSubject(e.target.value)} placeholder="What is your feedback about?" />
                       </div>
                     </div>
                     <div>
                       <label htmlFor="message" className="block text-sm font-medium mb-1.5 text-neutral-700">
                         Message
                       </label>
-                      <Textarea 
-                        id="message"
-                        value={feedbackMessage}
-                        onChange={(e) => setFeedbackMessage(e.target.value)}
-                        placeholder="Please share your thoughts, suggestions, or report any issues..."
-                        rows={5}
-                        className="resize-none"
-                      />
+                      <Textarea id="message" value={feedbackMessage} onChange={e => setFeedbackMessage(e.target.value)} placeholder="Please share your thoughts, suggestions, or report any issues..." rows={5} className="resize-none" />
                     </div>
-                    <Button 
-                      type="submit" 
-                      className="bg-blue-800 hover:bg-blue-900"
-                    >
+                    <Button type="submit" className="bg-blue-800 hover:bg-blue-900">
                       Submit Feedback
                     </Button>
                   </form>
@@ -188,8 +158,6 @@ const HelpSupportPage = () => {
           </Tabs>
         </div>
       </div>
-    </ClinicalLayout>
-  );
+    </ClinicalLayout>;
 };
-
 export default HelpSupportPage;
