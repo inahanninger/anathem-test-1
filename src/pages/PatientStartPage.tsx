@@ -157,6 +157,12 @@ const PatientStartPage = () => {
                   <Label htmlFor="nhsNumber" className="text-xs text-muted-foreground mb-1">NHS Number</Label>
                   <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="h-8 w-[140px] text-sm" />
                 </div>
+                <Link to="/transcribe">
+                  <Button size="sm" className="bg-red-800 hover:bg-red-900 text-white h-8 ml-4">
+                    <MicIcon className="mr-2 h-4 w-4" />
+                    Transcribe Consultation
+                  </Button>
+                </Link>
               </div>
               <div className="flex items-center gap-2">
                 <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
@@ -253,16 +259,6 @@ const PatientStartPage = () => {
                 />
               </CardContent>
             </Card>
-
-            {/* 5. Record Consultation Button */}
-            <Link to="/transcribe">
-              <Card className="p-5 transition-all hover:shadow-md cursor-pointer bg-red-50 border-2 border-red-200">
-                <div className="flex items-center justify-center">
-                  <MicIcon className="mr-2 h-5 w-5 text-red-500" />
-                  <span className="text-lg font-medium text-red-500">Transcribe Consultation</span>
-                </div>
-              </Card>
-            </Link>
 
             {/* Generate Button */}
             <Button className={`w-full py-6 text-lg bg-blue-800 hover:bg-blue-900`} onClick={handleGenerateClick}>
