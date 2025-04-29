@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Button } from "@/components/ui/button";
@@ -157,12 +158,6 @@ const PatientStartPage = () => {
                   <Label htmlFor="nhsNumber" className="text-xs text-muted-foreground mb-1">NHS Number</Label>
                   <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="h-8 w-[140px] text-sm" />
                 </div>
-                <Link to="/transcribe">
-                  <Button size="sm" className="bg-red-800 hover:bg-red-900 text-white h-8 ml-4">
-                    <MicIcon className="mr-2 h-4 w-4" />
-                    Transcribe Consultation
-                  </Button>
-                </Link>
               </div>
               <div className="flex items-center gap-2">
                 <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
@@ -183,6 +178,16 @@ const PatientStartPage = () => {
         {/* Main Content */}
         <div className="container mx-auto px-6 py-8 w-6xl">
           <div className="max-w-lg mx-auto space-y-4">
+            {/* Transcribe Consultation Button */}
+            <Link to="/transcribe">
+              <Card className="p-5 transition-all hover:shadow-md cursor-pointer bg-red-800 border-2 border-red-700">
+                <div className="flex items-center justify-center">
+                  <MicIcon className="mr-2 h-5 w-5 text-white" />
+                  <span className="text-lg font-medium text-white">Transcribe Consultation</span>
+                </div>
+              </Card>
+            </Link>
+            
             {/* 1. Enter SNAP-IV results */}
             <Card className="transition-all border-2 hover:shadow-md">
               <CardContent className="p-5">
