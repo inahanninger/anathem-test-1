@@ -1,9 +1,7 @@
-
 import { TabsContent } from "@/components/ui/tabs";
 import ProgressNotesTab from "../ProgressNotesTab";
 import ClinicalDetailsTab from "../ClinicalDetailsTab";
 import DevelopmentalHistoryTab from "../DevelopmentalHistoryTab";
-
 interface TabsContentSectionProps {
   progressNotes: string;
   setProgressNotes: (value: string) => void;
@@ -13,7 +11,6 @@ interface TabsContentSectionProps {
   setDevelopmentalHistory: (value: string) => void;
   showSources: boolean;
 }
-
 const TabsContentSection = ({
   progressNotes,
   setProgressNotes,
@@ -37,15 +34,10 @@ const TabsContentSection = ({
       </TabsContent>
       
       <TabsContent value="developmental-history" className="m-0 flex-1 w-full overflow-auto">
-        <div className="h-full w-full p-4">
-          <DevelopmentalHistoryTab 
-            developmentalHistory={developmentalHistory} 
-            setDevelopmentalHistory={setDevelopmentalHistory} 
-            showSources={showSources} 
-          />
+        <div className="h-full w-full p-4 px-0 py-[8px]">
+          <DevelopmentalHistoryTab developmentalHistory={developmentalHistory} setDevelopmentalHistory={setDevelopmentalHistory} showSources={showSources} />
         </div>
       </TabsContent>
     </>;
 };
-
 export default TabsContentSection;
