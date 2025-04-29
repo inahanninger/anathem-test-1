@@ -26,11 +26,13 @@ const HelpSupportPage = () => {
   return <ClinicalLayout>
       <div className="min-h-screen bg-white">
         {/* Header Section */}
-        <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
+        <div className="border-b border-gray-100 px-6 py-[12px] bg-white">
           <div className="container mx-auto w-6xl">
-            <div className="flex items-center justify-between bg-white">
+            <div className="flex items-center justify-between">
               <h1 className="text-xl font-semibold text-neutral-900">Help</h1>
-              <Button onClick={handleEmailSupport} className="bg-blue-800 hover:bg-blue-900">Contact Support</Button>
+              <Button onClick={handleEmailSupport} className="bg-blue-800 hover:bg-blue-900">
+                Contact Support Team
+              </Button>
             </div>
           </div>
         </div>
