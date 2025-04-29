@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { FileText, Users, FileTextIcon, PlayCircle, ExternalLink } from "lucide-react";
@@ -30,6 +31,9 @@ const HelpSupportPage = () => {
           <div className="container mx-auto w-6xl">
             <div className="flex items-center justify-between">
               <h1 className="text-xl font-semibold text-neutral-900">Help</h1>
+              <Button onClick={handleEmailSupport} className="bg-blue-800 hover:bg-blue-900">
+                Contact Support Team
+              </Button>
             </div>
           </div>
         </div>
@@ -103,9 +107,7 @@ const HelpSupportPage = () => {
             
             <div className="mt-10">
               <h3 className="mb-4 text-lg font-semibold">Email Support</h3>
-              <Button onClick={handleEmailSupport} className="bg-blue-800 hover:bg-blue-900">
-                Contact Support Team
-              </Button>
+              {/* Removed the Contact Support Team button from here */}
             </div>
             
             <div className="mt-10">
