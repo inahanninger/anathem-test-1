@@ -1,58 +1,148 @@
+
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Button } from "@/components/ui/button";
-import { ArrowRightIcon, FileTextIcon, MicIcon, AlertCircle } from "lucide-react";
+import { ArrowRightIcon, FileTextIcon, MicIcon, AlertCircle, Plus, Trash2 } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import FileUploadSection from "@/components/FileUploadSection";
+import { Textarea } from "@/components/ui/textarea";
+
 interface UploadStatus {
   snap4: boolean;
   teacherSummary: boolean;
   abcReport: boolean;
+  connorsQuestionnaire: boolean;
   consultationRecorded: boolean;
 }
+
+interface SnapValue {
+  id: string;
+  value: string;
+}
+
+interface UploadedFile {
+  id: string;
+  name: string;
+  size: number;
+  dateUploaded: Date;
+}
+
 const PatientStartPage = () => {
   const [uploadStatus, setUploadStatus] = useState<UploadStatus>({
     snap4: false,
-    teacherSummary: true,
-    // Set to true as shown in the wireframe
+    teacherSummary: true, // Set to true as shown in the wireframe
     abcReport: false,
+    connorsQuestionnaire: false,
     consultationRecorded: false
   });
+  
   const [generateConfirmOpen, setGenerateConfirmOpen] = useState(false);
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
+  const [snapValues, setSnapValues] = useState<SnapValue[]>([{ id: '1', value: '' }]);
+  
+  const [teacherFiles, setTeacherFiles] = useState<UploadedFile[]>([
+    { id: '1', name: 'Merry Cameron Report.pdf', size: 2500000, dateUploaded: new Date() }
+  ]);
+  
+  const [adhdFiles, setAdhdFiles] = useState<UploadedFile[]>([]);
+  const [connorsFiles, setConnorsFiles] = useState<UploadedFile[]>([]);
+  
   const navigate = useNavigate();
-  const handleUploadSnap4 = () => {
-    // Here you would handle the actual file upload
-    setTimeout(() => {
-      setUploadStatus(prev => ({
-        ...prev,
-        snap4: true
-      }));
-      toast.success("SNAP4 uploaded successfully");
-    }, 500);
+
+  const handleAddSnapField = () => {
+    const newId = (snapValues.length + 1).toString();
+    setSnapValues([...snapValues, { id: newId, value: '' }]);
   };
-  const handleUploadABCReport = () => {
-    // Here you would handle the actual file upload
-    setTimeout(() => {
-      setUploadStatus(prev => ({
-        ...prev,
-        abcReport: true
-      }));
-      toast.success("ABC Report uploaded successfully");
-    }, 500);
+
+  const handleSnapValueChange = (id: string, value: string) => {
+    setSnapValues(snapValues.map(item => item.id === id ? { ...item, value } : item));
+    
+    // Mark as completed if at least one field has a value
+    if (value.trim() !== '') {
+      setUploadStatus(prev => ({ ...prev, snap4: true }));
+    } else {
+      // Check if any other field has a value
+      const anyValueFilled = snapValues.some(item => item.id !== id && item.value.trim() !== '');
+      setUploadStatus(prev => ({ ...prev, snap4: anyValueFilled }));
+    }
   };
+
+  const handleRemoveSnapField = (id: string) => {
+    const newValues = snapValues.filter(item => item.id !== id);
+    setSnapValues(newValues);
+    
+    // Check if any field still has a value
+    const anyValueFilled = newValues.some(item => item.value.trim() !== '');
+    setUploadStatus(prev => ({ ...prev, snap4: anyValueFilled }));
+  };
+
+  const handleFileUpload = (files: File[], documentType: string) => {
+    const newFiles = files.map(file => ({
+      id: Math.random().toString(36).substring(2, 9),
+      name: file.name,
+      size: file.size,
+      dateUploaded: new Date()
+    }));
+
+    if (documentType === 'teacher') {
+      setTeacherFiles(prev => [...prev, ...newFiles]);
+      setUploadStatus(prev => ({ ...prev, teacherSummary: true }));
+    } else if (documentType === 'adhd') {
+      setAdhdFiles(prev => [...prev, ...newFiles]);
+      setUploadStatus(prev => ({ ...prev, abcReport: true }));
+    } else if (documentType === 'connors') {
+      setConnorsFiles(prev => [...prev, ...newFiles]);
+      setUploadStatus(prev => ({ ...prev, connorsQuestionnaire: true }));
+    }
+
+    toast.success(`${files.length} file(s) uploaded successfully`);
+  };
+
+  const handleDeleteFile = (id: string, documentType: string) => {
+    if (documentType === 'teacher') {
+      setTeacherFiles(prev => {
+        const filtered = prev.filter(file => file.id !== id);
+        if (filtered.length === 0) {
+          setUploadStatus(prev => ({ ...prev, teacherSummary: false }));
+        }
+        return filtered;
+      });
+    } else if (documentType === 'adhd') {
+      setAdhdFiles(prev => {
+        const filtered = prev.filter(file => file.id !== id);
+        if (filtered.length === 0) {
+          setUploadStatus(prev => ({ ...prev, abcReport: false }));
+        }
+        return filtered;
+      });
+    } else if (documentType === 'connors') {
+      setConnorsFiles(prev => {
+        const filtered = prev.filter(file => file.id !== id);
+        if (filtered.length === 0) {
+          setUploadStatus(prev => ({ ...prev, connorsQuestionnaire: false }));
+        }
+        return filtered;
+      });
+    }
+
+    toast.success("File deleted successfully");
+  };
+
   const handleGenerateClick = () => {
-    if (!uploadStatus.snap4 && !uploadStatus.teacherSummary && !uploadStatus.abcReport && !uploadStatus.consultationRecorded) {
+    if (!uploadStatus.snap4 && !uploadStatus.teacherSummary && !uploadStatus.abcReport && 
+        !uploadStatus.connorsQuestionnaire && !uploadStatus.consultationRecorded) {
       setGenerateConfirmOpen(true);
     } else {
       navigate("/workflow/upload");
     }
   };
+
   return <ClinicalLayout>
       <div className="min-h-screen bg-white">
         {/* Header Section */}
@@ -88,39 +178,95 @@ const PatientStartPage = () => {
         {/* Main Content */}
         <div className="container mx-auto px-6 py-8 w-6xl">
           <div className="max-w-lg mx-auto space-y-4">
-            {/* Upload SNAP4 Button */}
-            <Card className={`p-6 transition-all hover:shadow-md cursor-pointer border-2 ${uploadStatus.snap4 ? 'bg-blue-50 border-blue-200' : 'border-gray-200'}`} onClick={handleUploadSnap4}>
-              <div className="flex items-center justify-center">
-                <span className="text-lg font-medium">Upload SNAP-IV</span>
-              </div>
+            {/* 1. Enter SNAP-IV results */}
+            <Card className="transition-all border-2 hover:shadow-md">
+              <CardContent className="p-5">
+                <h3 className="text-lg font-medium mb-4">Enter SNAP-IV results</h3>
+                <div className="space-y-3">
+                  {snapValues.map((item) => (
+                    <div key={item.id} className="flex items-center gap-2">
+                      <Input
+                        value={item.value}
+                        onChange={(e) => handleSnapValueChange(item.id, e.target.value)}
+                        placeholder="Enter SNAP-IV value"
+                        className="flex-1"
+                      />
+                      {snapValues.length > 1 && (
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          onClick={() => handleRemoveSnapField(item.id)}
+                          className="shrink-0"
+                        >
+                          <Trash2 size={16} />
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleAddSnapField}
+                    className="w-full"
+                  >
+                    <Plus size={16} className="mr-2" />
+                    Add Value
+                  </Button>
+                </div>
+              </CardContent>
             </Card>
 
-            {/* Teacher Summary Button - Already uploaded in wireframe */}
-            <Card className="p-6 transition-all bg-neutral-50 border-2 border-neutral-200">
-              <div className="flex items-center justify-center">
-                <span className="text-lg font-medium">Upload Merry Cameron</span>
-              </div>
+            {/* 2. Upload Merry Cameron Report */}
+            <Card className={`transition-all border-2 ${uploadStatus.teacherSummary ? 'bg-blue-50 border-blue-200' : 'border-gray-200'}`}>
+              <CardContent className="p-5">
+                <FileUploadSection
+                  title="Upload Merry Cameron Report"
+                  documentType="teacher"
+                  onFileUpload={handleFileUpload}
+                  uploadedFiles={teacherFiles}
+                  onDeleteFile={(id) => handleDeleteFile(id, "teacher")}
+                />
+              </CardContent>
             </Card>
 
-            {/* Upload ABC Report Button */}
-            <Card className={`p-6 transition-all hover:shadow-md cursor-pointer border-2 ${uploadStatus.abcReport ? 'bg-blue-50 border-blue-200' : 'border-gray-200'}`} onClick={handleUploadABCReport}>
-              <div className="flex items-center justify-center">
-                <span className="text-lg font-medium">Upload ADHD Referral Pack</span>
-              </div>
+            {/* 3. Upload ADHD Referral Pack */}
+            <Card className={`transition-all border-2 ${uploadStatus.abcReport ? 'bg-blue-50 border-blue-200' : 'border-gray-200'}`}>
+              <CardContent className="p-5">
+                <FileUploadSection
+                  title="Upload ADHD Referral Pack"
+                  documentType="adhd"
+                  onFileUpload={handleFileUpload}
+                  uploadedFiles={adhdFiles}
+                  onDeleteFile={(id) => handleDeleteFile(id, "adhd")}
+                />
+              </CardContent>
             </Card>
 
-            {/* Record Consultation Button */}
+            {/* 4. Upload Connor's Questionnaire */}
+            <Card className={`transition-all border-2 ${uploadStatus.connorsQuestionnaire ? 'bg-blue-50 border-blue-200' : 'border-gray-200'}`}>
+              <CardContent className="p-5">
+                <FileUploadSection
+                  title="Upload Connor's Questionnaire"
+                  documentType="connors"
+                  onFileUpload={handleFileUpload}
+                  uploadedFiles={connorsFiles}
+                  onDeleteFile={(id) => handleDeleteFile(id, "connors")}
+                />
+              </CardContent>
+            </Card>
+
+            {/* 5. Record Consultation Button */}
             <Link to="/transcribe">
-              <Card className="p-6 transition-all hover:shadow-md cursor-pointer bg-red-50 border-2 border-red-200">
+              <Card className="p-5 transition-all hover:shadow-md cursor-pointer bg-red-50 border-2 border-red-200">
                 <div className="flex items-center justify-center">
                   <MicIcon className="mr-2 h-5 w-5 text-red-500" />
-                  <span className="text-lg font-medium text-red-500">Record Consultation</span>
+                  <span className="text-lg font-medium text-red-500">Transcribe Consultation</span>
                 </div>
               </Card>
             </Link>
 
             {/* Generate Button */}
-            <Button className={`w-full py-6 text-lg ${uploadStatus.consultationRecorded ? 'bg-blue-500' : ''}`} onClick={handleGenerateClick}>
+            <Button className={`w-full py-6 text-lg bg-blue-800 hover:bg-blue-900`} onClick={handleGenerateClick}>
               Generate
             </Button>
           </div>
@@ -150,4 +296,5 @@ const PatientStartPage = () => {
       </AlertDialog>
     </ClinicalLayout>;
 };
+
 export default PatientStartPage;
