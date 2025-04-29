@@ -1,14 +1,12 @@
-
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
-import { FileText, Users, FileTextIcon, PlayCircle, ExternalLink, Mail } from "lucide-react";
+import { FileText, Users, FileTextIcon, PlayCircle, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-
 const HelpSupportPage = () => {
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [email, setEmail] = useState("");
@@ -30,12 +28,9 @@ const HelpSupportPage = () => {
         {/* Header Section */}
         <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
           <div className="container mx-auto w-6xl">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between bg-white">
               <h1 className="text-xl font-semibold text-neutral-900">Help</h1>
-              <Button size="sm" onClick={handleEmailSupport} className="bg-blue-800 hover:bg-blue-900">
-                <Mail className="mr-2 h-4 w-4" />
-                Contact Support
-              </Button>
+              <Button onClick={handleEmailSupport} className="bg-blue-800 hover:bg-blue-900">Contact Support</Button>
             </div>
           </div>
         </div>
@@ -127,7 +122,7 @@ const HelpSupportPage = () => {
                   </label>
                   <Textarea id="message" value={feedbackMessage} onChange={e => setFeedbackMessage(e.target.value)} placeholder="Please share your thoughts, suggestions, or report any issues..." rows={4} className="resize-none max-w-md" />
                 </div>
-                <Button size="sm" type="submit" className="bg-blue-800 hover:bg-blue-900">
+                <Button type="submit" className="bg-blue-800 hover:bg-blue-900">
                   Submit Feedback
                 </Button>
               </form>
@@ -137,5 +132,4 @@ const HelpSupportPage = () => {
       </div>
     </ClinicalLayout>;
 };
-
 export default HelpSupportPage;
