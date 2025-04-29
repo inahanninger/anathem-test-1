@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
-import { ArrowRightIcon, UploadIcon, SettingsIcon, FileTextIcon, TrashIcon, Mic as MicIcon } from "lucide-react";
+
+import React, { useState, useRef, useEffect } from "react";
+import { ArrowRightIcon, UploadIcon, SettingsIcon, FileTextIcon, TrashIcon, Mic as MicIcon, Play, Square } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
@@ -12,7 +12,9 @@ import { Link, useNavigate } from "react-router-dom";
 import RecordingButton from "@/components/RecordingButton";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import StepProgress from "@/components/StepProgress";
+
 type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
+
 interface FileUpload {
   id: string;
   name: string;
@@ -20,209 +22,161 @@ interface FileUpload {
   dateUploaded: Date;
   size: number;
 }
-const workflowSteps = [{
-  name: "Transcribe/Upload",
-  path: "/transcribe"
-}, {
-  name: "Review",
-  path: "/review"
-}, {
-  name: "Generate",
-  path: "/generate"
-}];
+
+const workflowSteps = [
+  { name: "Transcribe/Upload", path: "/transcribe" },
+  { name: "Review", path: "/review" },
+  { name: "Generate", path: "/generate" }
+];
+
 const TranscribePage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
   const [uploads, setUploads] = useState<FileUpload[]>([]);
   const [isRecording, setIsRecording] = useState(false);
   const [transcription, setTranscription] = useState("");
-  const [clinicalNotes, setClinicalNotes] = useState("");
-  const [activeTab, setActiveTab] = useState<string>("clinical-notes");
-  const [isDragging, setIsDragging] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [recordingTime, setRecordingTime] = useState(0);
+  const [activeTab, setActiveTab] = useState<string>("inputs");
   const navigate = useNavigate();
-  const completedSections = 1;
-  const totalSections = 6;
-  const handleFileUpload = (files: FileList | null) => {
-    if (!files || files.length === 0) return;
-    Array.from(files).forEach(file => {
-      const newUpload: FileUpload = {
-        id: crypto.randomUUID(),
-        name: file.name,
-        type: "",
-        dateUploaded: new Date(),
-        size: file.size
-      };
-      setUploads(prev => [...prev, newUpload]);
-      toast.success(`${file.name} uploaded successfully`);
-    });
+
+  // Timer for recording
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isRecording) {
+      interval = setInterval(() => {
+        setRecordingTime(prev => prev + 1);
+      }, 1000);
+    } else {
+      setRecordingTime(0);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isRecording]);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
-  const handleDeleteFile = (fileId: string) => {
-    setUploads(uploads.filter(upload => upload.id !== fileId));
-    toast.success("File deleted successfully");
-  };
-  const formatFileSize = (bytes: number) => {
-    if (bytes < 1024) return `${bytes} bytes`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-  };
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString("en-GB", {
-      day: "numeric",
-      month: "short",
-      year: "numeric"
-    });
-  };
+
   const toggleRecording = () => {
     if (isRecording) {
       setIsRecording(false);
       toast.success("Recording stopped");
-      setTranscription("This is a sample transcription that would be generated from the recording.");
+      setTranscription("Speaker 1: blah blah\nSpeaker 2: blue bleeh");
+      // Navigate back to patient start page after recording is done
+      setTimeout(() => {
+        navigate("/patient-start");
+        toast.success("Consultation recorded successfully");
+      }, 1500);
     } else {
       setIsRecording(true);
       toast.success("Recording started");
       setTranscription("");
     }
   };
-  const handleContinue = () => {
-    if (uploads.length === 0 && !transcription) {
-      toast.error("Please upload a file or create a transcription");
-      return;
-    }
-    toast.success("Generating report");
-    navigate("/workflow/report");
-  };
-  const handleClickUpload = () => {
-    fileInputRef.current?.click();
-  };
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragging(false);
-  };
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragging(false);
-    const files = e.dataTransfer.files;
-    handleFileUpload(files);
-  };
-  return <ClinicalLayout>
-    <div className="min-h-screen bg-white">
-      <div className="border-b border-gray-100 bg-gray-50/80 py-3 px-6 sticky top-0 z-10 shadow-sm">
-        <div className="container mx-auto w-6xl">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="flex flex-col">
-                <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
-                <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} className="h-8 w-[180px] text-sm" />
-              </div>
-              <div className="flex flex-col">
-                <Label htmlFor="nhsNumber" className="text-xs text-muted-foreground mb-1">NHS Number</Label>
-                <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="h-8 w-[140px] text-sm" />
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
-                Back
-              </Button>
-              <Button className="bg-blue-800 hover:bg-blue-900 text-sm flex items-center gap-1" onClick={handleContinue}>
-                Continue <ArrowRightIcon size={16} />
+
+  return (
+    <ClinicalLayout>
+      <div className="min-h-screen bg-white">
+        <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
+          <div className="container mx-auto w-6xl">
+            <div className="flex items-center justify-between">
+              <h1 className="text-xl font-semibold text-neutral-900">Record Consultation</h1>
+              <Button variant="outline" onClick={() => navigate('/patient-start')}>
+                Back to Patient
               </Button>
             </div>
           </div>
         </div>
-      </div>
-      
-      <div className="container mx-auto py-4 w-6xl">
-        <StepProgress currentStep={1} steps={workflowSteps} />
-      </div>
-      
-      <div className="container mx-auto px-6 w-6xl py-[8px]">
-        <div className="grid grid-cols-2 md:grid-cols-2 gap-3">
-          <div>
-            <Card className="rounded-lg overflow-hidden w-full h-full">
-              <div className="p-4 flex items-center justify-between border-b bg-transparent">
-                <div className="flex items-center gap-2">
-                  <MicIcon className="w-5 h-5 text-blue-800" />
-                  <h2 className="text-base font-semibold">Transcription</h2>
-                </div>
-                <div className="flex gap-2">
-                  <RecordingButton isRecording={isRecording} onClick={toggleRecording} />
-                  <Button variant="outline" size="icon" className="bg-white">
-                    <SettingsIcon className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
-              <div className="p-4 min-h-[400px] bg-white">
-                {transcription ? <div className="p-4 text-sm px-[8px] py-[8px]">{transcription}</div> : <div className="flex flex-col items-center justify-center h-full text-center p-8 text-gray-500 bg-gray-50 rounded-md">
-                    <p className="text-sm">Click the button above to start recording your consultation. Transcription will appear here once active.</p>
-                    
-                  </div>}
-              </div>
-            </Card>
-          </div>
-
-          <div>
-            <Card className="rounded-lg overflow-hidden">
-              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full">
-                <div className="p-4 border-b bg-transparent">
-                  <TabsList className="w-full bg-gray-100">
-                    <TabsTrigger value="clinical-notes" className="flex-1">
-                      <FileTextIcon className="w-4 h-4 mr-2" />
-                      Clinical Notes
-                    </TabsTrigger>
-                    <TabsTrigger value="file-upload" className="flex-1">
-                      <UploadIcon className="w-4 h-4 mr-2" />
-                      Upload Files
-                    </TabsTrigger>
-                  </TabsList>
-                </div>
-                
-                <TabsContent value="clinical-notes" className="p-4 min-h-[400px] m-0 border-0">
-                  <Textarea placeholder="Enter clinical notes here..." value={clinicalNotes} onChange={e => setClinicalNotes(e.target.value)} className="min-h-[370px] resize-none border-0 focus-visible:ring-0" />
-                  <div className="text-xs text-gray-400 mt-2 text-right">
-                    Changes are automatically saved
-                  </div>
-                </TabsContent>
-                
-                <TabsContent value="file-upload" className="m-0 p-4 min-h-[400px] border-0">
-                  <div className={`border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center mb-4 transition-colors h-48
-                      ${isDragging ? 'bg-blue-50 border-blue-300' : 'border-gray-300 bg-gray-50'}`} onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop} onClick={handleClickUpload}>
-                    <input type="file" ref={fileInputRef} onChange={e => handleFileUpload(e.target.files)} className="hidden" multiple />
-                    <UploadIcon className="h-12 w-12 text-gray-400 mb-4" />
-                    <p className="text-blue-600 font-medium mb-2 text-sm">Click to upload or drag and drop</p>
-                    <p className="text-gray-500 text-xs">PDF, DOC, DOCX, JPG, PNG up to 10MB</p>
+        
+        <div className="container mx-auto px-6 py-8 w-6xl">
+          <div className="max-w-3xl mx-auto">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+              <TabsList className="w-full mb-6">
+                <TabsTrigger value="inputs" className="flex-1">Inputs / Generate</TabsTrigger>
+                <TabsTrigger value="transcript" className="flex-1">Transcript</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="inputs" className="space-y-6">
+                <div className="bg-white p-4 rounded-lg border">
+                  <div className="flex justify-center">
+                    {/* Audio waveform visualization - simplified for this example */}
+                    <div className="flex items-center justify-center h-32 w-full">
+                      <svg width="100%" height="60" viewBox="0 0 400 60">
+                        <path 
+                          d="M0,30 Q20,10 40,30 T80,30 T120,30 T160,30 T200,30 T240,30 T280,30 T320,30 T360,30 T400,30" 
+                          fill="none" 
+                          stroke={isRecording ? "red" : "#ddd"} 
+                          strokeWidth="2"
+                        />
+                        <path 
+                          d="M0,30 Q20,50 40,30 T80,30 T120,30 T160,30 T200,30 T240,30 T280,30 T320,30 T360,30 T400,30" 
+                          fill="none" 
+                          stroke={isRecording ? "red" : "#ddd"} 
+                          strokeWidth="2"
+                        />
+                        {isRecording && (
+                          <>
+                            {/* Random "active" waveform elements */}
+                            <path d="M50,30 Q60,10 70,30" fill="none" stroke="red" strokeWidth="2" />
+                            <path d="M100,30 Q110,5 120,30" fill="none" stroke="red" strokeWidth="2" />
+                            <path d="M150,30 Q160,15 170,30" fill="none" stroke="red" strokeWidth="2" />
+                            <path d="M200,30 Q220,5 240,30" fill="none" stroke="red" strokeWidth="2" />
+                            <path d="M250,30 Q270,20 290,30" fill="none" stroke="red" strokeWidth="2" />
+                            <path d="M300,30 Q320,5 340,30" fill="none" stroke="red" strokeWidth="2" />
+                          </>
+                        )}
+                      </svg>
+                    </div>
                   </div>
                   
-                  {uploads.length > 0 && <div>
-                      <h3 className="font-medium text-lg mb-3">Uploaded Documents</h3>
-                      <div className="space-y-3">
-                        {uploads.map(file => <div key={file.id} className="border rounded-lg p-4 flex items-center justify-between bg-white">
-                            <div className="flex items-center space-x-3">
-                              <div className="bg-blue-50 p-3 rounded-lg">
-                                <FileTextIcon className="h-6 w-6 text-blue-600" />
-                              </div>
-                              <div>
-                                <p className="font-medium">{file.name}</p>
-                                <p className="text-xs text-gray-500">{formatFileSize(file.size)}</p>
-                              </div>
-                            </div>
-                            <Button variant="ghost" size="icon" onClick={() => handleDeleteFile(file.id)}>
-                              <TrashIcon className="h-5 w-5 text-gray-500 hover:text-red-500" />
-                            </Button>
-                          </div>)}
+                  <div className="flex items-center justify-center mt-4 space-x-4">
+                    <div className="flex items-center space-x-2">
+                      {isRecording ? (
+                        <Button 
+                          className="bg-red-500 hover:bg-red-600 text-white flex items-center" 
+                          onClick={toggleRecording}
+                        >
+                          <Square className="w-4 h-4 mr-2" />
+                          Stop Recording {recordingTime > 0 && `(${formatTime(recordingTime)})`}
+                        </Button>
+                      ) : (
+                        <Button 
+                          className="bg-blue-800 hover:bg-blue-900 text-white flex items-center" 
+                          onClick={toggleRecording}
+                        >
+                          <MicIcon className="w-4 h-4 mr-2" />
+                          Start Recording
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="transcript" className="p-4 border rounded-lg min-h-[400px]">
+                {transcription ? (
+                  <div className="p-4">
+                    {transcription.split('\n').map((line, i) => (
+                      <div key={i} className="mb-4">
+                        <p className="whitespace-pre-wrap">{line}</p>
                       </div>
-                    </div>}
-                </TabsContent>
-              </Tabs>
-            </Card>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center h-64 text-center">
+                    <p className="text-gray-500">Transcript will appear here once recording is active</p>
+                  </div>
+                )}
+              </TabsContent>
+            </Tabs>
           </div>
         </div>
       </div>
-    </div>
-  </ClinicalLayout>;
+    </ClinicalLayout>
+  );
 };
+
 export default TranscribePage;

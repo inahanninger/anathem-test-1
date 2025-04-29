@@ -1,102 +1,155 @@
+
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Button } from "@/components/ui/button";
-import FileUploadSection from "@/components/FileUploadSection";
-import { ArrowRightIcon, FileTextIcon } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { ArrowRightIcon, FileTextIcon, MicIcon, AlertCircle } from "lucide-react";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
-type FileUpload = {
-  id: string;
-  name: string;
-  type: string;
-  dateUploaded: Date;
-  size: number;
-};
+import { Link, useNavigate } from "react-router-dom";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Card } from "@/components/ui/card";
+
+interface UploadStatus {
+  snap4: boolean;
+  teacherSummary: boolean;
+  abcReport: boolean;
+  consultationRecorded: boolean;
+}
+
 const PatientStartPage = () => {
-  const [patientName, setPatientName] = useState("");
-  const [nhsNumber, setNhsNumber] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const [uploads, setUploads] = useState<FileUpload[]>([]);
-  const [assessmentType, setAssessmentType] = useState("");
-  const assessmentTypes = ["ADHD Assessment", "Autism Assessment", "ADHD/Autism Combined Assessment"];
-  const handleFileUpload = (files: File[], documentType: string) => {
-    const newUploads = files.map(file => ({
-      id: crypto.randomUUID(),
-      name: file.name,
-      type: "patient file",
-      dateUploaded: new Date(),
-      size: file.size
-    }));
-    setUploads(prev => [...prev, ...newUploads]);
-    toast.success(`${files.length} file(s) uploaded successfully`);
+  const [uploadStatus, setUploadStatus] = useState<UploadStatus>({
+    snap4: false,
+    teacherSummary: true, // Set to true as shown in the wireframe
+    abcReport: false,
+    consultationRecorded: false,
+  });
+  const [generateConfirmOpen, setGenerateConfirmOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleUploadSnap4 = () => {
+    // Here you would handle the actual file upload
+    setTimeout(() => {
+      setUploadStatus(prev => ({ ...prev, snap4: true }));
+      toast.success("SNAP4 uploaded successfully");
+    }, 500);
   };
-  const handleDeleteFile = (fileId: string) => {
-    setUploads(uploads.filter(upload => upload.id !== fileId));
-    toast.success("File deleted successfully");
+
+  const handleUploadABCReport = () => {
+    // Here you would handle the actual file upload
+    setTimeout(() => {
+      setUploadStatus(prev => ({ ...prev, abcReport: true }));
+      toast.success("ABC Report uploaded successfully");
+    }, 500);
   };
-  return <ClinicalLayout>
+
+  const handleGenerateClick = () => {
+    if (!uploadStatus.snap4 && !uploadStatus.teacherSummary && 
+        !uploadStatus.abcReport && !uploadStatus.consultationRecorded) {
+      setGenerateConfirmOpen(true);
+    } else {
+      navigate("/workflow/upload");
+    }
+  };
+
+  return (
+    <ClinicalLayout>
       <div className="min-h-screen bg-white">
         {/* Header Section */}
         <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
           <div className="container mx-auto w-6xl">
             <div className="flex items-center justify-between">
-              <h1 className="text-xl font-semibold text-neutral-900">Patient Start</h1>
-              <Button asChild className="bg-blue-800 hover:bg-blue-900">
-                <Link to="/workflow/upload" className="flex items-center gap-1">
-                  Start Assessment <ArrowRightIcon size={16} />
-                </Link>
-              </Button>
+              <h1 className="text-xl font-semibold text-neutral-900">Patient Assessment</h1>
             </div>
           </div>
         </div>
 
         {/* Main Content */}
         <div className="container mx-auto px-6 py-8 w-6xl">
-          {/* Patient Information Section */}
-          <div className="mb-8 bg-neutral-50 p-6 rounded-lg">
-            <h2 className="text-lg font-semibold mb-4">Patient Information</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div>
-                <Label htmlFor="patientName">Patient Name</Label>
-                <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} className="mt-1" />
+          <div className="max-w-lg mx-auto space-y-4">
+            {/* Upload SNAP4 Button */}
+            <Card 
+              className={`p-6 transition-all hover:shadow-md cursor-pointer border-2 ${uploadStatus.snap4 ? 'bg-blue-50 border-blue-200' : 'border-gray-200'}`}
+              onClick={handleUploadSnap4}
+            >
+              <div className="flex items-center justify-center">
+                <span className="text-lg font-medium">Upload SNAP4</span>
               </div>
-              <div>
-                <Label htmlFor="nhsNumber">NHS Number</Label>
-                <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="mt-1" />
+            </Card>
+
+            {/* Teacher Summary Button - Already uploaded in wireframe */}
+            <Card 
+              className="p-6 transition-all bg-neutral-50 border-2 border-neutral-200"
+            >
+              <div className="flex items-center justify-center">
+                <span className="text-lg font-medium">Teacher Summary Uploaded</span>
               </div>
-              <div>
-                <Label htmlFor="dateOfBirth">Date of Birth</Label>
-                <Input id="dateOfBirth" type="date" value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)} className="mt-1" />
+            </Card>
+
+            {/* Upload ABC Report Button */}
+            <Card 
+              className={`p-6 transition-all hover:shadow-md cursor-pointer border-2 ${uploadStatus.abcReport ? 'bg-blue-50 border-blue-200' : 'border-gray-200'}`}
+              onClick={handleUploadABCReport}
+            >
+              <div className="flex items-center justify-center">
+                <span className="text-lg font-medium">Upload ABC Report</span>
               </div>
-            </div>
-          </div>
+            </Card>
 
-          {/* Assessment Type Section */}
-          <div className="mb-8">
-            <h2 className="text-lg font-semibold mb-4">Assessment Type</h2>
-            <Select value={assessmentType} onValueChange={setAssessmentType}>
-              <SelectTrigger className="w-full md:w-[300px]">
-                <SelectValue placeholder="Select assessment type" />
-              </SelectTrigger>
-              <SelectContent>
-                {assessmentTypes.map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}
-              </SelectContent>
-            </Select>
-          </div>
+            {/* Record Consultation Button */}
+            <Link to="/transcribe">
+              <Card 
+                className="p-6 transition-all hover:shadow-md cursor-pointer bg-red-50 border-2 border-red-200"
+              >
+                <div className="flex items-center justify-center">
+                  <MicIcon className="mr-2 h-5 w-5 text-red-500" />
+                  <span className="text-lg font-medium text-red-500">Record Consultation</span>
+                </div>
+              </Card>
+            </Link>
 
-          {/* File Upload Section */}
-          <div className="mb-8">
-            <h2 className="text-lg font-semibold mb-4">Patient Documents</h2>
-            <FileUploadSection title="Upload Patient Files" documentType="patient-files" onFileUpload={handleFileUpload} uploadedFiles={uploads} onDeleteFile={handleDeleteFile} />
+            {/* Generate Button */}
+            <Button 
+              className={`w-full py-6 text-lg ${uploadStatus.consultationRecorded ? 'bg-blue-500' : ''}`}
+              onClick={handleGenerateClick}
+            >
+              Generate
+            </Button>
           </div>
-
-          {/* Recent Files Section */}
-          {uploads.length > 0}
         </div>
       </div>
-    </ClinicalLayout>;
+
+      {/* Generate Confirmation Dialog */}
+      <AlertDialog open={generateConfirmOpen} onOpenChange={setGenerateConfirmOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Continue without uploads?</AlertDialogTitle>
+            <AlertDialogDescription>
+              <div className="flex items-center text-amber-600 mb-2">
+                <AlertCircle className="h-5 w-5 mr-2" />
+                <span>No documents or recordings have been added.</span>
+              </div>
+              Are you sure you want to proceed without adding any documentation?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={() => navigate("/workflow/upload")}>
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </ClinicalLayout>
+  );
 };
+
 export default PatientStartPage;
