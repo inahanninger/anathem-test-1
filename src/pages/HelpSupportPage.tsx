@@ -53,7 +53,7 @@ const HelpSupportPage = () => {
                     <FileText className="h-5 w-5 text-blue-800" />
                   </div>
                   <div>
-                    <h3 className="font-medium">Sign-in Using Authenticator</h3>
+                    <h3 className="font-medium text-base">Sign-in Using Authenticator</h3>
                   </div>
                 </CardContent>
               </Card>
@@ -64,7 +64,7 @@ const HelpSupportPage = () => {
                     <Users className="h-5 w-5 text-blue-800" />
                   </div>
                   <div>
-                    <h3 className="font-medium">Create Paperwork using Anathem</h3>
+                    <h3 className="font-medium text-base">Create Paperwork using Anathem</h3>
                   </div>
                 </CardContent>
               </Card>
@@ -75,21 +75,12 @@ const HelpSupportPage = () => {
                     <FileTextIcon className="h-5 w-5 text-blue-800" />
                   </div>
                   <div>
-                    <h3 className="font-medium">Watch Anathem Demo</h3>
+                    <h3 className="font-medium text-base">Watch Anathem Demo</h3>
                   </div>
                 </CardContent>
               </Card>
               
-              <Card className="border border-neutral-100 shadow-sm hover:shadow transition-shadow">
-                <CardContent className="p-4 flex items-center">
-                  <div className="mr-4 p-2 bg-blue-50 rounded-md">
-                    <PlayCircle className="h-5 w-5 text-blue-800" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium">Tutorials</h3>
-                  </div>
-                </CardContent>
-              </Card>
+              
             </div>
           </div>
           
