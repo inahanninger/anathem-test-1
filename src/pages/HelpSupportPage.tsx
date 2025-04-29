@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { FileText, Users, FileTextIcon, PlayCircle, ExternalLink } from "lucide-react";
@@ -106,7 +105,7 @@ const HelpSupportPage = () => {
             </Card>
             
             <div className="mt-10">
-              <h3 className="mb-4 text-lg font-semibold">Email Support</h3>
+              
               {/* Removed the Contact Support Team button from here */}
             </div>
             
