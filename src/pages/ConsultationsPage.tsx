@@ -4,7 +4,7 @@ import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Search, Calendar, Filter, ChevronDown, FileText, ArrowUpDown } from "lucide-react";
+import { Search, Calendar, Filter, ChevronDown, Plus, ArrowUpDown } from "lucide-react";
 import { format } from "date-fns";
 
 // Mock data for consultations
@@ -34,7 +34,7 @@ const ConsultationsPage = () => {
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-semibold">All Consultations</h1>
           <Button className="bg-blue-800 hover:bg-blue-900">
-            <FileText className="mr-2 h-4 w-4" /> New Consultation
+            <Plus className="mr-2 h-4 w-4" /> New Consultation
           </Button>
         </div>
         
