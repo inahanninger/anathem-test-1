@@ -44,7 +44,7 @@ const HelpSupportPage = () => {
           {/* Resources Section */}
           <div className="mb-10">
             <h2 className="text-lg mb-2 font-semibold">Resources</h2>
-            <p className="text-neutral-600 mb-6">Learn how Anathem works.</p>
+            <p className="mb-6 text-inherit">Learn how Anathem works.</p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Card className="border border-neutral-100 shadow-sm hover:shadow transition-shadow">
