@@ -82,11 +82,22 @@ const TranscribePage = () => {
       <div className="min-h-screen bg-white">
         <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
           <div className="container mx-auto w-6xl">
-            <div className="flex items-center justify-between">
-              <h1 className="text-xl font-semibold text-neutral-900">Record Consultation</h1>
-              <Button variant="outline" onClick={() => navigate('/patient-start')}>
-                Back to Patient
-              </Button>
+            <div className="flex items-center justify-between w-auto">
+              <div className="flex items-center gap-4">
+                <div className="flex flex-col">
+                  <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
+                  <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} className="h-8 w-[180px] text-sm" />
+                </div>
+                <div className="flex flex-col">
+                  <Label htmlFor="nhsNumber" className="text-xs text-muted-foreground mb-1">NHS Number</Label>
+                  <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="h-8 w-[140px] text-sm" />
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button variant="outline" onClick={() => navigate('/patient-start')} className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
+                  Back to Patient
+                </Button>
+              </div>
             </div>
           </div>
         </div>
