@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Button } from "@/components/ui/button";
@@ -217,7 +216,7 @@ const PatientStartPage = () => {
             </Card>
 
             {/* 2. Upload Merry Cameron Report */}
-            <Card className={`transition-all border-2 ${uploadStatus.teacherSummary ? 'bg-blue-50 border-blue-200' : 'border-gray-200'}`}>
+            <Card className={`transition-all border-2 ${uploadStatus.teacherSummary ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
               <CardContent className="p-5">
                 <FileUploadSection
                   title="Upload Merry Cameron Report"
@@ -230,7 +229,7 @@ const PatientStartPage = () => {
             </Card>
 
             {/* 3. Upload ADHD Referral Pack */}
-            <Card className={`transition-all border-2 ${uploadStatus.abcReport ? 'bg-blue-50 border-blue-200' : 'border-gray-200'}`}>
+            <Card className={`transition-all border-2 ${uploadStatus.abcReport ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
               <CardContent className="p-5">
                 <FileUploadSection
                   title="Upload ADHD Referral Pack"
@@ -243,7 +242,7 @@ const PatientStartPage = () => {
             </Card>
 
             {/* 4. Upload Connor's Questionnaire */}
-            <Card className={`transition-all border-2 ${uploadStatus.connorsQuestionnaire ? 'bg-blue-50 border-blue-200' : 'border-gray-200'}`}>
+            <Card className={`transition-all border-2 ${uploadStatus.connorsQuestionnaire ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
               <CardContent className="p-5">
                 <FileUploadSection
                   title="Upload Connor's Questionnaire"
