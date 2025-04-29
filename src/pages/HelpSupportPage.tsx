@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { FileText, Users, FileTextIcon, PlayCircle, ExternalLink, Mail } from "lucide-react";
@@ -31,7 +32,7 @@ const HelpSupportPage = () => {
           <div className="container mx-auto w-6xl">
             <div className="flex items-center justify-between">
               <h1 className="text-xl font-semibold text-neutral-900">Help</h1>
-              <Button onClick={handleEmailSupport} className="bg-blue-800 hover:bg-blue-900">
+              <Button size="sm" onClick={handleEmailSupport} className="bg-blue-800 hover:bg-blue-900">
                 <Mail className="mr-2 h-4 w-4" />
                 Contact Support
               </Button>
@@ -126,7 +127,7 @@ const HelpSupportPage = () => {
                   </label>
                   <Textarea id="message" value={feedbackMessage} onChange={e => setFeedbackMessage(e.target.value)} placeholder="Please share your thoughts, suggestions, or report any issues..." rows={4} className="resize-none max-w-md" />
                 </div>
-                <Button type="submit" className="bg-blue-800 hover:bg-blue-900">
+                <Button size="sm" type="submit" className="bg-blue-800 hover:bg-blue-900">
                   Submit Feedback
                 </Button>
               </form>
