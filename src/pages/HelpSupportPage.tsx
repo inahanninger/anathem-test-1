@@ -61,7 +61,7 @@ const HelpSupportPage = () => {
                     <Users className="h-5 w-5 text-blue-800" />
                   </div>
                   <div>
-                    <h3 className="font-medium">Community</h3>
+                    <h3 className="font-medium">Create Paperwork using Anathem</h3>
                   </div>
                 </CardContent>
               </Card>
