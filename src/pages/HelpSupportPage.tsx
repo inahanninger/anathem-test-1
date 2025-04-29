@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
-import { Mail, MessageSquareQuestion, HelpCircle, Info } from "lucide-react";
+import { Mail, MessageSquare, HelpCircle, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -172,7 +172,7 @@ const HelpSupportPage = () => {
                 <Card>
                   <CardHeader>
                     <div className="flex items-center gap-2">
-                      <MessageSquareQuestion className="h-5 w-5 text-blue-800" />
+                      <MessageSquare className="h-5 w-5 text-blue-800" />
                       <CardTitle>FAQs</CardTitle>
                     </div>
                   </CardHeader>
