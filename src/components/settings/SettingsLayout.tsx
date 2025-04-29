@@ -1,14 +1,11 @@
-
 import React from 'react';
 import { ClinicalLayout } from '@/components/ClinicalLayout';
 import { Link, useLocation } from 'react-router-dom';
 import { User, Sliders } from 'lucide-react';
-
 interface SettingsLayoutProps {
   title: string;
   children: React.ReactNode;
 }
-
 const SettingsLayout: React.FC<SettingsLayoutProps> = ({
   title,
   children
@@ -23,12 +20,10 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({
     icon: Sliders,
     path: '/settings/preferences'
   }];
-
-  return (
-    <ClinicalLayout>
+  return <ClinicalLayout>
       <div className="max-w-6xl mx-auto p-6">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-clinical-blue">{title}</h1>
+          <h1 className="text-2xl text-inherit font-semibold">{title}</h1>
           <p className="text-gray-600">Manage your settings and preferences</p>
         </div>
 
@@ -44,8 +39,6 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({
           </div>
         </div>
       </div>
-    </ClinicalLayout>
-  );
+    </ClinicalLayout>;
 };
-
 export default SettingsLayout;
