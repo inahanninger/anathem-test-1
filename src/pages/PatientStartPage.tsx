@@ -16,6 +16,7 @@ interface UploadStatus {
   abcReport: boolean;
   connorsQuestionnaire: boolean;
   consultationRecorded: boolean;
+  developmentHistory: boolean;
 }
 interface SnapValue {
   id: string;
@@ -34,7 +35,8 @@ const PatientStartPage = () => {
     // Set to true as shown in the wireframe
     abcReport: false,
     connorsQuestionnaire: false,
-    consultationRecorded: false
+    consultationRecorded: false,
+    developmentHistory: false
   });
   const [generateConfirmOpen, setGenerateConfirmOpen] = useState(false);
   const [patientName, setPatientName] = useState("James Wilson");
@@ -51,6 +53,7 @@ const PatientStartPage = () => {
   }]);
   const [adhdFiles, setAdhdFiles] = useState<UploadedFile[]>([]);
   const [connorsFiles, setConnorsFiles] = useState<UploadedFile[]>([]);
+  const [developmentFiles, setDevelopmentFiles] = useState<UploadedFile[]>([]);
   const navigate = useNavigate();
   const handleAddSnapField = () => {
     const newId = (snapValues.length + 1).toString();
@@ -116,6 +119,12 @@ const PatientStartPage = () => {
         ...prev,
         connorsQuestionnaire: true
       }));
+    } else if (documentType === 'development') {
+      setDevelopmentFiles(prev => [...prev, ...newFiles]);
+      setUploadStatus(prev => ({
+        ...prev,
+        developmentHistory: true
+      }));
     }
     toast.success(`${files.length} file(s) uploaded successfully`);
   };
@@ -153,11 +162,22 @@ const PatientStartPage = () => {
         }
         return filtered;
       });
+    } else if (documentType === 'development') {
+      setDevelopmentFiles(prev => {
+        const filtered = prev.filter(file => file.id !== id);
+        if (filtered.length === 0) {
+          setUploadStatus(prev => ({
+            ...prev,
+            developmentHistory: false
+          }));
+        }
+        return filtered;
+      });
     }
     toast.success("File deleted successfully");
   };
   const handleGenerateClick = () => {
-    if (!uploadStatus.snap4 && !uploadStatus.teacherSummary && !uploadStatus.abcReport && !uploadStatus.connorsQuestionnaire && !uploadStatus.consultationRecorded) {
+    if (!uploadStatus.snap4 && !uploadStatus.teacherSummary && !uploadStatus.abcReport && !uploadStatus.connorsQuestionnaire && !uploadStatus.consultationRecorded && !uploadStatus.developmentHistory) {
       setGenerateConfirmOpen(true);
     } else {
       navigate("/workflow/upload");
@@ -245,6 +265,13 @@ const PatientStartPage = () => {
             <Card className={`transition-all border-2 ${uploadStatus.connorsQuestionnaire ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
               <CardContent className="p-5">
                 <FileUploadSection title="Upload Connor's Questionnaire" documentType="connors" onFileUpload={handleFileUpload} uploadedFiles={connorsFiles} onDeleteFile={id => handleDeleteFile(id, "connors")} />
+              </CardContent>
+            </Card>
+            
+            {/* 5. Upload Developmental History */}
+            <Card className={`transition-all border-2 ${uploadStatus.developmentHistory ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
+              <CardContent className="p-5">
+                <FileUploadSection title="Upload Developmental History" documentType="development" onFileUpload={handleFileUpload} uploadedFiles={developmentFiles} onDeleteFile={id => handleDeleteFile(id, "development")} />
               </CardContent>
             </Card>
 
