@@ -1,18 +1,18 @@
+
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
-import { Mail, MessageSquare, HelpCircle, Info } from "lucide-react";
+import { FileText, Users, FileTextIcon, PlayCircle, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
+
 const HelpSupportPage = () => {
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [email, setEmail] = useState("");
-  const [subject, setSubject] = useState("");
+  
   const handleFeedbackSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!feedbackMessage.trim()) {
@@ -20,144 +20,178 @@ const HelpSupportPage = () => {
       return;
     }
 
-    // Submit feedback logic would go here
     toast.success("Thank you for your feedback!");
     setFeedbackMessage("");
     setEmail("");
-    setSubject("");
   };
+  
   const handleEmailSupport = () => {
     window.location.href = "mailto:support@mediassist.com?subject=Support Request";
   };
-  return <ClinicalLayout>
+  
+  return (
+    <ClinicalLayout>
       <div className="min-h-screen bg-white">
         {/* Header Section */}
         <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
           <div className="container mx-auto w-6xl">
             <div className="flex items-center justify-between">
-              <h1 className="text-xl font-semibold text-neutral-900">Help & Support</h1>
+              <h1 className="text-xl font-semibold text-neutral-900">Help</h1>
             </div>
           </div>
         </div>
 
         {/* Main Content */}
         <div className="container mx-auto px-6 py-8 w-6xl">
-          <Tabs defaultValue="support" className="w-full">
-            <TabsList className="grid grid-cols-2 mb-8">
-              <TabsTrigger value="support">Support Options</TabsTrigger>
-              <TabsTrigger value="feedback">Give Feedback</TabsTrigger>
-            </TabsList>
+          <p className="text-neutral-700 mb-8">
+            Explore our resources to learn MediAssist and get support
+          </p>
+          
+          {/* Resources Section */}
+          <div className="mb-10">
+            <h2 className="text-lg font-medium mb-2">Resources</h2>
+            <p className="text-neutral-600 mb-6">
+              Learn how MediAssist works, understand best practices, and connect with our community
+            </p>
             
-            {/* Support Options Tab */}
-            <TabsContent value="support">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card>
-                  <CardHeader>
-                    <div className="flex items-center gap-2">
-                      <Mail className="h-5 w-5 text-blue-800" />
-                      <CardTitle>Email Support</CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="mb-4">Our support team is available Monday-Friday, 8am - 6pm.</p>
-                    <Button onClick={handleEmailSupport} className="bg-blue-800 hover:bg-blue-900">
-                      Contact Support
-                    </Button>
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardHeader>
-                    <div className="flex items-center gap-2">
-                      <MessageSquare className="h-5 w-5 text-blue-800" />
-                      <CardTitle>FAQs</CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      <li>
-                        <h3 className="font-medium">How do I create a new patient record?</h3>
-                        <p className="text-sm text-muted-foreground">Go to Patient Start and enter the required information.</p>
-                      </li>
-                      <Separator className="my-2" />
-                      <li>
-                        <h3 className="font-medium">Can I export assessment results?</h3>
-                        <p className="text-sm text-muted-foreground">Yes, use the export button on the report page.</p>
-                      </li>
-                      <Separator className="my-2" />
-                      <li>
-                        <h3 className="font-medium">How do I update patient information?</h3>
-                        <p className="text-sm text-muted-foreground">Edit the patient profile from the patient details page.</p>
-                      </li>
-                    </ul>
-                  </CardContent>
-                </Card>
-                
-                <Card className="md:col-span-2">
-                  <CardHeader>
-                    <div className="flex items-center gap-2">
-                      <Info className="h-5 w-5 text-blue-800" />
-                      <CardTitle>Knowledge Base</CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <Button variant="outline" className="justify-start">
-                        <HelpCircle className="mr-2 h-4 w-4" />
-                        Getting Started Guide
-                      </Button>
-                      <Button variant="outline" className="justify-start">
-                        <HelpCircle className="mr-2 h-4 w-4" />
-                        User Manual
-                      </Button>
-                      <Button variant="outline" className="justify-start">
-                        <HelpCircle className="mr-2 h-4 w-4" />
-                        Troubleshooting
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-            
-            {/* Feedback Tab */}
-            <TabsContent value="feedback">
-              <Card>
-                <CardHeader>
-                  <CardTitle>We Value Your Feedback</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <form onSubmit={handleFeedbackSubmit} className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-medium mb-1.5 text-neutral-700">
-                          Email (optional)
-                        </label>
-                        <Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your.email@example.com" />
-                      </div>
-                      <div>
-                        <label htmlFor="subject" className="block text-sm font-medium mb-1.5 text-neutral-700">
-                          Subject
-                        </label>
-                        <Input id="subject" value={subject} onChange={e => setSubject(e.target.value)} placeholder="What is your feedback about?" />
-                      </div>
-                    </div>
-                    <div>
-                      <label htmlFor="message" className="block text-sm font-medium mb-1.5 text-neutral-700">
-                        Message
-                      </label>
-                      <Textarea id="message" value={feedbackMessage} onChange={e => setFeedbackMessage(e.target.value)} placeholder="Please share your thoughts, suggestions, or report any issues..." rows={5} className="resize-none" />
-                    </div>
-                    <Button type="submit" className="bg-blue-800 hover:bg-blue-900">
-                      Submit Feedback
-                    </Button>
-                  </form>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Card className="border border-neutral-100 shadow-sm hover:shadow transition-shadow">
+                <CardContent className="p-4 flex items-center">
+                  <div className="mr-4 p-2 bg-blue-50 rounded-md">
+                    <FileText className="h-5 w-5 text-blue-800" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium">Documentation</h3>
+                  </div>
                 </CardContent>
               </Card>
-            </TabsContent>
-          </Tabs>
+              
+              <Card className="border border-neutral-100 shadow-sm hover:shadow transition-shadow">
+                <CardContent className="p-4 flex items-center">
+                  <div className="mr-4 p-2 bg-blue-50 rounded-md">
+                    <Users className="h-5 w-5 text-blue-800" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium">Community</h3>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card className="border border-neutral-100 shadow-sm hover:shadow transition-shadow">
+                <CardContent className="p-4 flex items-center">
+                  <div className="mr-4 p-2 bg-blue-50 rounded-md">
+                    <FileTextIcon className="h-5 w-5 text-blue-800" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium">Templates</h3>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card className="border border-neutral-100 shadow-sm hover:shadow transition-shadow">
+                <CardContent className="p-4 flex items-center">
+                  <div className="mr-4 p-2 bg-blue-50 rounded-md">
+                    <PlayCircle className="h-5 w-5 text-blue-800" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium">Tutorials</h3>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+          
+          {/* External Support Section */}
+          <div className="mb-6">
+            <h2 className="text-lg font-medium mb-2">External support</h2>
+            <p className="text-neutral-600 mb-2">
+              To diagnose problems or support you, we sometimes need to access your account. Turning this on will 
+              grant the MediAssist staff access to your account. You can revoke access any time.
+            </p>
+            
+            <p className="text-neutral-600 mb-6">
+              Click any of the options below to enable support access for the chosen duration of time.
+            </p>
+            
+            <Card className="border border-neutral-100 mb-6">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <ExternalLink className="h-5 w-5 mr-2" />
+                    <p className="font-medium">Support access granted until 31 Dec 2024</p>
+                  </div>
+                  <Button variant="outline" size="sm" className="text-red-500 hover:text-red-600 hover:bg-red-50">
+                    Revoke
+                  </Button>
+                </div>
+                
+                <Separator className="my-4" />
+                
+                <div className="flex gap-2">
+                  <Button variant="outline" size="sm" className="rounded-full">
+                    1 day
+                  </Button>
+                  <Button variant="outline" size="sm" className="rounded-full">
+                    1 week
+                  </Button>
+                  <Button variant="outline" size="sm" className="rounded-full">
+                    1 month
+                  </Button>
+                  <Button variant="outline" size="sm" className="rounded-full">
+                    Until further notice
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <div className="mt-10">
+              <h3 className="font-medium mb-4">Email Support</h3>
+              <Button onClick={handleEmailSupport} className="bg-blue-800 hover:bg-blue-900">
+                Contact Support Team
+              </Button>
+            </div>
+            
+            <div className="mt-10">
+              <h3 className="font-medium mb-4">Submit Feedback</h3>
+              <form onSubmit={handleFeedbackSubmit} className="space-y-4">
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium mb-1.5 text-neutral-700">
+                    Email (optional)
+                  </label>
+                  <Input 
+                    id="email" 
+                    type="email" 
+                    value={email} 
+                    onChange={e => setEmail(e.target.value)} 
+                    placeholder="your.email@example.com" 
+                    className="max-w-md"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium mb-1.5 text-neutral-700">
+                    Feedback
+                  </label>
+                  <Textarea 
+                    id="message" 
+                    value={feedbackMessage} 
+                    onChange={e => setFeedbackMessage(e.target.value)} 
+                    placeholder="Please share your thoughts, suggestions, or report any issues..." 
+                    rows={4} 
+                    className="resize-none max-w-md" 
+                  />
+                </div>
+                <Button 
+                  type="submit" 
+                  className="bg-blue-800 hover:bg-blue-900">
+                  Submit Feedback
+                </Button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
-    </ClinicalLayout>;
+    </ClinicalLayout>
+  );
 };
+
 export default HelpSupportPage;
