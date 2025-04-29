@@ -17,7 +17,7 @@ const HomePage = () => {
           <div className="border rounded-lg p-6 bg-neutral-50">
             <div className="flex items-start gap-3 mb-2">
               <Mic className="h-5 w-5 text-gray-500" />
-              <h2 className="font-semibold text-base">Transcribe a Consultation</h2>
+              <h2 className="font-semibold text-lg">Transcribe a Consultation</h2>
             </div>
             <p className="mb-6 ml-8 text-sm text-neutral-500">
               Generate paperwork through transcribing a patient consultation.
@@ -33,7 +33,7 @@ const HomePage = () => {
           <div className="border rounded-lg p-6 bg-neutral-50">
             <div className="flex items-start gap-3 mb-2">
               <FileText className="h-5 w-5 text-gray-500" />
-              <h2 className="font-semibold text-base">Begin Patient Assessment Workflow</h2>
+              <h2 className="font-semibold text-lg">Begin Patient Assessment Workflow</h2>
             </div>
             <p className="mb-6 ml-8 text-sm text-neutral-500">
               Generate reports with multiple file uploads and consultation recordings.
