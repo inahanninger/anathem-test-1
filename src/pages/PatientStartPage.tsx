@@ -201,9 +201,7 @@ const PatientStartPage = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
-                  <Link to="/" className="flex items-center gap-1">
-                    Cancel
-                  </Link>
+                  <Link to="/" className="flex items-center gap-1">Save & Exit</Link>
                 </Button>
                 <Button className="bg-blue-800 hover:bg-blue-900 text-sm" onClick={handleGenerateClick}>
                   <span className="flex items-center gap-1">
