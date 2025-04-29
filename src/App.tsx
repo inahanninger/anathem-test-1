@@ -13,6 +13,7 @@ import WorkflowReportPage from "./pages/workflow/WorkflowReportPage";
 import ProfilePage from "./pages/settings/ProfilePage";
 import PreferencesPage from "./pages/settings/PreferencesPage";
 import PatientStartPage from "./pages/PatientStartPage";
+import HelpSupportPage from "./pages/HelpSupportPage";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/review" element={<TranscribePage />} />
           <Route path="/generate" element={<TranscribePage />} />
           <Route path="/patient-start" element={<PatientStartPage />} />
+          <Route path="/help-support" element={<HelpSupportPage />} />
           
           <Route path="/workflow/upload" element={<UploadDocumentPage />} />
           <Route path="/workflow/review" element={<ReviewInformationPage />} />

@@ -1,5 +1,5 @@
 
-import { Home, Plus, FileText, Calendar, Settings } from 'lucide-react';
+import { Home, Plus, FileText, Calendar, Settings, HelpCircle } from 'lucide-react';
 
 export type NavSubItem = {
   name: string;
@@ -48,5 +48,10 @@ export const navItems: NavItem[] = [
         path: '/settings/preferences'
       }
     ]
+  },
+  {
+    name: 'Help & Support',
+    icon: HelpCircle,
+    path: '/help-support'
   }
 ];
