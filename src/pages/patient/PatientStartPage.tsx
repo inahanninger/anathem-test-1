@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Button } from "@/components/ui/button";
-import { FileUploadSection } from "@/components/FileUploadSection";
+import FileUploadSection from "@/components/FileUploadSection";
 import { ArrowRightIcon, FileTextIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
