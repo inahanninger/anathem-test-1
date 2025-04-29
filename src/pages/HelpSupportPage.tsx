@@ -50,7 +50,7 @@ const HelpSupportPage = () => {
                     <FileText className="h-5 w-5 text-blue-800" />
                   </div>
                   <div>
-                    <h3 className="font-medium">Documentation</h3>
+                    <h3 className="font-medium">Sign-in Using Authenticator</h3>
                   </div>
                 </CardContent>
               </Card>
