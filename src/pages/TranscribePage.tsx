@@ -1,5 +1,6 @@
+
 import React, { useState, useRef, useEffect } from "react";
-import { ArrowRightIcon, UploadIcon, SettingsIcon, FileTextIcon, TrashIcon, Mic as MicIcon, Play, Square } from "lucide-react";
+import { ArrowRightIcon, ArrowLeftIcon, UploadIcon, SettingsIcon, FileTextIcon, TrashIcon, Mic as MicIcon, Play, Square } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,7 +12,9 @@ import { Link, useNavigate } from "react-router-dom";
 import RecordingButton from "@/components/RecordingButton";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import StepProgress from "@/components/StepProgress";
+
 type UploadType = "transcript" | "dictation" | "letter" | "patient notes";
+
 interface FileUpload {
   id: string;
   name: string;
@@ -19,6 +22,7 @@ interface FileUpload {
   dateUploaded: Date;
   size: number;
 }
+
 const workflowSteps = [{
   name: "Transcribe/Upload",
   path: "/transcribe"
@@ -29,6 +33,7 @@ const workflowSteps = [{
   name: "Generate",
   path: "/generate"
 }];
+
 const TranscribePage = () => {
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
@@ -53,11 +58,13 @@ const TranscribePage = () => {
       if (interval) clearInterval(interval);
     };
   }, [isRecording]);
+
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
+
   const toggleRecording = () => {
     if (isRecording) {
       setIsRecording(false);
@@ -74,11 +81,12 @@ const TranscribePage = () => {
       setTranscription("");
     }
   };
+
   return <ClinicalLayout>
       <div className="min-h-screen bg-white">
         <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
           <div className="container mx-auto w-6xl">
-            <div className="flex items-center justify-between w-auto">
+            <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="flex flex-col">
                   <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
@@ -99,61 +107,77 @@ const TranscribePage = () => {
         </div>
         
         <div className="container mx-auto px-6 py-8 w-6xl">
-          <div className="max-w-3xl mx-auto">
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="w-full mb-1">
-                <TabsTrigger value="inputs" className="flex-1">Inputs / Generate</TabsTrigger>
-                <TabsTrigger value="transcript" className="flex-1">Transcript</TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="inputs" className="space-y-6">
-                <div className="bg-white p-4 rounded-lg border py-[16px]">
-                  <div className="flex justify-center">
-                    {/* Audio waveform visualization - simplified for this example */}
-                    <div className="flex items-center justify-center h-32 w-full">
-                      <svg width="100%" height="60" viewBox="0 0 400 60">
-                        <path d="M0,30 Q20,10 40,30 T80,30 T120,30 T160,30 T200,30 T240,30 T280,30 T320,30 T360,30 T400,30" fill="none" stroke={isRecording ? "red" : "#ddd"} strokeWidth="2" />
-                        <path d="M0,30 Q20,50 40,30 T80,30 T120,30 T160,30 T200,30 T240,30 T280,30 T320,30 T360,30 T400,30" fill="none" stroke={isRecording ? "red" : "#ddd"} strokeWidth="2" />
-                        {isRecording && <>
-                            {/* Random "active" waveform elements */}
-                            <path d="M50,30 Q60,10 70,30" fill="none" stroke="red" strokeWidth="2" />
-                            <path d="M100,30 Q110,5 120,30" fill="none" stroke="red" strokeWidth="2" />
-                            <path d="M150,30 Q160,15 170,30" fill="none" stroke="red" strokeWidth="2" />
-                            <path d="M200,30 Q220,5 240,30" fill="none" stroke="red" strokeWidth="2" />
-                            <path d="M250,30 Q270,20 290,30" fill="none" stroke="red" strokeWidth="2" />
-                            <path d="M300,30 Q320,5 340,30" fill="none" stroke="red" strokeWidth="2" />
-                          </>}
-                      </svg>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center justify-center mt-4 space-x-4">
-                    <div className="flex items-center space-x-2">
-                      {isRecording ? <Button className="bg-red-500 hover:bg-red-600 text-white flex items-center" onClick={toggleRecording}>
-                          <Square className="w-4 h-4 mr-2" />
-                          Stop Recording {recordingTime > 0 && `(${formatTime(recordingTime)})`}
-                        </Button> : <Button className="bg-blue-800 hover:bg-blue-900 text-white flex items-center" onClick={toggleRecording}>
-                          <MicIcon className="w-4 h-4 mr-2" />
-                          Start Recording
-                        </Button>}
-                    </div>
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <Card className="rounded-lg overflow-hidden">
+              <div className="bg-gray-50 p-4 flex items-center justify-between border-b">
+                <div className="flex items-center space-x-4">
+                  <RecordingButton isRecording={isRecording} onClick={toggleRecording} className="min-w-[140px]" />
+                  {isRecording && <div className="flex items-center space-x-3">
+                      <span className="text-sm font-medium">{formatTime(recordingTime)}</span>
+                    </div>}
                 </div>
-              </TabsContent>
-              
-              <TabsContent value="transcript" className="p-4 border rounded-lg min-h-[400px]">
-                {transcription ? <div className="p-4">
-                    {transcription.split('\n').map((line, i) => <div key={i} className="mb-4">
-                        <p className="whitespace-pre-wrap">{line}</p>
-                      </div>)}
-                  </div> : <div className="flex flex-col items-center justify-center h-64 text-center">
-                    <p className="text-gray-500">Transcript will appear here once recording is active</p>
+                <div className="flex items-center space-x-4">
+                  <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <SettingsIcon className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+              <div className="p-4 min-h-[400px] bg-white">
+                {transcription ? <div className="p-4 text-sm px-[8px] py-[8px]">{transcription}</div> : <div className="flex flex-col items-center justify-center h-full text-center p-8 text-gray-500 bg-gray-50 rounded-md">
+                    <p className="text-sm">Click the button above to start recording your consultation. Transcription will appear here once active.</p>
                   </div>}
-              </TabsContent>
-            </Tabs>
+              </div>
+            </Card>
+
+            <Card className="rounded-lg overflow-hidden">
+              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full">
+                <div className="bg-gray-50 p-4 border-b">
+                  <TabsList className="w-full bg-gray-100">
+                    <TabsTrigger value="transcript" className="flex-1">
+                      <FileTextIcon className="w-4 h-4 mr-2" />
+                      Clinical Notes
+                    </TabsTrigger>
+                    <TabsTrigger value="file-upload" className="flex-1">
+                      <UploadIcon className="w-4 h-4 mr-2" />
+                      Upload Files
+                    </TabsTrigger>
+                  </TabsList>
+                </div>
+                
+                <TabsContent value="transcript" className="p-4 min-h-[400px] m-0 border-0">
+                  <Textarea placeholder="Enter clinical notes here..." className="min-h-[370px] resize-none border-0 focus-visible:ring-0" />
+                  <div className="text-xs text-gray-400 mt-2 text-right">
+                    Changes are automatically saved
+                  </div>
+                </TabsContent>
+                
+                <TabsContent value="file-upload" className="min-h-[400px] m-0 border-0">
+                  <div className="flex flex-col items-center justify-center h-full p-8 bg-gray-50/50">
+                    <div className="text-center space-y-4 max-w-sm">
+                      <div className="mx-auto w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center">
+                        <UploadIcon className="w-6 h-6 text-blue-500" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-medium text-gray-900">Upload Files</h3>
+                        <p className="text-sm text-gray-500 mt-1">
+                          Upload any supporting documents or files related to this consultation
+                        </p>
+                      </div>
+                      <Button
+                        variant="outline"
+                        className="w-full max-w-[200px]"
+                      >
+                        Choose Files
+                      </Button>
+                    </div>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </Card>
           </div>
         </div>
       </div>
     </ClinicalLayout>;
 };
+
 export default TranscribePage;
