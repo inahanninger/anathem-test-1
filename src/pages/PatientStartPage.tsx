@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Button } from "@/components/ui/button";
@@ -247,109 +248,123 @@ const PatientStartPage = () => {
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="container mx-auto px-6 py-8 w-6xl">
-          <div className="max-w-lg mx-auto space-y-4">
-            {/* Transcribe Consultation Card */}
-            <Card className={`transition-all border-2 ${uploadStatus.consultationRecorded ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
-              <CardContent className="p-5">
-                <h3 className="text-lg font-medium mb-4">Transcribe Consultation</h3>
-                
-                <Link to="/transcribe" className="w-full block">
-                  <Button className="bg-red-800 hover:bg-red-900 w-full py-2">
-                    <MicIcon className="mr-2 h-5 w-5" />
-                    <span>Start New Recording</span>
-                  </Button>
-                </Link>
-                
-                {recordedSessions.length > 0 && (
-                  <div className="mt-4 space-y-3">
-                    <h4 className="text-sm font-medium text-gray-600">Recorded Sessions</h4>
-                    {recordedSessions.map(session => (
-                      <div key={session.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-md border">
-                        <div>
-                          <h5 className="font-medium">{session.title}</h5>
-                          <div className="text-sm text-gray-500">{session.date} · {session.duration}</div>
-                        </div>
-                        <Button variant="ghost" size="sm">
-                          <FileTextIcon size={16} className="mr-2" />
-                          View
-                        </Button>
+        {/* Main Content - Redesigned Layout */}
+        <div className="bg-neutral-50/50 min-h-[calc(100vh-56px)] py-8">
+          <div className="container mx-auto px-6 w-6xl">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="text-xl font-semibold mb-6 text-neutral-900">Patient Documents</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                {/* Transcribe Consultation Card */}
+                <Card className={`h-full transition-all border-2 ${uploadStatus.consultationRecorded ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
+                  <CardContent className="p-5 h-full flex flex-col">
+                    <h3 className="text-lg font-medium mb-4">Transcribe Consultation</h3>
+                    
+                    <Link to="/transcribe" className="w-full block mb-4">
+                      <Button className="bg-blue-800 hover:bg-blue-900 w-full py-2">
+                        <MicIcon className="mr-2 h-5 w-5" />
+                        <span>Start New Recording</span>
+                      </Button>
+                    </Link>
+                    
+                    {recordedSessions.length > 0 && (
+                      <div className="space-y-3 flex-1">
+                        <h4 className="text-sm font-medium text-neutral-700">Recorded Sessions</h4>
+                        {recordedSessions.map(session => (
+                          <div key={session.id} className="flex items-center justify-between p-3 bg-white rounded-md border shadow-sm hover:shadow transition-shadow">
+                            <div>
+                              <h5 className="font-medium">{session.title}</h5>
+                              <div className="text-xs text-neutral-500">{session.date} · {session.duration}</div>
+                            </div>
+                            <Button variant="ghost" size="sm">
+                              <FileTextIcon size={16} className="mr-2" />
+                              View
+                            </Button>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-            
-            {/* 1. Enter SNAP-IV results */}
-            <Card className="transition-all border-2 hover:shadow-md">
-              <CardContent className="p-5">
-                <h3 className="text-lg font-medium mb-4">Enter SNAP-IV results</h3>
-                <div className="space-y-3">
-                  {snapValues.map(item => <div key={item.id} className="flex items-center gap-2">
-                      <Input 
-                        value={item.value} 
-                        onChange={e => handleSnapValueChange(item.id, e.target.value)} 
-                        placeholder="Enter SNAP-IV value" 
-                        className="flex-1" 
-                      />
-                      <Select 
-                        value={item.source} 
-                        onValueChange={(value) => handleSnapSourceChange(item.id, value)}
-                      >
-                        <SelectTrigger className="w-[140px]">
-                          <SelectValue placeholder="Select source" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Teacher">Teacher</SelectItem>
-                          <SelectItem value="Parent">Parent</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      {snapValues.length > 1 && <Button variant="outline" size="icon" onClick={() => handleRemoveSnapField(item.id)} className="shrink-0">
-                          <Trash2 size={16} />
-                        </Button>}
-                    </div>)}
-                  <Button variant="outline" size="sm" onClick={handleAddSnapField} className="w-full">
-                    <Plus size={16} className="mr-2" />
-                    Add Value
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                    )}
+                  </CardContent>
+                </Card>
 
-            {/* 2. Upload Merry Cameron Report */}
-            <Card className={`transition-all border-2 ${uploadStatus.teacherSummary ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
-              <CardContent className="p-5">
-                <FileUploadSection title="Upload Merry Cameron Report" documentType="teacher" onFileUpload={handleFileUpload} uploadedFiles={teacherFiles} onDeleteFile={id => handleDeleteFile(id, "teacher")} />
-              </CardContent>
-            </Card>
+                {/* SNAP-IV results */}
+                <Card className="h-full transition-all border-2 hover:shadow-md">
+                  <CardContent className="p-5 h-full">
+                    <h3 className="text-lg font-medium mb-4">Enter SNAP-IV results</h3>
+                    <div className="space-y-3">
+                      {snapValues.map(item => <div key={item.id} className="flex items-center gap-2">
+                          <Input 
+                            value={item.value} 
+                            onChange={e => handleSnapValueChange(item.id, e.target.value)} 
+                            placeholder="Enter SNAP-IV value" 
+                            className="flex-1" 
+                          />
+                          <Select 
+                            value={item.source} 
+                            onValueChange={(value) => handleSnapSourceChange(item.id, value)}
+                          >
+                            <SelectTrigger className="w-[140px]">
+                              <SelectValue placeholder="Select source" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Teacher">Teacher</SelectItem>
+                              <SelectItem value="Parent">Parent</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          {snapValues.length > 1 && <Button variant="outline" size="icon" onClick={() => handleRemoveSnapField(item.id)} className="shrink-0">
+                              <Trash2 size={16} />
+                            </Button>}
+                        </div>)}
+                      <Button variant="outline" size="sm" onClick={handleAddSnapField} className="w-full">
+                        <Plus size={16} className="mr-2" />
+                        Add Value
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+              
+              <h2 className="text-xl font-semibold mb-4 text-neutral-900">Document Uploads</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                {/* Merry Cameron Report */}
+                <Card className={`transition-all border-2 ${uploadStatus.teacherSummary ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
+                  <CardContent className="p-5">
+                    <FileUploadSection title="Upload Merry Cameron Report" documentType="teacher" onFileUpload={handleFileUpload} uploadedFiles={teacherFiles} onDeleteFile={id => handleDeleteFile(id, "teacher")} />
+                  </CardContent>
+                </Card>
 
-            {/* 3. Upload ADHD Referral Pack */}
-            <Card className={`transition-all border-2 ${uploadStatus.abcReport ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
-              <CardContent className="p-5">
-                <FileUploadSection title="Upload ADHD Referral Pack" documentType="adhd" onFileUpload={handleFileUpload} uploadedFiles={adhdFiles} onDeleteFile={id => handleDeleteFile(id, "adhd")} />
-              </CardContent>
-            </Card>
+                {/* ADHD Referral Pack */}
+                <Card className={`transition-all border-2 ${uploadStatus.abcReport ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
+                  <CardContent className="p-5">
+                    <FileUploadSection title="Upload ADHD Referral Pack" documentType="adhd" onFileUpload={handleFileUpload} uploadedFiles={adhdFiles} onDeleteFile={id => handleDeleteFile(id, "adhd")} />
+                  </CardContent>
+                </Card>
 
-            {/* 4. Upload Connor's Questionnaire */}
-            <Card className={`transition-all border-2 ${uploadStatus.connorsQuestionnaire ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
-              <CardContent className="p-5">
-                <FileUploadSection title="Upload Connor's Questionnaire" documentType="connors" onFileUpload={handleFileUpload} uploadedFiles={connorsFiles} onDeleteFile={id => handleDeleteFile(id, "connors")} />
-              </CardContent>
-            </Card>
-            
-            {/* 5. Upload Developmental History */}
-            <Card className={`transition-all border-2 ${uploadStatus.developmentHistory ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
-              <CardContent className="p-5">
-                <FileUploadSection title="Upload Developmental History" documentType="development" onFileUpload={handleFileUpload} uploadedFiles={developmentFiles} onDeleteFile={id => handleDeleteFile(id, "development")} />
-              </CardContent>
-            </Card>
+                {/* Connor's Questionnaire */}
+                <Card className={`transition-all border-2 ${uploadStatus.connorsQuestionnaire ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
+                  <CardContent className="p-5">
+                    <FileUploadSection title="Upload Connor's Questionnaire" documentType="connors" onFileUpload={handleFileUpload} uploadedFiles={connorsFiles} onDeleteFile={id => handleDeleteFile(id, "connors")} />
+                  </CardContent>
+                </Card>
+                
+                {/* Developmental History */}
+                <Card className={`transition-all border-2 ${uploadStatus.developmentHistory ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
+                  <CardContent className="p-5">
+                    <FileUploadSection title="Upload Developmental History" documentType="development" onFileUpload={handleFileUpload} uploadedFiles={developmentFiles} onDeleteFile={id => handleDeleteFile(id, "development")} />
+                  </CardContent>
+                </Card>
+              </div>
 
-            {/* Generate Button */}
-            <Button className={`w-full py-6 text-lg bg-blue-800 hover:bg-blue-900`} onClick={handleGenerateClick}>
-              Generate
-            </Button>
+              {/* Generate Button - Fixed at bottom */}
+              <div className="mt-8">
+                <Button 
+                  className="w-full py-5 text-base font-medium bg-blue-800 hover:bg-blue-900 shadow-md" 
+                  onClick={handleGenerateClick}
+                >
+                  Generate Report
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
