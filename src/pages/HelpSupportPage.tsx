@@ -121,7 +121,7 @@ const HelpSupportPage = () => {
                   </label>
                   <Textarea id="message" value={feedbackMessage} onChange={e => setFeedbackMessage(e.target.value)} placeholder="Please share your thoughts, suggestions, or report any issues..." rows={4} className="resize-none max-w-md" />
                 </div>
-                <Button type="submit" className="bg-blue-800 hover:bg-blue-900">
+                <Button type="submit" variant="outline" className="border border-neutral-200 bg-white text-neutral-900 hover:bg-neutral-50">
                   Submit Feedback
                 </Button>
               </form>
