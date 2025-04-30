@@ -195,10 +195,7 @@ const PatientStartPage = () => {
                   <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
                   <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} className="h-8 w-[180px] text-sm" />
                 </div>
-                <div className="flex flex-col">
-                  <Label htmlFor="dateOfBirth" className="text-xs text-muted-foreground mb-1">Date of Birth</Label>
-                  <Input id="dateOfBirth" type="date" value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)} className="h-8 w-[140px] text-sm" />
-                </div>
+                
                 <div className="flex flex-col">
                   <Label htmlFor="nhsNumber" className="text-xs text-muted-foreground mb-1">NHS Number</Label>
                   <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="h-8 w-[140px] text-sm" />
