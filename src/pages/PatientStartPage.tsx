@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Button } from "@/components/ui/button";
@@ -43,6 +42,10 @@ const PatientStartPage = () => {
   ]);
   
   const navigate = useNavigate();
+  
+  // Calculate total documents
+  const totalDocuments = teacherFiles.length + adhdFiles.length + 
+                         connorsFiles.length + developmentFiles.length;
   
   const handleAddSnapField = () => {
     const newId = (snapValues.length + 1).toString();
@@ -198,6 +201,7 @@ const PatientStartPage = () => {
           nhsNumber={nhsNumber}
           setNhsNumber={setNhsNumber}
           onContinue={handleGenerateClick}
+          documentCount={totalDocuments}
         />
 
         <div className="bg-neutral-50/50 min-h-[calc(100vh-56px)] py-8">
