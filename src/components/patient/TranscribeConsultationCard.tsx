@@ -19,7 +19,7 @@ const TranscribeConsultationCard: React.FC<TranscribeConsultationCardProps> = ({
         <Link to="/transcribe" className="w-full block mb-4">
           <Button className="w-full py-2 bg-red-900 hover:bg-red-800">
             <MicIcon className="mr-2 h-5 w-5" />
-            <span>Start New Recording</span>
+            <span>Transcribe</span>
           </Button>
         </Link>
         
