@@ -16,7 +16,7 @@ const TranscribeConsultationCard: React.FC<TranscribeConsultationCardProps> = ({
   recordedSessions
 }) => {
   return (
-    <Card className={`h-full transition-all border-2 ${isCompleted ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
+    <Card className={`h-full transition-all border ${isCompleted ? 'bg-emerald-50 border-emerald-100' : 'border-gray-100'}`}>
       <CardContent className="p-5 h-full flex flex-col">
         <h3 className="text-lg font-medium mb-4">Transcribe Consultation</h3>
         

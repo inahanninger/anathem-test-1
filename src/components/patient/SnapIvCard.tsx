@@ -23,7 +23,7 @@ const SnapIvCard: React.FC<SnapIvCardProps> = ({
   onRemoveField
 }) => {
   return (
-    <Card className="h-full transition-all border-2 hover:shadow-md">
+    <Card className="h-full transition-all border border-gray-100 hover:shadow-md">
       <CardContent className="p-5 h-full">
         <h3 className="text-lg font-medium mb-4">Enter SNAP-IV results</h3>
         <div className="space-y-3">

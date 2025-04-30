@@ -22,7 +22,7 @@ const DocumentUploadSection: React.FC<DocumentUploadSectionProps> = ({
   onDeleteFile
 }) => {
   return (
-    <Card className={`transition-all border-2 ${isCompleted ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
+    <Card className={`transition-all border ${isCompleted ? 'bg-emerald-50 border-emerald-100' : 'border-gray-100'}`}>
       <CardContent className="p-5">
         <FileUploadSection 
           title={title} 
