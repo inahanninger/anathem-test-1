@@ -41,7 +41,6 @@ const PatientStartPage = () => {
   const [generateConfirmOpen, setGenerateConfirmOpen] = useState(false);
   const [patientName, setPatientName] = useState("James Wilson");
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
-  const [dateOfBirth, setDateOfBirth] = useState("");
   const [snapValues, setSnapValues] = useState<SnapValue[]>([{
     id: '1',
     value: ''
@@ -195,7 +194,6 @@ const PatientStartPage = () => {
                   <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
                   <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} className="h-8 w-[180px] text-sm" />
                 </div>
-                
                 <div className="flex flex-col">
                   <Label htmlFor="nhsNumber" className="text-xs text-muted-foreground mb-1">NHS Number</Label>
                   <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="h-8 w-[140px] text-sm" />
