@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Button } from "@/components/ui/button";
@@ -206,62 +207,66 @@ const PatientStartPage = () => {
 
         <div className="bg-neutral-50/50 min-h-[calc(100vh-56px)] py-8">
           <div className="container mx-auto px-6 w-6xl">
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-xl font-semibold mb-6 text-neutral-900">Patient Documents</h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                <TranscribeConsultationCard 
-                  isCompleted={uploadStatus.consultationRecorded}
-                  recordedSessions={recordedSessions}
-                />
+            <div className="max-w-4xl mx-auto space-y-8">
+              <section>
+                <h2 className="text-xl font-semibold mb-6 text-neutral-900">Patient Documents</h2>
                 
-                <SnapIvCard 
-                  snapValues={snapValues}
-                  onValueChange={handleSnapValueChange}
-                  onSourceChange={handleSnapSourceChange}
-                  onAddField={handleAddSnapField}
-                  onRemoveField={handleRemoveSnapField}
-                />
-              </div>
+                <div className="space-y-4">
+                  <TranscribeConsultationCard 
+                    isCompleted={uploadStatus.consultationRecorded}
+                    recordedSessions={recordedSessions}
+                  />
+                  
+                  <SnapIvCard 
+                    snapValues={snapValues}
+                    onValueChange={handleSnapValueChange}
+                    onSourceChange={handleSnapSourceChange}
+                    onAddField={handleAddSnapField}
+                    onRemoveField={handleRemoveSnapField}
+                  />
+                </div>
+              </section>
               
-              <h2 className="text-xl font-semibold mb-4 text-neutral-900">Document Uploads</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <DocumentUploadSection
-                  title="Upload Merry Cameron Report"
-                  documentType="teacher"
-                  isCompleted={uploadStatus.teacherSummary}
-                  uploadedFiles={teacherFiles}
-                  onFileUpload={handleFileUpload}
-                  onDeleteFile={handleDeleteFile}
-                />
+              <section>
+                <h2 className="text-xl font-semibold mb-4 text-neutral-900">Document Uploads</h2>
+                <div className="space-y-4">
+                  <DocumentUploadSection
+                    title="Upload Merry Cameron Report"
+                    documentType="teacher"
+                    isCompleted={uploadStatus.teacherSummary}
+                    uploadedFiles={teacherFiles}
+                    onFileUpload={handleFileUpload}
+                    onDeleteFile={handleDeleteFile}
+                  />
 
-                <DocumentUploadSection
-                  title="Upload ADHD Referral Pack"
-                  documentType="adhd"
-                  isCompleted={uploadStatus.abcReport}
-                  uploadedFiles={adhdFiles}
-                  onFileUpload={handleFileUpload}
-                  onDeleteFile={handleDeleteFile}
-                />
+                  <DocumentUploadSection
+                    title="Upload ADHD Referral Pack"
+                    documentType="adhd"
+                    isCompleted={uploadStatus.abcReport}
+                    uploadedFiles={adhdFiles}
+                    onFileUpload={handleFileUpload}
+                    onDeleteFile={handleDeleteFile}
+                  />
 
-                <DocumentUploadSection
-                  title="Upload Connor's Questionnaire"
-                  documentType="connors"
-                  isCompleted={uploadStatus.connorsQuestionnaire}
-                  uploadedFiles={connorsFiles}
-                  onFileUpload={handleFileUpload}
-                  onDeleteFile={handleDeleteFile}
-                />
-                
-                <DocumentUploadSection
-                  title="Upload Developmental History"
-                  documentType="development"
-                  isCompleted={uploadStatus.developmentHistory}
-                  uploadedFiles={developmentFiles}
-                  onFileUpload={handleFileUpload}
-                  onDeleteFile={handleDeleteFile}
-                />
-              </div>
+                  <DocumentUploadSection
+                    title="Upload Connor's Questionnaire"
+                    documentType="connors"
+                    isCompleted={uploadStatus.connorsQuestionnaire}
+                    uploadedFiles={connorsFiles}
+                    onFileUpload={handleFileUpload}
+                    onDeleteFile={handleDeleteFile}
+                  />
+                  
+                  <DocumentUploadSection
+                    title="Upload Developmental History"
+                    documentType="development"
+                    isCompleted={uploadStatus.developmentHistory}
+                    uploadedFiles={developmentFiles}
+                    onFileUpload={handleFileUpload}
+                    onDeleteFile={handleDeleteFile}
+                  />
+                </div>
+              </section>
 
               <div className="mt-8">
                 <Button 
