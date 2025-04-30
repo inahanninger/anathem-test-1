@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,8 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Card, CardContent } from "@/components/ui/card";
 import FileUploadSection from "@/components/FileUploadSection";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 interface UploadStatus {
   snap4: boolean;
   teacherSummary: boolean;
@@ -21,6 +24,7 @@ interface UploadStatus {
 interface SnapValue {
   id: string;
   value: string;
+  source: string;
 }
 interface UploadedFile {
   id: string;
@@ -43,7 +47,8 @@ const PatientStartPage = () => {
   const [nhsNumber, setNhsNumber] = useState("NHS123456789");
   const [snapValues, setSnapValues] = useState<SnapValue[]>([{
     id: '1',
-    value: ''
+    value: '',
+    source: 'Teacher'
   }]);
   const [teacherFiles, setTeacherFiles] = useState<UploadedFile[]>([{
     id: '1',
@@ -59,7 +64,8 @@ const PatientStartPage = () => {
     const newId = (snapValues.length + 1).toString();
     setSnapValues([...snapValues, {
       id: newId,
-      value: ''
+      value: '',
+      source: 'Teacher'
     }]);
   };
   const handleSnapValueChange = (id: string, value: string) => {
@@ -83,6 +89,14 @@ const PatientStartPage = () => {
       }));
     }
   };
+
+  const handleSnapSourceChange = (id: string, source: string) => {
+    setSnapValues(snapValues.map(item => item.id === id ? {
+      ...item,
+      source
+    } : item));
+  };
+  
   const handleRemoveSnapField = (id: string) => {
     const newValues = snapValues.filter(item => item.id !== id);
     setSnapValues(newValues);
@@ -232,7 +246,24 @@ const PatientStartPage = () => {
                 <h3 className="text-lg font-medium mb-4">Enter SNAP-IV results</h3>
                 <div className="space-y-3">
                   {snapValues.map(item => <div key={item.id} className="flex items-center gap-2">
-                      <Input value={item.value} onChange={e => handleSnapValueChange(item.id, e.target.value)} placeholder="Enter SNAP-IV value" className="flex-1" />
+                      <Input 
+                        value={item.value} 
+                        onChange={e => handleSnapValueChange(item.id, e.target.value)} 
+                        placeholder="Enter SNAP-IV value" 
+                        className="flex-1" 
+                      />
+                      <Select 
+                        value={item.source} 
+                        onValueChange={(value) => handleSnapSourceChange(item.id, value)}
+                      >
+                        <SelectTrigger className="w-[140px]">
+                          <SelectValue placeholder="Select source" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Teacher">Teacher</SelectItem>
+                          <SelectItem value="Parent">Parent</SelectItem>
+                        </SelectContent>
+                      </Select>
                       {snapValues.length > 1 && <Button variant="outline" size="icon" onClick={() => handleRemoveSnapField(item.id)} className="shrink-0">
                           <Trash2 size={16} />
                         </Button>}
