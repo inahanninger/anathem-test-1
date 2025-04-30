@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Button } from "@/components/ui/button";
@@ -21,17 +20,27 @@ interface UploadStatus {
   consultationRecorded: boolean;
   developmentHistory: boolean;
 }
+
 interface SnapValue {
   id: string;
   value: string;
   source: string;
 }
+
 interface UploadedFile {
   id: string;
   name: string;
   size: number;
   dateUploaded: Date;
 }
+
+interface RecordedSession {
+  id: string;
+  title: string;
+  date: string;
+  duration: string;
+}
+
 const PatientStartPage = () => {
   const [uploadStatus, setUploadStatus] = useState<UploadStatus>({
     snap4: false,
@@ -59,7 +68,13 @@ const PatientStartPage = () => {
   const [adhdFiles, setAdhdFiles] = useState<UploadedFile[]>([]);
   const [connorsFiles, setConnorsFiles] = useState<UploadedFile[]>([]);
   const [developmentFiles, setDevelopmentFiles] = useState<UploadedFile[]>([]);
+  const [recordedSessions, setRecordedSessions] = useState<RecordedSession[]>([
+    { id: '1', title: 'Initial Consultation', date: '24 April 2025', duration: '32:15' },
+    { id: '2', title: 'Follow-up Session', date: '28 April 2025', duration: '16:42' }
+  ]);
+  
   const navigate = useNavigate();
+  
   const handleAddSnapField = () => {
     const newId = (snapValues.length + 1).toString();
     setSnapValues([...snapValues, {
@@ -68,6 +83,7 @@ const PatientStartPage = () => {
       source: 'Teacher'
     }]);
   };
+  
   const handleSnapValueChange = (id: string, value: string) => {
     setSnapValues(snapValues.map(item => item.id === id ? {
       ...item,
@@ -89,7 +105,7 @@ const PatientStartPage = () => {
       }));
     }
   };
-
+  
   const handleSnapSourceChange = (id: string, source: string) => {
     setSnapValues(snapValues.map(item => item.id === id ? {
       ...item,
@@ -108,6 +124,7 @@ const PatientStartPage = () => {
       snap4: anyValueFilled
     }));
   };
+  
   const handleFileUpload = (files: File[], documentType: string) => {
     const newFiles = files.map(file => ({
       id: Math.random().toString(36).substring(2, 9),
@@ -142,6 +159,7 @@ const PatientStartPage = () => {
     }
     toast.success(`${files.length} file(s) uploaded successfully`);
   };
+  
   const handleDeleteFile = (id: string, documentType: string) => {
     if (documentType === 'teacher') {
       setTeacherFiles(prev => {
@@ -190,6 +208,7 @@ const PatientStartPage = () => {
     }
     toast.success("File deleted successfully");
   };
+  
   const handleGenerateClick = () => {
     if (!uploadStatus.snap4 && !uploadStatus.teacherSummary && !uploadStatus.abcReport && !uploadStatus.connorsQuestionnaire && !uploadStatus.consultationRecorded && !uploadStatus.developmentHistory) {
       setGenerateConfirmOpen(true);
@@ -197,6 +216,7 @@ const PatientStartPage = () => {
       navigate("/workflow/upload");
     }
   };
+  
   return <ClinicalLayout>
       <div className="min-h-screen bg-white">
         {/* Header Section */}
@@ -230,15 +250,37 @@ const PatientStartPage = () => {
         {/* Main Content */}
         <div className="container mx-auto px-6 py-8 w-6xl">
           <div className="max-w-lg mx-auto space-y-4">
-            {/* Transcribe Consultation Button */}
-            <Link to="/transcribe">
-              <Card className="p-5 transition-all hover:shadow-md cursor-pointer bg-red-800 border-2 py-[12px]">
-                <div className="flex items-center justify-center">
-                  <MicIcon className="mr-2 h-5 w-5 text-white" />
-                  <span className="text-lg font-medium text-white">Transcribe Consultation</span>
-                </div>
-              </Card>
-            </Link>
+            {/* Transcribe Consultation Card */}
+            <Card className={`transition-all border-2 ${uploadStatus.consultationRecorded ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
+              <CardContent className="p-5">
+                <h3 className="text-lg font-medium mb-4">Transcribe Consultation</h3>
+                
+                <Link to="/transcribe" className="w-full block">
+                  <Button className="bg-red-800 hover:bg-red-900 w-full py-2">
+                    <MicIcon className="mr-2 h-5 w-5" />
+                    <span>Start New Recording</span>
+                  </Button>
+                </Link>
+                
+                {recordedSessions.length > 0 && (
+                  <div className="mt-4 space-y-3">
+                    <h4 className="text-sm font-medium text-gray-600">Recorded Sessions</h4>
+                    {recordedSessions.map(session => (
+                      <div key={session.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-md border">
+                        <div>
+                          <h5 className="font-medium">{session.title}</h5>
+                          <div className="text-sm text-gray-500">{session.date} · {session.duration}</div>
+                        </div>
+                        <Button variant="ghost" size="sm">
+                          <FileTextIcon size={16} className="mr-2" />
+                          View
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
             
             {/* 1. Enter SNAP-IV results */}
             <Card className="transition-all border-2 hover:shadow-md">
@@ -335,4 +377,5 @@ const PatientStartPage = () => {
       </AlertDialog>
     </ClinicalLayout>;
 };
+
 export default PatientStartPage;
