@@ -2,51 +2,19 @@
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { Button } from "@/components/ui/button";
-import { ArrowRightIcon, FileTextIcon, MicIcon, AlertCircle, Plus, Trash2 } from "lucide-react";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { Link, useNavigate } from "react-router-dom";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { Card, CardContent } from "@/components/ui/card";
-import FileUploadSection from "@/components/FileUploadSection";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
-interface UploadStatus {
-  snap4: boolean;
-  teacherSummary: boolean;
-  abcReport: boolean;
-  connorsQuestionnaire: boolean;
-  consultationRecorded: boolean;
-  developmentHistory: boolean;
-}
-
-interface SnapValue {
-  id: string;
-  value: string;
-  source: string;
-}
-
-interface UploadedFile {
-  id: string;
-  name: string;
-  size: number;
-  dateUploaded: Date;
-}
-
-interface RecordedSession {
-  id: string;
-  title: string;
-  date: string;
-  duration: string;
-}
+import { useNavigate } from "react-router-dom";
+import { UploadStatus, SnapValue, UploadedFile, RecordedSession } from "@/types/patient";
+import PatientHeader from "@/components/patient/PatientHeader";
+import TranscribeConsultationCard from "@/components/patient/TranscribeConsultationCard";
+import SnapIvCard from "@/components/patient/SnapIvCard";
+import DocumentUploadSection from "@/components/patient/DocumentUploadSection";
+import ContinueConfirmDialog from "@/components/patient/ContinueConfirmDialog";
 
 const PatientStartPage = () => {
   const [uploadStatus, setUploadStatus] = useState<UploadStatus>({
     snap4: false,
-    teacherSummary: true,
-    // Set to true as shown in the wireframe
+    teacherSummary: true, // Set to true as shown in the wireframe
     abcReport: false,
     connorsQuestionnaire: false,
     consultationRecorded: false,
@@ -133,6 +101,7 @@ const PatientStartPage = () => {
       size: file.size,
       dateUploaded: new Date()
     }));
+    
     if (documentType === 'teacher') {
       setTeacherFiles(prev => [...prev, ...newFiles]);
       setUploadStatus(prev => ({
@@ -211,151 +180,85 @@ const PatientStartPage = () => {
   };
   
   const handleGenerateClick = () => {
-    if (!uploadStatus.snap4 && !uploadStatus.teacherSummary && !uploadStatus.abcReport && !uploadStatus.connorsQuestionnaire && !uploadStatus.consultationRecorded && !uploadStatus.developmentHistory) {
+    if (!uploadStatus.snap4 && !uploadStatus.teacherSummary && !uploadStatus.abcReport && 
+        !uploadStatus.connorsQuestionnaire && !uploadStatus.consultationRecorded && 
+        !uploadStatus.developmentHistory) {
       setGenerateConfirmOpen(true);
     } else {
       navigate("/workflow/upload");
     }
   };
   
-  return <ClinicalLayout>
+  return (
+    <ClinicalLayout>
       <div className="min-h-screen bg-white">
-        {/* Header Section */}
-        <div className="border-b border-gray-100 bg-gray-50/80 px-6 py-[12px]">
-          <div className="container mx-auto w-6xl">
-            <div className="flex items-center justify-between w-auto">
-              <div className="flex items-center gap-4">
-                <div className="flex flex-col">
-                  <Label htmlFor="patientName" className="text-xs text-muted-foreground mb-1">Patient Name</Label>
-                  <Input id="patientName" value={patientName} onChange={e => setPatientName(e.target.value)} className="h-8 w-[180px] text-sm" />
-                </div>
-                <div className="flex flex-col">
-                  <Label htmlFor="nhsNumber" className="text-xs text-muted-foreground mb-1">NHS Number</Label>
-                  <Input id="nhsNumber" value={nhsNumber} onChange={e => setNhsNumber(e.target.value)} className="h-8 w-[140px] text-sm" />
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
-                  <Link to="/" className="flex items-center gap-1">Save & Exit</Link>
-                </Button>
-                <Button className="bg-blue-800 hover:bg-blue-900 text-sm" onClick={handleGenerateClick}>
-                  <span className="flex items-center gap-1">
-                    Continue <ArrowRightIcon size={16} />
-                  </span>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <PatientHeader 
+          patientName={patientName}
+          setPatientName={setPatientName}
+          nhsNumber={nhsNumber}
+          setNhsNumber={setNhsNumber}
+          onContinue={handleGenerateClick}
+        />
 
-        {/* Main Content - Redesigned Layout */}
         <div className="bg-neutral-50/50 min-h-[calc(100vh-56px)] py-8">
           <div className="container mx-auto px-6 w-6xl">
             <div className="max-w-3xl mx-auto">
               <h2 className="text-xl font-semibold mb-6 text-neutral-900">Patient Documents</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                {/* Transcribe Consultation Card */}
-                <Card className={`h-full transition-all border-2 ${uploadStatus.consultationRecorded ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
-                  <CardContent className="p-5 h-full flex flex-col">
-                    <h3 className="text-lg font-medium mb-4">Transcribe Consultation</h3>
-                    
-                    <Link to="/transcribe" className="w-full block mb-4">
-                      <Button className="bg-blue-800 hover:bg-blue-900 w-full py-2">
-                        <MicIcon className="mr-2 h-5 w-5" />
-                        <span>Start New Recording</span>
-                      </Button>
-                    </Link>
-                    
-                    {recordedSessions.length > 0 && (
-                      <div className="space-y-3 flex-1">
-                        <h4 className="text-sm font-medium text-neutral-700">Recorded Sessions</h4>
-                        {recordedSessions.map(session => (
-                          <div key={session.id} className="flex items-center justify-between p-3 bg-white rounded-md border shadow-sm hover:shadow transition-shadow">
-                            <div>
-                              <h5 className="font-medium">{session.title}</h5>
-                              <div className="text-xs text-neutral-500">{session.date} · {session.duration}</div>
-                            </div>
-                            <Button variant="ghost" size="sm">
-                              <FileTextIcon size={16} className="mr-2" />
-                              View
-                            </Button>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-
-                {/* SNAP-IV results */}
-                <Card className="h-full transition-all border-2 hover:shadow-md">
-                  <CardContent className="p-5 h-full">
-                    <h3 className="text-lg font-medium mb-4">Enter SNAP-IV results</h3>
-                    <div className="space-y-3">
-                      {snapValues.map(item => <div key={item.id} className="flex items-center gap-2">
-                          <Input 
-                            value={item.value} 
-                            onChange={e => handleSnapValueChange(item.id, e.target.value)} 
-                            placeholder="Enter SNAP-IV value" 
-                            className="flex-1" 
-                          />
-                          <Select 
-                            value={item.source} 
-                            onValueChange={(value) => handleSnapSourceChange(item.id, value)}
-                          >
-                            <SelectTrigger className="w-[140px]">
-                              <SelectValue placeholder="Select source" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="Teacher">Teacher</SelectItem>
-                              <SelectItem value="Parent">Parent</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          {snapValues.length > 1 && <Button variant="outline" size="icon" onClick={() => handleRemoveSnapField(item.id)} className="shrink-0">
-                              <Trash2 size={16} />
-                            </Button>}
-                        </div>)}
-                      <Button variant="outline" size="sm" onClick={handleAddSnapField} className="w-full">
-                        <Plus size={16} className="mr-2" />
-                        Add Value
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                <TranscribeConsultationCard 
+                  isCompleted={uploadStatus.consultationRecorded}
+                  recordedSessions={recordedSessions}
+                />
+                
+                <SnapIvCard 
+                  snapValues={snapValues}
+                  onValueChange={handleSnapValueChange}
+                  onSourceChange={handleSnapSourceChange}
+                  onAddField={handleAddSnapField}
+                  onRemoveField={handleRemoveSnapField}
+                />
               </div>
               
               <h2 className="text-xl font-semibold mb-4 text-neutral-900">Document Uploads</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                {/* Merry Cameron Report */}
-                <Card className={`transition-all border-2 ${uploadStatus.teacherSummary ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
-                  <CardContent className="p-5">
-                    <FileUploadSection title="Upload Merry Cameron Report" documentType="teacher" onFileUpload={handleFileUpload} uploadedFiles={teacherFiles} onDeleteFile={id => handleDeleteFile(id, "teacher")} />
-                  </CardContent>
-                </Card>
+                <DocumentUploadSection
+                  title="Upload Merry Cameron Report"
+                  documentType="teacher"
+                  isCompleted={uploadStatus.teacherSummary}
+                  uploadedFiles={teacherFiles}
+                  onFileUpload={handleFileUpload}
+                  onDeleteFile={handleDeleteFile}
+                />
 
-                {/* ADHD Referral Pack */}
-                <Card className={`transition-all border-2 ${uploadStatus.abcReport ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
-                  <CardContent className="p-5">
-                    <FileUploadSection title="Upload ADHD Referral Pack" documentType="adhd" onFileUpload={handleFileUpload} uploadedFiles={adhdFiles} onDeleteFile={id => handleDeleteFile(id, "adhd")} />
-                  </CardContent>
-                </Card>
+                <DocumentUploadSection
+                  title="Upload ADHD Referral Pack"
+                  documentType="adhd"
+                  isCompleted={uploadStatus.abcReport}
+                  uploadedFiles={adhdFiles}
+                  onFileUpload={handleFileUpload}
+                  onDeleteFile={handleDeleteFile}
+                />
 
-                {/* Connor's Questionnaire */}
-                <Card className={`transition-all border-2 ${uploadStatus.connorsQuestionnaire ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
-                  <CardContent className="p-5">
-                    <FileUploadSection title="Upload Connor's Questionnaire" documentType="connors" onFileUpload={handleFileUpload} uploadedFiles={connorsFiles} onDeleteFile={id => handleDeleteFile(id, "connors")} />
-                  </CardContent>
-                </Card>
+                <DocumentUploadSection
+                  title="Upload Connor's Questionnaire"
+                  documentType="connors"
+                  isCompleted={uploadStatus.connorsQuestionnaire}
+                  uploadedFiles={connorsFiles}
+                  onFileUpload={handleFileUpload}
+                  onDeleteFile={handleDeleteFile}
+                />
                 
-                {/* Developmental History */}
-                <Card className={`transition-all border-2 ${uploadStatus.developmentHistory ? 'bg-emerald-50 border-emerald-200' : 'border-gray-200'}`}>
-                  <CardContent className="p-5">
-                    <FileUploadSection title="Upload Developmental History" documentType="development" onFileUpload={handleFileUpload} uploadedFiles={developmentFiles} onDeleteFile={id => handleDeleteFile(id, "development")} />
-                  </CardContent>
-                </Card>
+                <DocumentUploadSection
+                  title="Upload Developmental History"
+                  documentType="development"
+                  isCompleted={uploadStatus.developmentHistory}
+                  uploadedFiles={developmentFiles}
+                  onFileUpload={handleFileUpload}
+                  onDeleteFile={handleDeleteFile}
+                />
               </div>
 
-              {/* Generate Button - Fixed at bottom */}
               <div className="mt-8">
                 <Button 
                   className="w-full py-5 text-base font-medium bg-blue-800 hover:bg-blue-900 shadow-md" 
@@ -369,28 +272,13 @@ const PatientStartPage = () => {
         </div>
       </div>
 
-      {/* Generate Confirmation Dialog */}
-      <AlertDialog open={generateConfirmOpen} onOpenChange={setGenerateConfirmOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Continue without uploads?</AlertDialogTitle>
-            <AlertDialogDescription>
-              <div className="flex items-center text-amber-600 mb-2">
-                <AlertCircle className="h-5 w-5 mr-2" />
-                <span>No documents or recordings have been added.</span>
-              </div>
-              Are you sure you want to proceed without adding any documentation?
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={() => navigate("/workflow/upload")}>
-              Continue
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </ClinicalLayout>;
+      <ContinueConfirmDialog
+        open={generateConfirmOpen}
+        onOpenChange={setGenerateConfirmOpen}
+        onConfirm={() => navigate("/workflow/upload")}
+      />
+    </ClinicalLayout>
+  );
 };
 
 export default PatientStartPage;
