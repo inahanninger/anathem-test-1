@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { ClinicalLayout } from "@/components/ClinicalLayout";
 import { FileText, Users, FileTextIcon, PlayCircle, ExternalLink, Mail } from "lucide-react";
@@ -8,11 +7,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-
 const HelpSupportPage = () => {
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [email, setEmail] = useState("");
-
   const handleFeedbackSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!feedbackMessage.trim()) {
@@ -23,18 +20,16 @@ const HelpSupportPage = () => {
     setFeedbackMessage("");
     setEmail("");
   };
-
   const handleEmailSupport = () => {
     window.location.href = "mailto:support@mediassist.com?subject=Support Request";
   };
-
   return <ClinicalLayout>
       <div className="min-h-screen bg-white">
         {/* Header Section */}
         <div className="border-b border-gray-100 px-6 py-[12px] bg-white">
-          <div className="container mx-auto w-6xl">
+          <div className="">
             <div className="flex items-center justify-between">
-              <h1 className="text-xl font-semibold text-neutral-900">Help</h1>
+              <h1 className="font-semibold text-neutral-900 text-2xl">Help & Support</h1>
               <Button onClick={handleEmailSupport} className="bg-blue-800 hover:bg-blue-900">
                 <Mail className="mr-2" />
                 Contact Support Team
@@ -131,5 +126,4 @@ const HelpSupportPage = () => {
       </div>
     </ClinicalLayout>;
 };
-
 export default HelpSupportPage;
