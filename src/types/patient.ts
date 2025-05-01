@@ -19,6 +19,7 @@ export interface UploadedFile {
   name: string;
   size: number;
   dateUploaded: Date;
+  component?: React.ReactNode;
 }
 
 export interface RecordedSession {

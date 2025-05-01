@@ -39,6 +39,7 @@ interface FileUploadSectionProps {
     name: string;
     size: number;
     dateUploaded: Date;
+    component?: React.ReactNode;
   }>;
 
   /**
@@ -156,6 +157,7 @@ const FileUploadSection: React.FC<FileUploadSectionProps> = ({
                     </div>
                   </div>
                   <div className="flex items-center">
+                    {file.component}
                     <Button 
                       variant="ghost" 
                       size="icon" 
