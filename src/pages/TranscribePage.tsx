@@ -98,9 +98,11 @@ const TranscribePage = () => {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Button variant="outline" onClick={() => navigate('/patient-start')} className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
-                  Back to Patient
-                </Button>
+                <Link to="/patient-start">
+                  <Button variant="outline" className="text-neutral-800 bg-neutral-200 hover:bg-neutral-100 text-sm">
+                    Back to Patient
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
